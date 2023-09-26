@@ -1,0 +1,3 @@
+F:/Universidad/Arquitectura de Computadores/cmake-build-debug/CMakeFiles/Arquitectura_de_Computadores.dir
+F:/Universidad/Arquitectura de Computadores/cmake-build-debug/CMakeFiles/edit_cache.dir
+F:/Universidad/Arquitectura de Computadores/cmake-build-debug/CMakeFiles/rebuild_cache.dir
