@@ -1,55 +1,51 @@
-//
-// Created by bale2 on 26/09/2023.
-//
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "progargs.hpp"
 
-int validate_parameters (int argc, const char * argv[] ){
-    using namespace std;
+using namespace std;
+int validate_parameters(int argc, const char* argv[]) {
 
-    cout << "este es el parametro 0" << argv[0] << "\n";
-    /* Número parametros correctos */
-    if(argc != 4){
-        cerr << "Error: Invalid number of arguments: " << argc<<"\n";
+    if (argc != 4) {
+        cerr << "Error: Invalid number of arguments: " << argc << "\n";
         return -1;
     }
 
-
-    /* Primer Argumento es un Número mayor que 0 TODO y el 0??*/
-    int nts;
-    nts = stoi(argv[1]);
-    /* TODO esto no chekea que no sea un numero */
-
-    if (nts == 0){
-        cerr << "Error: time steps must be numeric." <<"\n";
-        return -1;
-    }
-    if (nts < 0){
-        cerr << "Error: Invalid number of time steps."<<"\n";
-        return -2;
-    }
-
-
-    /* Archivo de entrada */
-    ifstream input_file(argv[2]);
-    if (!input_file.is_open()) {
-        cerr << "Error: Cannot open " << argv[2] << " for reading." << "\n";
-        return -3;
-    }
-
-    /* Verificar si el archivo de salida se puede abrir para escritura */
-    ofstream output_file(argv[3]);
-    if (!output_file.is_open()) {
-        cerr << "Error: Cannot open " << argv[3] << " for writing." << "\n";
-        return -4;
-    }
+    int nts = stoi(argv[1]);
+    if (validate_time_steps(nts) != 0) return -1;
+    if (validate_input_file(argv[2]) != 0) return -3;
+    if (validate_output_file(argv[3]) != 0)return -4;
 
 
     return 0;
+}
 
+int validate_time_steps(int nts) {
+    if (nts == 0) {
+        cerr << "Error: time steps must be numeric." << "\n";
+        return -1;
+    }
+    if (nts < 0) {
+        cerr << "Error: Invalid number of time steps." << "\n";
+        return -2;
+    }
+    return 0;
+}
 
+int validate_input_file(const char* inputFileName) {
+    ifstream input_file(inputFileName);
+    if (!input_file.is_open()) {
+        cerr << "Error: Cannot open " << inputFileName << " for reading." << "\n";
+        return -1;
+    }
+    return 0;
+}
 
-    /* Primer Argumento no negativo */
-
+int validate_output_file(const char* outputFileName) {
+    ofstream output_file(outputFileName);
+    if (!output_file.is_open()) {
+        cerr << "Error: Cannot open " << outputFileName << " for writing." << "\n";
+        return -1;
+    }
+    return 0;
 }
