@@ -1,4 +1,0 @@
-Cannot generate into C:\Users\bale2\CLionProjects\ac_p1
-It is already used for project C:\Users\bale2\CLionProjects\ac_p1\fluid
-
-Please either delete it manually or select another generation directory
