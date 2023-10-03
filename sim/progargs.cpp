@@ -3,17 +3,10 @@
 #include <string>
 #include <vector>
 #include <cmath>
-#include <filesystem>
 #include "progargs.hpp"
-
-
-
-// Define a struct to represent a particle
-struct Particle {
-    double px, py, pz, hvx, hvy, hvz, vx, vy, vz;
-};
+#include "block.hpp"
+#include "grid.hpp"
 using namespace std;
-
 int validate_time_steps(int nts) {
     if (nts == 0) {
         cerr << "Error: time steps must be numeric." << "\n";
@@ -27,8 +20,6 @@ int validate_time_steps(int nts) {
 }
 
 int validate_input_file(const char* inputFileName) {
-    std::filesystem::path currentPath = std::filesystem::current_path();
-    std::cout << "Current directory: " << currentPath.string() << std::endl;
     cout << "Input file: " << inputFileName << "\n";
     ifstream input_file(inputFileName);
     if (!input_file.is_open()) {
@@ -73,10 +64,27 @@ int read_input_file (const char * in_file){
     int np;
     input_file.read(reinterpret_cast<char*>(&np), sizeof(np));
 
+    // Calculate constants TODO crear archivo constantes
+    // Check if the number of particles read matches the header
+    double const h = smooth_length(ppm);
+    double const xmax = 0.065;
+    double const xmin = -0.065;
+    double const ymax = 0.1;
+    double const ymin = -0.08;
+    double const zmax = 0.065;
+    double const zmin = -0.065;
+    double const nx = nx_calc(xmax, xmin, h);
+    double const ny = ny_calc(ymax, ymin, h);
+    double const nz = nz_calc(zmax, zmin, h);
+    double const sx = sx_calc(xmax, xmin, nx);
+    double const sy = sy_calc(ymax, ymin, ny);
+    double const sz = sz_calc(zmax, zmin, nz);
+
+
     if (np <= 0) {
-        cerr << "Error: Invalid number of particles:"<< np << ".\n";
-        return -5;
-    }
+        string errorMsg = "Error: Invalid number of particles: " + to_string(np) + ".\n";
+        throw runtime_error(errorMsg);
+            }
 
     // Print the values to the screen
     cout << "ppm: " << ppm << endl;
@@ -100,16 +108,20 @@ int read_input_file (const char * in_file){
 
 
         // Cast from float to double and store in the Particle struct
-        particles.emplace_back();
-        particles[i].px = static_cast<double>(px_float);
-        particles[i].py = static_cast<double>(py_float);
-        particles[i].pz = static_cast<double>(pz_float);
-        particles[i].hvx = static_cast<double>(hvx_float);
-        particles[i].hvy = static_cast<double>(hvy_float);
-        particles[i].hvz = static_cast<double>(hvz_float);
-        particles[i].vx = static_cast<double>(vx_float);
-        particles[i].vy = static_cast<double>(vy_float);
-        particles[i].vz = static_cast<double>(vz_float);
+        malla.particles.emplace_back();
+        malla.particles[i].px = static_cast<double>(px_float);
+        malla.particles[i].py = static_cast<double>(py_float);
+        malla.particles[i].pz = static_cast<double>(pz_float);
+        malla.particles[i].hvx = static_cast<double>(hvx_float);
+        malla.particles[i].hvy = static_cast<double>(hvy_float);
+        malla.particles[i].hvz = static_cast<double>(hvz_float);
+        malla.particles[i].vx = static_cast<double>(vx_float);
+        malla.particles[i].vy = static_cast<double>(vy_float);
+        malla.particles[i].vz = static_cast<double>(vz_float);
+        cout << "Particle " << i << " Data:" << "\n";
+        malla.particles[i].i = calculate_block_index(malla.particles[i].px, xmin, sx);
+        malla.particles[i].j = calculate_block_index(malla.particles[i].py, ymin, sy);
+        malla.particles[i].k = calculate_block_index(malla.particles[i].pz, zmin, sz);
 
         cout << "Particle " << i << " Data:" << "\n";
         cout << "px: " << particles[i].px << "\n";
@@ -126,10 +138,9 @@ int read_input_file (const char * in_file){
         i++; // Increment the counter
     }
 
-
     if (i != np) {
-        cerr << "Error: Number of particles mismatch. Header: " << np << ", Found: " << i << ".\n";
-        return -5;
+        string errorMsg = "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(i) + ".\n";
+        throw runtime_error(errorMsg);
     }
 
     input_file.close(); /* TODO esto hay que cerrarlo? */
