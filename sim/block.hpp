@@ -7,9 +7,12 @@
 #include <vector>
 
 struct Particle {
-    double px, py, pz, hvx, hvy, hvz, vx, vy, vz;
+    double px, py, pz, hvx, hvy, hvz, vx, vy, vz, ax, ay, az, rho;
     int id;
 };
+
+
+
 
 struct Block {
     int i, j, k;
