@@ -76,73 +76,16 @@ Malla read_input_file (const char * in_file) {
     Malla malla = create_fill_grid(np, ppm, constantes.nz, constantes.ny, constantes.nx);
 
 
+    refactor_gordo(input_file);
+
+
+
+
+
+
+
+
     // Read particle data in a single loop and cast from float to double
-    float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
-    int counter = 0;
-    while (input_file.read(reinterpret_cast<char *>(&px_float), sizeof(px_float))) {
-        // if i < np then read the next 8 floats, else continue
-        input_file.read(reinterpret_cast<char *>(&py_float), sizeof(py_float));
-        input_file.read(reinterpret_cast<char *>(&pz_float), sizeof(pz_float));
-        input_file.read(reinterpret_cast<char *>(&hvx_float), sizeof(hvx_float));
-        input_file.read(reinterpret_cast<char *>(&hvy_float), sizeof(hvy_float));
-        input_file.read(reinterpret_cast<char *>(&hvz_float), sizeof(hvz_float));
-        input_file.read(reinterpret_cast<char *>(&vx_float), sizeof(vx_float));
-        input_file.read(reinterpret_cast<char *>(&vy_float), sizeof(vy_float));
-        input_file.read(reinterpret_cast<char *>(&vz_float), sizeof(vz_float));
-
-
-        // Check if the particle is inside the domain
-        if (px_float < xmin ){px_float = xmin;}
-        if (px_float > xmax ){px_float = xmax;}
-        if (py_float < ymin ){py_float = ymin;}
-        if (py_float > ymax ){py_float = ymax;}
-        if (pz_float < zmin ){pz_float = zmin;}
-        if (pz_float > zmax ){pz_float = zmax;}
-
-        int i,j,k;
-        i = calculate_block_index(static_cast<double>(px_float), xmin,  constantes.sx);
-        j = calculate_block_index(static_cast<double>(py_float), ymin,  constantes.sy);
-        k = calculate_block_index(static_cast<double>(pz_float), zmin,  constantes.sz);
-
-        // Linear mapping para encontrar el bloque correcto
-        int index = i + j * constantes.nx + k * constantes.nx * constantes.ny;
-        Block &selectedBlock = malla.blocks[index];
-        selectedBlock.particles.emplace_back();
-        selectedBlock.particles.back().id = counter;
-        selectedBlock.particles.back().px = static_cast<double>(px_float);
-        selectedBlock.particles.back().py = static_cast<double>(py_float);
-        selectedBlock.particles.back().pz = static_cast<double>(pz_float);
-        selectedBlock.particles.back().hvx = static_cast<double>(hvx_float);
-        selectedBlock.particles.back().hvy = static_cast<double>(hvy_float);
-        selectedBlock.particles.back().hvz = static_cast<double>(hvz_float);
-        selectedBlock.particles.back().vx = static_cast<double>(vx_float);
-        selectedBlock.particles.back().vy = static_cast<double>(vy_float);
-        selectedBlock.particles.back().vz = static_cast<double>(vz_float);
-        selectedBlock.particles.back().ax = 0;
-        selectedBlock.particles.back().ay = g;
-        selectedBlock.particles.back().az = 0;
-        selectedBlock.particles.back().rho = 0;
-
-        cout << "Particle " << counter << " Data:" << "\n";
-        cout << "px: " << selectedBlock.particles.back().px << "\n";
-        cout << "py: " << selectedBlock.particles.back().py << "\n";
-        cout << "pz: " << selectedBlock.particles.back().pz << "\n";
-        cout << "hvx: " << selectedBlock.particles.back().hvx << "\n";
-        cout << "hvy: " << selectedBlock.particles.back().hvy << "\n";
-        cout << "hvz: " << selectedBlock.particles.back().hvz << "\n";
-        cout << "vx: " << selectedBlock.particles.back().vx << "\n";
-        cout << "vy: " << selectedBlock.particles.back().vy << "\n";
-        cout << "vz: " << selectedBlock.particles.back().vz << "\n";
-        cout << "Block: " << selectedBlock.i << ", " << selectedBlock.j << ", " << selectedBlock.k << "\n";
-        counter++; // Increment the counter
-    }
-
-    if (counter != np) {
-        string errorMsg =
-                "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(counter) +
-                ".\n";
-        throw runtime_error(errorMsg);
-    }
 
     input_file.close(); /* TODO esto hay que cerrarlo? */
 
@@ -217,4 +160,78 @@ void check_np (int np){
 }
 
 
+
+void refactor_gordo (ifstream input_file) {
+
+    float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
+    int counter = 0;
+    vector<float> buffer(10);
+    while (input_file.read(reinterpret_cast<char *>(&px_float), sizeof(px_float))) {
+        // if i < np then read the next 8 floats, else continue
+        input_file.read(reinterpret_cast<char *>(&py_float), sizeof(py_float));
+        input_file.read(reinterpret_cast<char *>(&pz_float), sizeof(pz_float));
+        input_file.read(reinterpret_cast<char *>(&hvx_float), sizeof(hvx_float));
+        input_file.read(reinterpret_cast<char *>(&hvy_float), sizeof(hvy_float));
+        input_file.read(reinterpret_cast<char *>(&hvz_float), sizeof(hvz_float));
+        input_file.read(reinterpret_cast<char *>(&vx_float), sizeof(vx_float));
+        input_file.read(reinterpret_cast<char *>(&vy_float), sizeof(vy_float));
+        input_file.read(reinterpret_cast<char *>(&vz_float), sizeof(vz_float));
+
+
+        // Check if the particle is inside the domain
+        if (px_float < xmin ){px_float = xmin;}
+        if (px_float > xmax ){px_float = xmax;}
+        if (py_float < ymin ){py_float = ymin;}
+        if (py_float > ymax ){py_float = ymax;}
+        if (pz_float < zmin ){pz_float = zmin;}
+        if (pz_float > zmax ){pz_float = zmax;}
+
+        int i,j,k;
+        i = calculate_block_index(static_cast<double>(px_float), xmin,  constantes.sx);
+        j = calculate_block_index(static_cast<double>(py_float), ymin,  constantes.sy);
+        k = calculate_block_index(static_cast<double>(pz_float), zmin,  constantes.sz);
+
+        // Linear mapping para encontrar el bloque correcto
+        int index = i + j * constantes.nx + k * constantes.nx * constantes.ny;
+        Block &selectedBlock = malla.blocks[index];
+        selectedBlock.particles.emplace_back();
+        selectedBlock.particles.back().id = counter;
+        selectedBlock.particles.back().px = static_cast<double>(px_float);
+        selectedBlock.particles.back().py = static_cast<double>(py_float);
+        selectedBlock.particles.back().pz = static_cast<double>(pz_float);
+        selectedBlock.particles.back().hvx = static_cast<double>(hvx_float);
+        selectedBlock.particles.back().hvy = static_cast<double>(hvy_float);
+        selectedBlock.particles.back().hvz = static_cast<double>(hvz_float);
+        selectedBlock.particles.back().vx = static_cast<double>(vx_float);
+        selectedBlock.particles.back().vy = static_cast<double>(vy_float);
+        selectedBlock.particles.back().vz = static_cast<double>(vz_float);
+        selectedBlock.particles.back().ax = 0;
+        selectedBlock.particles.back().ay = g;
+        selectedBlock.particles.back().az = 0;
+        selectedBlock.particles.back().rho = 0;
+
+        cout << "Particle " << counter << " Data:" << "\n";
+        cout << "px: " << selectedBlock.particles.back().px << "\n";
+        cout << "py: " << selectedBlock.particles.back().py << "\n";
+        cout << "pz: " << selectedBlock.particles.back().pz << "\n";
+        cout << "hvx: " << selectedBlock.particles.back().hvx << "\n";
+        cout << "hvy: " << selectedBlock.particles.back().hvy << "\n";
+        cout << "hvz: " << selectedBlock.particles.back().hvz << "\n";
+        cout << "vx: " << selectedBlock.particles.back().vx << "\n";
+        cout << "vy: " << selectedBlock.particles.back().vy << "\n";
+        cout << "vz: " << selectedBlock.particles.back().vz << "\n";
+        cout << "Block: " << selectedBlock.i << ", " << selectedBlock.j << ", " << selectedBlock.k << "\n";
+        counter++; // Increment the counter
+    }
+
+
+
+    if (counter != np) {
+        string errorMsg =
+                "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(counter) +
+                ".\n";
+        throw runtime_error(errorMsg);
+    }
+
+}
 
