@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 #include <cmath>
 #include "progargs.hpp"
 #include "block.hpp"
@@ -56,11 +55,14 @@ int validate_parameters(int argc, const char* argv[]) {
     return 0;
 }
 
-int read_input_file (const char * in_file){
-    ifstream input_file(in_file, ios::binary);
-    float ppm;                                                              /* TODO ppm check errors? */
-    input_file.read(reinterpret_cast<char*>(&ppm), sizeof(ppm));
+Malla read_input_file (const char * in_file){
 
+
+    ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
+
+    // Crear la malla base
+    float ppm;
+    input_file.read(reinterpret_cast<char*>(&ppm), sizeof(ppm));
     int np;
     input_file.read(reinterpret_cast<char*>(&np), sizeof(np));
 
@@ -87,10 +89,13 @@ int read_input_file (const char * in_file){
             }
 
     // Print the values to the screen
-    cout << "ppm: " << ppm << endl;
-    cout << "np: " << np << endl;
+    cout << "ppm: " << ppm << "\n";
+    cout << "np: " << np << "\n";
 
-    vector<Particle> particles;                         /*Array de estructuras*/
+    vector<Particle> particles;
+    Malla malla(np, ppm,particles);
+
+
 
     // Read particle data in a single loop and cast from float to double
     float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
@@ -124,15 +129,18 @@ int read_input_file (const char * in_file){
         malla.particles[i].k = calculate_block_index(malla.particles[i].pz, zmin, sz);
 
         cout << "Particle " << i << " Data:" << "\n";
-        cout << "px: " << particles[i].px << "\n";
-        cout << "py: " << particles[i].py << "\n";
-        cout << "pz: " << particles[i].pz << "\n";
-        cout << "hvx: " << particles[i].hvx << "\n";
-        cout << "hvy: " << particles[i].hvy << "\n";
-        cout << "hvz: " << particles[i].hvz << "\n";
-        cout << "vx: " << particles[i].vx << "\n";
-        cout << "vy: " << particles[i].vy << "\n";
-        cout << "vz: " << particles[i].vz << "\n";
+        cout << "px: " << malla.particles[i].px << "\n";
+        cout << "py: " << malla.particles[i].py << "\n";
+        cout << "pz: " << malla.particles[i].pz << "\n";
+        cout << "hvx: " << malla.particles[i].hvx << "\n";
+        cout << "hvy: " << malla.particles[i].hvy << "\n";
+        cout << "hvz: " << malla.particles[i].hvz << "\n";
+        cout << "vx: " << malla.particles[i].vx << "\n";
+        cout << "vy: " << malla.particles[i].vy << "\n";
+        cout << "vz: " << malla.particles[i].vz << "\n";
+        cout << "i: " << malla.particles[i].i << "\n";
+        cout << "j: " << malla.particles[i].j << "\n";
+        cout << "k: " << malla.particles[i].k << "\n";
         cout << "\n";
 
         i++; // Increment the counter
@@ -145,15 +153,7 @@ int read_input_file (const char * in_file){
 
     input_file.close(); /* TODO esto hay que cerrarlo? */
 
-    // Check if the number of particles read matches the header
-    double h = smooth_length(ppm);
-    double xmax = 0.065;double xmin = -0.065;double ymax = 0.1;double ymin = -0.08;double zmax = 0.065;double zmin = -0.065;
-    double nx = nx_calc(xmax, xmin, h);
-    double ny = ny_calc(ymax, ymin, h);
-    double nz = nz_calc(zmax, zmin, h);
-    double sx = sx_calc(xmax, xmin, nx);
-    double sy = sy_calc(ymax, ymin, ny);
-    double sz = sz_calc(zmax, zmin, nz);
+
 
 
     cout << "Number of particles: " << np << "\n";
@@ -165,6 +165,43 @@ int read_input_file (const char * in_file){
     cout << "Block size: " << sx << " x " << sy << " x " << sz << "\n";
 
 
+    return malla;
+}
+
+
+int write_output_file (Malla malla, const char * out_file){
+    int np = malla.np;
+    float ppm = malla.ppm;
+    vector<Particle> particles = malla.particles;
+    //Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
+    ofstream output_file(out_file, ios::binary);
+    output_file.write(reinterpret_cast<char*>(&ppm), sizeof(ppm));
+    output_file.write(reinterpret_cast<char*>(&np), sizeof(np));
+
+    float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
+    for(int i = 0; i<np;i++){
+        px_float = static_cast<float>(particles[i].px);
+        py_float = static_cast<float>(particles[i].py);
+        pz_float = static_cast<float>(particles[i].pz);
+        hvx_float = static_cast<float>(particles[i].hvx);
+        hvy_float = static_cast<float>(particles[i].hvy);
+        hvz_float = static_cast<float>(particles[i].hvz);
+        vx_float = static_cast<float>(particles[i].vx);
+        vy_float = static_cast<float>(particles[i].vy);
+        vz_float = static_cast<float>(particles[i].vz);
+
+        output_file.write(reinterpret_cast<char*>(&px_float), sizeof(px_float));
+        output_file.write(reinterpret_cast<char*>(&py_float), sizeof(py_float));
+        output_file.write(reinterpret_cast<char*>(&pz_float), sizeof(pz_float));
+        output_file.write(reinterpret_cast<char*>(&hvx_float), sizeof(hvx_float));
+        output_file.write(reinterpret_cast<char*>(&hvy_float), sizeof(hvy_float));
+        output_file.write(reinterpret_cast<char*>(&hvz_float), sizeof(hvz_float));
+        output_file.write(reinterpret_cast<char*>(&vx_float), sizeof(vx_float));
+        output_file.write(reinterpret_cast<char*>(&vy_float), sizeof(vy_float));
+        output_file.write(reinterpret_cast<char*>(&vz_float), sizeof(vz_float));
+
+
+    }
     return 0;
 }
 
@@ -188,8 +225,14 @@ double nz_calc (double zmax, double zmin, double h){
 double sx_calc (double xmax, double xmin, double nx){
     return (xmax-xmin)/nx;
 }
+
 double sy_calc (double ymax, double ymin, double ny){
     return (ymax-ymin)/ny;
-}double sz_calc (double zmax, double zmin, double nz){
+}
+
+double sz_calc (double zmax, double zmin, double nz){
     return (zmax-zmin)/nz;
 }
+
+
+

@@ -6,6 +6,8 @@
 #define ARQUITECTURA_DE_COMPUTADORES_PROGARGS_HPP
 
 #include <fstream>
+#include <vector>
+#include "grid.hpp"
 using namespace std;
 
 
