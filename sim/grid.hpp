@@ -6,15 +6,11 @@
 #define ARQUITECTURA_DE_COMPUTADORES_GRID_HPP
 
 #include <vector>
+#include "block.hpp"
 using namespace std;
 
-struct Particle {
-    double px, py, pz, hvx, hvy, hvz, vx, vy, vz;
-    int i, j, k;
-};
-
 struct Malla {
-    int np; float ppm; vector<Particle> particles;
+    int np; float ppm; vector<Block> blocks;
 };
 
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

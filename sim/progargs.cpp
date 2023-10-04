@@ -55,16 +55,14 @@ int validate_parameters(int argc, const char* argv[]) {
     return 0;
 }
 
-Malla read_input_file (const char * in_file){
-
-
+Malla read_input_file (const char * in_file) {
     ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
     // Crear la malla base
     float ppm;
-    input_file.read(reinterpret_cast<char*>(&ppm), sizeof(ppm));
+    input_file.read(reinterpret_cast<char *>(&ppm), sizeof(ppm));
     int np;
-    input_file.read(reinterpret_cast<char*>(&np), sizeof(np));
+    input_file.read(reinterpret_cast<char *>(&np), sizeof(np));
 
     // Calculate constants TODO crear archivo constantes
     // Check if the number of particles read matches the header
@@ -86,82 +84,88 @@ Malla read_input_file (const char * in_file){
     if (np <= 0) {
         string errorMsg = "Error: Invalid number of particles: " + to_string(np) + ".\n";
         throw runtime_error(errorMsg);
-            }
+    }
 
     // Print the values to the screen
     cout << "ppm: " << ppm << "\n";
     cout << "np: " << np << "\n";
 
-    vector<Particle> particles;
-    Malla malla(np, ppm,particles);
-
-
-
+    int i, j, k;
+    Malla malla(np, ppm, vector<Block>());
+    // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
+    for (k = 0; k < nz; ++k) {
+        for (j = 0; j < ny; ++j) {
+            for (i = 0; i < nx; ++i) {
+                malla.blocks.push_back(Block(i, j, k, vector<Particle>()));
+            }
+        }
+    }
     // Read particle data in a single loop and cast from float to double
     float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
-    int i = 0;
-    while (input_file.read(reinterpret_cast<char*>(&px_float), sizeof(px_float))) {
+    int counter = 0;
+    while (input_file.read(reinterpret_cast<char *>(&px_float), sizeof(px_float))) {
         // if i < np then read the next 8 floats, else continue
-        input_file.read(reinterpret_cast<char*>(&py_float), sizeof(py_float));
-        input_file.read(reinterpret_cast<char*>(&pz_float), sizeof(pz_float));
-        input_file.read(reinterpret_cast<char*>(&hvx_float), sizeof(hvx_float));
-        input_file.read(reinterpret_cast<char*>(&hvy_float), sizeof(hvy_float));
-        input_file.read(reinterpret_cast<char*>(&hvz_float), sizeof(hvz_float));
-        input_file.read(reinterpret_cast<char*>(&vx_float), sizeof(vx_float));
-        input_file.read(reinterpret_cast<char*>(&vy_float), sizeof(vy_float));
-        input_file.read(reinterpret_cast<char*>(&vz_float), sizeof(vz_float));
+        input_file.read(reinterpret_cast<char *>(&py_float), sizeof(py_float));
+        input_file.read(reinterpret_cast<char *>(&pz_float), sizeof(pz_float));
+        input_file.read(reinterpret_cast<char *>(&hvx_float), sizeof(hvx_float));
+        input_file.read(reinterpret_cast<char *>(&hvy_float), sizeof(hvy_float));
+        input_file.read(reinterpret_cast<char *>(&hvz_float), sizeof(hvz_float));
+        input_file.read(reinterpret_cast<char *>(&vx_float), sizeof(vx_float));
+        input_file.read(reinterpret_cast<char *>(&vy_float), sizeof(vy_float));
+        input_file.read(reinterpret_cast<char *>(&vz_float), sizeof(vz_float));
 
 
-        // Cast from float to double and store in the Particle struct
-        malla.particles.emplace_back();
-        malla.particles[i].px = static_cast<double>(px_float);
-        malla.particles[i].py = static_cast<double>(py_float);
-        malla.particles[i].pz = static_cast<double>(pz_float);
-        malla.particles[i].hvx = static_cast<double>(hvx_float);
-        malla.particles[i].hvy = static_cast<double>(hvy_float);
-        malla.particles[i].hvz = static_cast<double>(hvz_float);
-        malla.particles[i].vx = static_cast<double>(vx_float);
-        malla.particles[i].vy = static_cast<double>(vy_float);
-        malla.particles[i].vz = static_cast<double>(vz_float);
-        cout << "Particle " << i << " Data:" << "\n";
-        malla.particles[i].i = calculate_block_index(malla.particles[i].px, xmin, sx);
-        malla.particles[i].j = calculate_block_index(malla.particles[i].py, ymin, sy);
-        malla.particles[i].k = calculate_block_index(malla.particles[i].pz, zmin, sz);
+        i = calculate_block_index(static_cast<double>(px_float), xmin, sx);
+        j = calculate_block_index(static_cast<double>(py_float), ymin, sy);
+        k = calculate_block_index(static_cast<double>(pz_float), zmin, sz);
+        if (i >= nx){i= nx-1;}
+        if (j >= ny){j= ny-1;}
+        if (k >= nz){k= nz-1;}
 
-        cout << "Particle " << i << " Data:" << "\n";
-        cout << "px: " << malla.particles[i].px << "\n";
-        cout << "py: " << malla.particles[i].py << "\n";
-        cout << "pz: " << malla.particles[i].pz << "\n";
-        cout << "hvx: " << malla.particles[i].hvx << "\n";
-        cout << "hvy: " << malla.particles[i].hvy << "\n";
-        cout << "hvz: " << malla.particles[i].hvz << "\n";
-        cout << "vx: " << malla.particles[i].vx << "\n";
-        cout << "vy: " << malla.particles[i].vy << "\n";
-        cout << "vz: " << malla.particles[i].vz << "\n";
-        cout << "i: " << malla.particles[i].i << "\n";
-        cout << "j: " << malla.particles[i].j << "\n";
-        cout << "k: " << malla.particles[i].k << "\n";
+        // Linear mapping para encontrar el bloque correcto
+        int index = i + j * nx + k * nx * ny;
+        Block &selectedBlock = malla.blocks[index];
+        selectedBlock.particles.emplace_back();
+        selectedBlock.particles.back().id = counter;
+        selectedBlock.particles.back().px = static_cast<double>(px_float);
+        selectedBlock.particles.back().py = static_cast<double>(py_float);
+        selectedBlock.particles.back().pz = static_cast<double>(pz_float);
+        selectedBlock.particles.back().hvx = static_cast<double>(hvx_float);
+        selectedBlock.particles.back().hvy = static_cast<double>(hvy_float);
+        selectedBlock.particles.back().hvz = static_cast<double>(hvz_float);
+        selectedBlock.particles.back().vx = static_cast<double>(vx_float);
+        selectedBlock.particles.back().vy = static_cast<double>(vy_float);
+        selectedBlock.particles.back().vz = static_cast<double>(vz_float);
+
+        cout << "Particle " << counter << " Data:" << "\n";
+        cout << "px: " << selectedBlock.particles.back().px << "\n";
+        cout << "py: " << selectedBlock.particles.back().py << "\n";
+        cout << "pz: " << selectedBlock.particles.back().pz << "\n";
+        cout << "hvx: " << selectedBlock.particles.back().hvx << "\n";
+        cout << "hvy: " << selectedBlock.particles.back().hvy << "\n";
+        cout << "hvz: " << selectedBlock.particles.back().hvz << "\n";
+        cout << "vx: " << selectedBlock.particles.back().vx << "\n";
+        cout << "vy: " << selectedBlock.particles.back().vy << "\n";
+        cout << "vz: " << selectedBlock.particles.back().vz << "\n";
         cout << "\n";
-
-        i++; // Increment the counter
+        counter++; // Increment the counter
     }
 
-    if (i != np) {
-        string errorMsg = "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(i) + ".\n";
+    if (counter != np) {
+        string errorMsg =
+                "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(counter) +
+                ".\n";
         throw runtime_error(errorMsg);
     }
 
     input_file.close(); /* TODO esto hay que cerrarlo? */
 
-
-
-
     cout << "Number of particles: " << np << "\n";
     cout << "Particles per meter: " << ppm << "\n";
     cout << "Smoothing length: " << h << "\n";
     cout << "Particle mass: " << particle_mass(ppm) << "\n";
-    cout << "Grid size: " << nx << " x "<< ny << " x " << nz << "\n";
-    cout << "Number of blocks: " << nx*ny*nz << "\n";
+    cout << "Grid size: " << nx << " x " << ny << " x " << nz << "\n";
+    cout << "Number of blocks: " << nx * ny * nz << "\n";
     cout << "Block size: " << sx << " x " << sy << " x " << sz << "\n";
 
 
@@ -172,24 +176,34 @@ Malla read_input_file (const char * in_file){
 int write_output_file (Malla malla, const char * out_file){
     int np = malla.np;
     float ppm = malla.ppm;
-    vector<Particle> particles = malla.particles;
     //Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
     ofstream output_file(out_file, ios::binary);
     output_file.write(reinterpret_cast<char*>(&ppm), sizeof(ppm));
     output_file.write(reinterpret_cast<char*>(&np), sizeof(np));
 
     float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
-    for(int i = 0; i<np;i++){
-        px_float = static_cast<float>(particles[i].px);
-        py_float = static_cast<float>(particles[i].py);
-        pz_float = static_cast<float>(particles[i].pz);
-        hvx_float = static_cast<float>(particles[i].hvx);
-        hvy_float = static_cast<float>(particles[i].hvy);
-        hvz_float = static_cast<float>(particles[i].hvz);
-        vx_float = static_cast<float>(particles[i].vx);
-        vy_float = static_cast<float>(particles[i].vy);
-        vz_float = static_cast<float>(particles[i].vz);
+    vector<Particle> particles_out;
+    // Loop through all the blocks
+    for (Block & block : malla.blocks) {
+        // Loop through all the particles in the block
+        for (Particle & particle : block.particles) {
+            // Cast from double to float and write to file
+            particles_out.push_back(particle);
+        }
+    }
+    // Sort particles_out by id
+    sort(particles_out.begin(), particles_out.end(), [](Particle & a, Particle & b) { return a.id < b.id; });
 
+    for (Particle & particle : particles_out) {
+        px_float = static_cast<float>(particle.px);
+        py_float = static_cast<float>(particle.py);
+        pz_float = static_cast<float>(particle.pz);
+        hvx_float = static_cast<float>(particle.hvx);
+        hvy_float = static_cast<float>(particle.hvy);
+        hvz_float = static_cast<float>(particle.hvz);
+        vx_float = static_cast<float>(particle.vx);
+        vy_float = static_cast<float>(particle.vy);
+        vz_float = static_cast<float>(particle.vz);
         output_file.write(reinterpret_cast<char*>(&px_float), sizeof(px_float));
         output_file.write(reinterpret_cast<char*>(&py_float), sizeof(py_float));
         output_file.write(reinterpret_cast<char*>(&pz_float), sizeof(pz_float));
@@ -199,9 +213,10 @@ int write_output_file (Malla malla, const char * out_file){
         output_file.write(reinterpret_cast<char*>(&vx_float), sizeof(vx_float));
         output_file.write(reinterpret_cast<char*>(&vy_float), sizeof(vy_float));
         output_file.write(reinterpret_cast<char*>(&vz_float), sizeof(vz_float));
-
-
     }
+
+    output_file.close();
+
     return 0;
 }
 
