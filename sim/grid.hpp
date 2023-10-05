@@ -28,11 +28,14 @@ double const zmin = -0.065;
 double const g = -9.8;
 
 struct Constants{
-    double h, nx, ny, nz, sx, sy, sz;
+    double nx,ny,nz;
+    double h,m,sx, sy, sz;
 };
 
 struct Malla {
     int np; float ppm; vector<Block> blocks;
+    int nx,ny,nz;
+    double h, m;
 };
 
 Constants calculate_constants(double ppm);
@@ -44,5 +47,10 @@ double sy_calc (double ymax, double ymin, double ny);
 double sz_calc (double zmax, double zmin, double nz);
 double smooth_length (double ppm);
 double particle_mass (double ppm);
-Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx);
+Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m);
+
+
+Malla cuatropunto3punto2 (Malla malla);
+double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
+double density_transformation(double rho,double h, double m);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

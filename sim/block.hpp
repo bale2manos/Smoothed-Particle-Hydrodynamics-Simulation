@@ -5,12 +5,17 @@
 #ifndef ARQUITECTURA_DE_COMPUTADORES_BLOCK_HPP
 #define ARQUITECTURA_DE_COMPUTADORES_BLOCK_HPP
 #include <vector>
+#include <array>
 
-struct Particle {
+struct Particle1 {
     double px, py, pz, hvx, hvy, hvz, vx, vy, vz, ax, ay, az, rho;
     int id;
 };
-
+struct Particle {
+    std::array<double,3> p, hv, v, a;
+    double rho;
+    int id;
+};
 
 
 

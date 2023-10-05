@@ -19,9 +19,14 @@ int main(int argc, const char *argv[]) {
         cerr << e.what() << "\n";
         return -5;
     }
+
+    cuatropunto3punto2 (malla);
+
+
+
+
     write_output_file(malla, argv[3]);
-    cout << "el valor de ppm: " << malla.ppm << "\n";
-    cout << "el valor de np: " << malla.np << "\n";
+
 
 
 

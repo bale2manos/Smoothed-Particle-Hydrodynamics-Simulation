@@ -2,15 +2,17 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
+#include <iostream>
 Constants calculate_constants(double ppm){
     double const h = smooth_length(ppm);
+    double const m = particle_mass(ppm);
     double const nx = nx_calc(xmax, xmin, h);
     double const ny = ny_calc(ymax, ymin, h);
     double const nz = nz_calc(zmax, zmin, h);
     double const sx = sx_calc(xmax, xmin, nx);
     double const sy = sy_calc(ymax, ymin, ny);
     double const sz = sz_calc(zmax, zmin, nz);
-    Constants constants(h, nx, ny, nz, sx, sy, sz);
+    Constants constants(nx, ny, nz, h, m, sx, sy, sz);
     return constants;
 }
 
@@ -46,9 +48,9 @@ double particle_mass (double ppm){
     return static_cast<double>(rho_f)/(pow (ppm,3));
 }
 
-Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx){
+Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m){
     int i, j, k;
-    Malla malla(np, ppm, vector<Block>());
+    Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m);
     // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (k = 0; k < nz; ++k) {
         for (j = 0; j < ny; ++j) {
@@ -59,4 +61,41 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx){
     }
     return malla;
 }
+
+Malla cuatropunto3punto2 (Malla malla){
+    for (Block & block : malla.blocks) {
+        size_t neighbours_size = block.neighbours.size();
+        for (Particle & particle_pivot : block.particles) {
+            for (size_t i = 0; i < neighbours_size; ++i) {
+                for (Particle & particle2 : malla.blocks[i].particles) {
+                    double increase_d_factor = increase_density(particle_pivot.p, particle2.p, malla.h);
+                    particle_pivot.rho = particle_pivot.rho + increase_d_factor;
+                    particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
+                }
+            }
+        }
+    }
+
+    return malla;
+}
+
+double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h){
+    double norm = pow((pivot_coords[0] - particle2_coords[0]),2) + pow((pivot_coords[1] - particle2_coords[1]),2)
+            + pow((pivot_coords[2] - particle2_coords[2]),2);
+    double h_squared = pow(h,2);
+    if (norm < h_squared){
+        return pow(h_squared-norm,3);
+    }
+    return 0;
+}
+
+
+double density_transformation(double rho,double h, double m){
+    double first_term = (rho + pow(h,6));
+    double second_term = (315/(64*M_PI*pow(h,9)));
+    return first_term*second_term*m;
+}
+
+
+
 

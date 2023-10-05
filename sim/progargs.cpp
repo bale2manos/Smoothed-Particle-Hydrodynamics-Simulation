@@ -59,6 +59,7 @@ int validate_parameters(int argc, const char* argv[]) {
 }
 
 Malla read_input_file (const char * in_file) {
+
     ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
     // Crear la malla base
@@ -73,16 +74,8 @@ Malla read_input_file (const char * in_file) {
     //Comprobamos que np sea mayor que 1
     check_np(np);
     // Creamos la malla y la llenamos de bloques vacíos
-    Malla malla = create_fill_grid(np, ppm, constantes.nz, constantes.ny, constantes.nx);
-
-
-    refactor_gordo(input_file);
-
-
-
-
-
-
+    Malla malla = create_fill_grid(np, ppm, constantes.nz, constantes.ny, constantes.nx, constantes.h, constantes.m);
+    refactor_gordo(in_file, constantes, malla);
 
 
     // Read particle data in a single loop and cast from float to double
@@ -125,15 +118,15 @@ int write_output_file (Malla malla, const char * out_file){
     sort(particles_out.begin(), particles_out.end(), [](Particle & a, Particle & b) { return a.id < b.id; });
 
     for (Particle & particle : particles_out) {
-        px_float = static_cast<float>(particle.px);
-        py_float = static_cast<float>(particle.py);
-        pz_float = static_cast<float>(particle.pz);
-        hvx_float = static_cast<float>(particle.hvx);
-        hvy_float = static_cast<float>(particle.hvy);
-        hvz_float = static_cast<float>(particle.hvz);
-        vx_float = static_cast<float>(particle.vx);
-        vy_float = static_cast<float>(particle.vy);
-        vz_float = static_cast<float>(particle.vz);
+        px_float = static_cast<float>(particle.p[0]);
+        py_float = static_cast<float>(particle.p[1]);
+        pz_float = static_cast<float>(particle.p[2]);
+        hvx_float = static_cast<float>(particle.hv[0]);
+        hvy_float = static_cast<float>(particle.hv[1]);
+        hvz_float = static_cast<float>(particle.hv[2]);
+        vx_float = static_cast<float>(particle.v[0]);
+        vy_float = static_cast<float>(particle.v[1]);
+        vz_float = static_cast<float>(particle.v[2]);
         output_file.write(reinterpret_cast<char*>(&px_float), sizeof(px_float));
         output_file.write(reinterpret_cast<char*>(&py_float), sizeof(py_float));
         output_file.write(reinterpret_cast<char*>(&pz_float), sizeof(pz_float));
@@ -161,77 +154,100 @@ void check_np (int np){
 
 
 
-void refactor_gordo (ifstream input_file) {
-
-    float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
+void refactor_gordo (const char * in_file, Constants cons, Malla malla) {
+    ifstream input_file(in_file, ios::binary);
+    double trash;
+    input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
+    array<array<float, 3>, 3> info_particle;
+    array<array<double, 3>, 3> info_particle_double;
     int counter = 0;
-    vector<float> buffer(10);
-    while (input_file.read(reinterpret_cast<char *>(&px_float), sizeof(px_float))) {
+
+    while (input_file.read(reinterpret_cast<char *>(&info_particle[0][0]), sizeof(info_particle[0][0]))) {
         // if i < np then read the next 8 floats, else continue
-        input_file.read(reinterpret_cast<char *>(&py_float), sizeof(py_float));
-        input_file.read(reinterpret_cast<char *>(&pz_float), sizeof(pz_float));
-        input_file.read(reinterpret_cast<char *>(&hvx_float), sizeof(hvx_float));
-        input_file.read(reinterpret_cast<char *>(&hvy_float), sizeof(hvy_float));
-        input_file.read(reinterpret_cast<char *>(&hvz_float), sizeof(hvz_float));
-        input_file.read(reinterpret_cast<char *>(&vx_float), sizeof(vx_float));
-        input_file.read(reinterpret_cast<char *>(&vy_float), sizeof(vy_float));
-        input_file.read(reinterpret_cast<char *>(&vz_float), sizeof(vz_float));
+        input_file.read(reinterpret_cast<char *>(&info_particle[0][1]), sizeof(info_particle[0][1]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[0][2]), sizeof(info_particle[0][2]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[1][0]), sizeof(info_particle[1][0]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[1][1]), sizeof(info_particle[1][1]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[1][2]), sizeof(info_particle[1][2]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[2][0]), sizeof(info_particle[2][0]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[2][1]), sizeof(info_particle[2][1]));
+        input_file.read(reinterpret_cast<char *>(&info_particle[2][2]), sizeof(info_particle[2][2]));
 
+        for (size_t i = 0; i < info_particle.size(); ++i) {
+            for (size_t j = 0; j < info_particle[i].size(); ++j) {
+                info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);
+            }
+        }
 
-        // Check if the particle is inside the domain
-        if (px_float < xmin ){px_float = xmin;}
-        if (px_float > xmax ){px_float = xmax;}
-        if (py_float < ymin ){py_float = ymin;}
-        if (py_float > ymax ){py_float = ymax;}
-        if (pz_float < zmin ){pz_float = zmin;}
-        if (pz_float > zmax ){pz_float = zmax;}
+        // check particle inside the grid
+        info_particle_double[0] = check_inside_grid(info_particle_double[0]);
 
-        int i,j,k;
-        i = initial_block_index(static_cast<double>(px_float), xmin,  constantes.sx);
-        j = initial_block_index(static_cast<double>(py_float), ymin,  constantes.sy);
-        k = initial_block_index(static_cast<double>(pz_float), zmin,  constantes.sz);
+        array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], cons);
 
         // Linear mapping para encontrar el bloque correcto
-        int index = i + j * constantes.nx + k * constantes.nx * constantes.ny;
-        Block &selectedBlock = malla.blocks[index];
-        selectedBlock.particles.emplace_back();
-        selectedBlock.particles.back().id = counter;
-        selectedBlock.particles.back().px = static_cast<double>(px_float);
-        selectedBlock.particles.back().py = static_cast<double>(py_float);
-        selectedBlock.particles.back().pz = static_cast<double>(pz_float);
-        selectedBlock.particles.back().hvx = static_cast<double>(hvx_float);
-        selectedBlock.particles.back().hvy = static_cast<double>(hvy_float);
-        selectedBlock.particles.back().hvz = static_cast<double>(hvz_float);
-        selectedBlock.particles.back().vx = static_cast<double>(vx_float);
-        selectedBlock.particles.back().vy = static_cast<double>(vy_float);
-        selectedBlock.particles.back().vz = static_cast<double>(vz_float);
-        selectedBlock.particles.back().ax = 0;
-        selectedBlock.particles.back().ay = g;
-        selectedBlock.particles.back().az = 0;
-        selectedBlock.particles.back().rho = 0;
+        int index = index_array[0] + index_array[1] * cons.nx + index_array[2] * cons.nx * cons.ny;
+        malla.blocks[index] = insert_particle_info(info_particle_double,malla.blocks[index],counter);
+
+
+        cout << "PROBLEMA A" << "\n";
+
 
         cout << "Particle " << counter << " Data:" << "\n";
-        cout << "px: " << selectedBlock.particles.back().px << "\n";
-        cout << "py: " << selectedBlock.particles.back().py << "\n";
-        cout << "pz: " << selectedBlock.particles.back().pz << "\n";
-        cout << "hvx: " << selectedBlock.particles.back().hvx << "\n";
-        cout << "hvy: " << selectedBlock.particles.back().hvy << "\n";
-        cout << "hvz: " << selectedBlock.particles.back().hvz << "\n";
-        cout << "vx: " << selectedBlock.particles.back().vx << "\n";
-        cout << "vy: " << selectedBlock.particles.back().vy << "\n";
-        cout << "vz: " << selectedBlock.particles.back().vz << "\n";
-        cout << "Block: " << selectedBlock.i << ", " << selectedBlock.j << ", " << selectedBlock.k << "\n";
-        counter++; // Increment the counter
+        cout << "px: " << malla.blocks[index].particles.back().p[0] << "\n";
+        cout << "py: " << malla.blocks[index].particles.back().p[1] << "\n";
+        cout << "pz: " << malla.blocks[index].particles.back().p[2] << "\n";
+        cout << "hvx: " << malla.blocks[index].particles.back().hv[0] << "\n";
+        cout << "hvy: " << malla.blocks[index].particles.back().hv[1] << "\n";
+        cout << "hvz: " << malla.blocks[index].particles.back().hv[2] << "\n";
+        cout << "vx: " << malla.blocks[index].particles.back().v[0] << "\n";
+        cout << "vy: " << malla.blocks[index].particles.back().v[1] << "\n";
+        cout << "vz: " << malla.blocks[index].particles.back().v[2] << "\n";
+        cout << "Block: " << malla.blocks[index].i << ", " << malla.blocks[index].j << ", " << malla.blocks[index].k << "\n";
+        cout << "PRUEBA" << "\n";
+        counter++;
+        cout << "counter " << counter;
     }
 
-
-
-    if (counter != np) {
-        string errorMsg =
-                "Error: Number of particles mismatch. Header: " + to_string(np) + ", Found: " + to_string(counter) +
-                ".\n";
-        throw runtime_error(errorMsg);
-    }
+    missmatch_particles(counter, malla.np);
 
 }
 
+
+array<double, 3> check_inside_grid(array<double, 3> position){
+    if (position[0] < xmin ){position[0] = xmin;}
+    if (position[0] > xmax ){position[0] = xmax;}
+    if (position[1] < ymin ){position[1] = ymin;}
+    if (position[1] > ymax ){position[1] = ymax;}
+    if (position[2] < zmin ){position[2] = zmin;}
+    if (position[2] > zmax ){position[2] = zmax;}
+    return position;
+}
+
+array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons){
+    int i,j,k;
+    i = initial_block_index(positions[0], xmin,  cons.sx);
+    j = initial_block_index(positions[1], ymin,  cons.sy);
+    k = initial_block_index(positions[2], zmin,  cons.sz);
+    return array<int, 3>{i,j,k};
+
+}
+
+Block insert_particle_info(array<array<double, 3>, 3> info, Block bloque, int id){
+    bloque.particles.emplace_back();
+    bloque.particles.back().id = id;
+    bloque.particles.back().p = info[0];
+    bloque.particles.back().hv = info[1];
+    bloque.particles.back().v = info[2];
+    bloque.particles.back().a = {0,g,0};
+    bloque.particles.back().rho = 0;
+    return bloque;
+}
+
+void missmatch_particles(int counter, int malla_np) {
+    if (counter != malla_np) {
+        string errorMsg =
+                "Error: Number of particles mismatch. Header: " + to_string(malla_np) + ", Found: " + to_string(counter) +
+                ".\n";
+        throw runtime_error(errorMsg);
+    }
+}
