@@ -17,6 +17,9 @@ struct Particle {
 struct Block {
     int i, j, k;
     std::vector<Particle> particles;
+    std::vector<int> neighbours;
 };
-int calculate_block_index(double position, double min_limit, double block_size);
+int initial_block_index(double position, double min_limit, double block_size);
+
+std::vector<int> check_neighbours(int i, int j, int k, double nx, double ny, double nz);
 #endif //ARQUITECTURA_DE_COMPUTADORES_BLOCK_HPP

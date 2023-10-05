@@ -187,9 +187,9 @@ void refactor_gordo (ifstream input_file) {
         if (pz_float > zmax ){pz_float = zmax;}
 
         int i,j,k;
-        i = calculate_block_index(static_cast<double>(px_float), xmin,  constantes.sx);
-        j = calculate_block_index(static_cast<double>(py_float), ymin,  constantes.sy);
-        k = calculate_block_index(static_cast<double>(pz_float), zmin,  constantes.sz);
+        i = initial_block_index(static_cast<double>(px_float), xmin,  constantes.sx);
+        j = initial_block_index(static_cast<double>(py_float), ymin,  constantes.sy);
+        k = initial_block_index(static_cast<double>(pz_float), zmin,  constantes.sz);
 
         // Linear mapping para encontrar el bloque correcto
         int index = i + j * constantes.nx + k * constantes.nx * constantes.ny;

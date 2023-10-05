@@ -53,9 +53,10 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx){
     for (k = 0; k < nz; ++k) {
         for (j = 0; j < ny; ++j) {
             for (i = 0; i < nx; ++i) {
-                malla.blocks.push_back(Block(i, j, k, vector<Particle>()));
+                malla.blocks.push_back(Block(i, j, k, vector<Particle>(), check_neighbours(i, j, k, nx, ny, nz)));
             }
         }
     }
     return malla;
 }
+
