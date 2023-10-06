@@ -2,6 +2,7 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
+#include <math.h>
 #include <iostream>
 Constants calculate_constants(double ppm){
     double const h = smooth_length(ppm);
@@ -18,7 +19,7 @@ Constants calculate_constants(double ppm){
 
 
 
-double nx_calc (double x_max, double x_min, double h_param){
+int nx_calc (double x_max, double x_min, double h_param){
     return floor( (x_max - x_min) / h_param);
 }
 int ny_calc (double y_max, double y_min, double h_param){
@@ -49,7 +50,6 @@ double particle_mass (double ppm){
 }
 
 Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m){
-    int i, j, k;
     Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m);
     // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (int k = 0; k < nz; ++k) {
@@ -79,6 +79,9 @@ Malla cuatropunto3punto2 (Malla malla){
     return malla;
 }
 
+
+
+
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h){
     double const norm = pow((pivot_coords[0] - particle2_coords[0]),2) + pow((pivot_coords[1] - particle2_coords[1]),2)
             + pow((pivot_coords[2] - particle2_coords[2]),2);
@@ -90,11 +93,61 @@ double increase_density(array<double, 3> pivot_coords, array<double, 3> particle
 }
 
 
+
 double density_transformation(double rho,double h, double m){
     double first_term = (rho + pow(h,6));
     double second_term = (315/(64*M_PI*pow(h,9)));
     return first_term*second_term*m;
 }
+
+
+double calcdistij(double const mod1, double const mod2){
+    double param = mod1-mod2;
+    double const compare = sqrt(1e-12);
+    if (param < compare){
+        param = compare;
+    }
+    double const distij = sqrt(param);
+    return distij;
+}
+
+int increase_accel(Particle Particle1, Particle Particle2, double h, double m){
+    double const mod1 = sqrt(pow(Particle1.p[0], 2) + pow(Particle1.p[1], 2)+ pow(Particle1.p[2], 2));
+    double const mod2 = sqrt(pow(Particle2.p[0], 2) + pow(Particle2.p[1], 2)+ pow(Particle2.p[2], 2));
+    double const distij = calcdistij(mod1, mod2);
+    double const calc1 = 15/(M_PI*pow(h,6));
+    double const calc2 = 15/(M_PI* pow(h,6));
+    double const calc3 = pow((h-distij),2)/distij;
+    if (pow((mod1 - mod2), 2) < pow(h,2)){
+
+        for (int i = 0; i<3; i++) {
+            double const diffij = ((Particle1.p[i] - Particle2.p[i])*calc1*m*calc3*(Particle1.rho + Particle2.rho - 2*rho_f) +
+                                   (Particle1.v[i]- Particle2.v[i])*calc2*mu*m);
+            Particle1.a[i] = Particle1.a[i] + diffij;
+
+        }
+    }
+
+
+    return 0;
+}
+
+
+Malla changeaccel ( Malla malla){
+    for (Block & block : malla.blocks) {
+        size_t const neighbours_size = block.neighbours.size();
+        for (Particle & particle_pivot : block.particles) {
+            for (size_t i = 0; i < neighbours_size; ++i) {
+                for (Particle  const& particle2 : malla.blocks[i].particles) {
+                    increase_accel(particle_pivot, particle2, malla.h, malla.m);
+                }
+            }
+        }
+    }
+    return malla;
+}
+
+
 
 
 
