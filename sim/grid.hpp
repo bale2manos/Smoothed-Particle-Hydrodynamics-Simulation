@@ -28,20 +28,20 @@ double const zmin = -0.065;
 double const g = -9.8;
 
 struct Constants{
-    double nx,ny,nz;
+    int nx,ny,nz;
     double h,m,sx, sy, sz;
 };
 
 struct Malla {
-    int np; float ppm; vector<Block> blocks;
+    int np; double ppm; vector<Block> blocks;
     int nx,ny,nz;
     double h, m;
 };
 
 Constants calculate_constants(double ppm);
-double nx_calc (double xmax, double xmin, double h);
-double ny_calc (double ymax, double ymin, double h);
-double nz_calc (double zmax, double zmin, double h);
+int nx_calc (double xmax, double xmin, double h);
+int ny_calc (double ymax, double ymin, double h);
+int nz_calc (double zmax, double zmin, double h);
 double sx_calc (double xmax, double xmin, double nx);
 double sy_calc (double ymax, double ymin, double ny);
 double sz_calc (double zmax, double zmin, double nz);

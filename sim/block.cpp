@@ -14,7 +14,6 @@ int initial_block_index(double position, double min_limit, double block_size) {
 }
 
 int calculate_block_index(int i,int j, int k,int nx, int ny) {
-    // sumamos min_limit para que el bloque 0 sea el bloque que contiene a min_limit
     return i + j * nx + k * nx * ny;
 
 }

@@ -63,18 +63,21 @@ Malla read_input_file (const char * in_file) {
     ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
     // Crear la malla base
-    float ppm;
+    float ppm=0;
     input_file.read(reinterpret_cast<char *>(&ppm), sizeof(ppm));
-    int np;
+    int np=0;
     input_file.read(reinterpret_cast<char *>(&np), sizeof(np));
+    //Comprobamos que np sea mayor que 1
+    check_np(np);
 
     // Calculate constants TODO crear archivo constantes
     // Check if the number of particles read matches the header
-    Constants constantes = calculate_constants(ppm);
-    //Comprobamos que np sea mayor que 1
-    check_np(np);
+    auto ppm_double = static_cast<double>(ppm);
+    Constants const constantes = calculate_constants(ppm_double);
+
+
     // Creamos la malla y la llenamos de bloques vacíos
-    Malla malla = create_fill_grid(np, ppm, constantes.nz, constantes.ny, constantes.nx, constantes.h, constantes.m);
+    Malla malla = create_fill_grid(np, ppm_double, constantes.nz, constantes.ny, constantes.nx, constantes.h, constantes.m);
     refactor_gordo(in_file, constantes, malla);
 
 
@@ -183,13 +186,9 @@ void refactor_gordo (const char * in_file, Constants cons, Malla malla) {
         info_particle_double[0] = check_inside_grid(info_particle_double[0]);
 
         array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], cons);
-
         // Linear mapping para encontrar el bloque correcto
         int index = index_array[0] + index_array[1] * cons.nx + index_array[2] * cons.nx * cons.ny;
         malla.blocks[index] = insert_particle_info(info_particle_double,malla.blocks[index],counter);
-
-
-        cout << "PROBLEMA A" << "\n";
 
 
         cout << "Particle " << counter << " Data:" << "\n";
@@ -228,18 +227,23 @@ array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons
     i = initial_block_index(positions[0], xmin,  cons.sx);
     j = initial_block_index(positions[1], ymin,  cons.sy);
     k = initial_block_index(positions[2], zmin,  cons.sz);
+    /* TODO problema coma flotante floor error */
+    if (i == cons.nx) {        i = cons.nx - 1;       }
+    if (j == cons.ny){j = cons.ny - 1;}
+    if (k == cons.nz){k = cons.nz - 1;}
     return array<int, 3>{i,j,k};
 
 }
 
 Block insert_particle_info(array<array<double, 3>, 3> info, Block bloque, int id){
-    bloque.particles.emplace_back();
-    bloque.particles.back().id = id;
-    bloque.particles.back().p = info[0];
-    bloque.particles.back().hv = info[1];
-    bloque.particles.back().v = info[2];
-    bloque.particles.back().a = {0,g,0};
-    bloque.particles.back().rho = 0;
+    Particle particle;
+    particle.p = info[0];
+    particle.hv = info[1];
+    particle.v = info[2];
+    particle.a = {0,g,0};
+    particle.rho = 0;
+    particle.id = id;
+    bloque.particles.emplace_back(particle);
     return bloque;
 }
 
