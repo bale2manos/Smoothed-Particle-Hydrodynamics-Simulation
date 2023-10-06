@@ -255,3 +255,181 @@ void missmatch_particles(int counter, int malla_np) {
         throw runtime_error(errorMsg);
     }
 }
+
+
+
+/*
+int accinit(Malla malla,  int nts, Constants constants){
+    int np = malla.np, i = 0, j = 0, nblocks = malla.blocks.size(), nparticles;
+    for (i < nblocks; i++){
+        nparticles = malla.blocks[i].particles.size()
+                         for (j < nparticles; j++){
+            malla.blocks[i].particles[j].ay = g
+                                                  malla.blocks[i].particles[j].ds = 0
+        }
+    }
+    return 0;
+}
+}
+
+
+int densitycalc(Malla malla, int nts, Constants constants){
+    int i = 0, j = 0, k = 0, bol = 0, nblocks = malla.blocks.size(), nparticles;
+    float ppm;
+    double densij, diffx, diffy, diffz;
+    std::vector<Particle> visitedp;
+    std::vector<Particle> tovisitb;
+    h = Constants.h;
+
+    for(i<nblocks; i++){
+        tovisitb::clear()
+            nparticles = malla.blocks[i].particles.size();
+        int x=malla.blocks[i].i;
+        int y=malla.blocks[i].j;
+        int z=malla.blocks[i].k;
+        tovisitb.push_back(malla.blocks[i]);
+        for(int d = 0; d < nblocks; d++){
+            if (x+1 == malla.blocks[d].i||x-1==malla.blocks[d].i||y-1==malla.blocks[d].j||y+1==malla.blocks[d].j
+                ||z+1==malla.blocks[d].k||z-1==malla.blocks[d].k){
+                tovisitb.push_back(malla.blocks[d]);
+            }
+        }
+
+        for(int j = 0; j< nparticles; j++) {
+            visited.push_back(malla.blocks[i].particles[j]);
+            for (ii = 0; ii<tovisitb.size; ii++) {
+                for (k < nparticles; k++) {
+                  bol = 0 for (int l; l < visited.size; l++) {
+                    if (malla.blocks[i].particles[k].id == visited[l].id) {
+                      bol = 1;
+                    }
+                  }
+                  if bol = 0 {
+                      densij = 0;
+                      diffx  = malla.blocks[i].particles[j].px -
+                              malla.blocks[ii].particles[k].px;
+                      diffy = malla.blocks[i].particles[j].py -
+                              malla.blocks[ii].particles[k].py;
+                      diffz = malla.blocks[i].particles[j].pz -
+                              malla.blocks[ii].particles[k].pz;
+                      double mod = sqrt(diffx ^ 2 + diffy ^ 2 + diffz ^ 2);
+                      if (mod ^ 2 < h ^ 2) { densij = (h ^ 2 - mod ^ 2) ^ 3; }
+                      malla.blocks[i].particles[j].rho =
+                          densij + malla.blocks[i].particles[j].rho;
+                      malla.blocks[i].particles[k].rho =
+                          densij + malla.blocks[i].particles[k].rho;
+                    }
+                }
+            }
+
+        }
+
+
+
+    }
+    return 0;
+}
+
+
+int denstransform(Malla malla, int nts, Constants constants){
+    int np = malla.np, i = 0, j = 0, nblocks = malla.blocks.size(), nparticles;
+    float ppm;
+    h = Constants.h;
+
+    for(i<nblocks; i++){
+        nparticles = malla.blocks[i].particles.size();
+
+        for(j< nparticles; j++) {
+            malla.blocks[i].particles[j].rho =
+                (malla.blocks[i].particles[j].rho + h^6)*(315/(64*M_PI*h^9))* (malla.blocks[i].particles[j].rho/ppm^3)
+
+        }
+
+
+
+    }
+    return 0;
+
+}
+
+
+int acceltransf(Malla malla) {
+    int i = 0, j = 0, k = 0, bol = 0, nblocks = malla.blocks.size(), nparticles;
+    float ppm;
+    double densij, diffx, diffy, diffz;
+    std::vector<Particle> visitedp;
+    std::vector<Particle> tovisitb;
+    h = Constants.h;
+
+    for(i<nblocks; i++){
+        tovisitb::clear()
+            nparticles = malla.blocks[i].particles.size();
+        int x=malla.blocks[i].i;
+        int y=malla.blocks[i].j;
+        int z=malla.blocks[i].k;
+        tovisitb.push_back(malla.blocks[i]);
+        for(int d = 0; d < nblocks; d++){
+            if (x+1 == malla.blocks[d].i||x-1==malla.blocks[d].i||y-1==malla.blocks[d].j||y+1==malla.blocks[d].j
+                ||z+1==malla.blocks[d].k||z-1==malla.blocks[d].k){
+                tovisitb.push_back(malla.blocks[d]);
+            }
+        }
+
+        for(int j = 0; j< nparticles; j++) {
+            visited.push_back(malla.blocks[i].particles[j]);
+            for (ii = 0; ii<tovisitb.size; ii++) {
+                for (k < nparticles; k++) {
+                  bol = 0 for (int l; l < visited.size; l++) {
+                    if (malla.blocks[i].particles[k].id == visited[l].id) {
+                      bol = 1;
+                    }
+                  }
+                  if bol = 0 {
+                      densij = 0;
+                      diffx  = malla.blocks[i].particles[j].px -
+                              malla.blocks[ii].particles[k].px;
+                      diffy = malla.blocks[i].particles[j].py -
+                              malla.blocks[ii].particles[k].py;
+                      diffz = malla.blocks[i].particles[j].pz -
+                              malla.blocks[ii].particles[k].pz;
+                      double mod = sqrt(diffx ^ 2 + diffy ^ 2 + diffz ^ 2);
+                      if (mod ^ 2 < h ^ 2) {
+                        accelx = (diffx * (15/M_PI*h^6) * (malla.blocks[i].particles[j].rho/ppm^3)^2 *((h-distij)^2/distij) * (
+                                                                                                                                                     malla.blocks[i].particles[j].rho + malla.blocks[ii].particles[k].rho - 2 * rho_f)
+                                                                                                                   + (malla.blocks[i].particles[j].vx + malla.blocks[ii].particles[j].vx) * (45/M_PI*h^6) * mu)/(
+                                     malla.blocks[i].particles[j].rho*malla.blocks[ii].particles[k].rho) ;
+                        accely = (diffy * (15/M_PI*h^6) * (malla.blocks[i].particles[j].rho/ppm^3)^2 *((h-distij)^2/distij) * (
+                                                                                                                                                     malla.blocks[i].particles[j].rho + malla.blocks[ii].particles[k].rho - 2 * rho_f)
+                                                                                                                   + (malla.blocks[i].particles[j].vy + malla.blocks[ii].particles[j].vy) * (45/M_PI*h^6) * mu)/(
+                                     malla.blocks[i].particles[j].rho*malla.blocks[ii].particles[k].rho) ;
+                        accelz = (diffz * (15/M_PI*h^6) * (malla.blocks[i].particles[j].rho/ppm^3)^2 *((h-distij)^2/distij) * (
+                                                                                                                                                     malla.blocks[i].particles[j].rho + malla.blocks[ii].particles[k].rho - 2 * rho_f)
+                                                                                                                   + (malla.blocks[i].particles[j].vz + malla.blocks[ii].particles[j].vz) * (45/M_PI*h^6) * mu)/(
+                                     malla.blocks[i].particles[j].rho*malla.blocks[ii].particles[k].rho) ;
+                      }
+                      malla.blocks[i].particles[j].ax =
+                          accelx + malla.blocks[i].particles[j].ax;
+                      malla.blocks[i].particles[k].ax =
+                          accelx + malla.blocks[i].particles[k].ax;
+                      malla.blocks[i].particles[j].ay =
+                          accely + malla.blocks[i].particles[j].ay;
+                      malla.blocks[i].particles[k].ay =
+                          accely + malla.blocks[i].particles[k].ay;
+                      malla.blocks[i].particles[j].ay =
+                          accelz + malla.blocks[i].particles[j].az;
+                      malla.blocks[i].particles[k].az =
+                          accelz + malla.blocks[i].particles[k].az;
+                    }
+                }
+            }
+
+        }
+
+
+
+    }
+    return 0;
+}
+
+
+}
