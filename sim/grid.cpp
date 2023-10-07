@@ -71,6 +71,8 @@ Malla cuatropunto3punto2 (Malla malla){
                     double const increase_d_factor = increase_density(particle_pivot.p, particle2.p, malla.h);
                     particle_pivot.rho = particle_pivot.rho + increase_d_factor;
                     particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
+                    array<double,3> new_acceleration = acceleration_transfer(particle_pivot,particle2,malla.h,malla.m);
+                    particle_pivot.a = new_acceleration;
                 }
             }
         }
@@ -97,5 +99,28 @@ double density_transformation(double rho,double h, double m){
 }
 
 
+array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m){
+    array<double,3> acc_increase;
+    //Aquí calculamos los términos por separado de la ecuación grande.
+    double const norm = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
+                        + pow((particle2.p[2] - particle2.p[2]),2);
+    double const norm_squared = pow(norm,2);
+    if (norm_squared>=pow(h,2)){return {0,0,0};}
+    double const distij = sqrt(max(norm,pow(10,-12)));
+    double const aux =M_PI*pow(h,6);
+    double const const1 = 15/aux;
+    double const const2 = const1*3; // Mejor multiplicar que dividir
+
+    for (int i=0; i<3; i++){
+        double const term1 = (pivot.p[i]-particle2.p[i]);
+        double const term2 = pow(h-distij,2)/distij;
+        double const term3 = (pivot.rho + particle2.rho - (2*rho_f));
+        double const term4 = (particle2.v[i] - pivot.v[i]);
+        double const denominator = (particle2.rho  * pivot.rho);
+        acc_increase[i] = ((term1*const1*m*term2*term3) + (term4*const2*mu*m))/denominator;
+        pivot.a[i] = pivot.a[i] + acc_increase[i];
+        }
+  return pivot.a;
+  }
 
 
