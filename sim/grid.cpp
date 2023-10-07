@@ -18,7 +18,7 @@ Constants calculate_constants(double ppm){
 
 
 
-double nx_calc (double x_max, double x_min, double h_param){
+int nx_calc (double x_max, double x_min, double h_param){
     return floor( (x_max - x_min) / h_param);
 }
 int ny_calc (double y_max, double y_min, double h_param){
@@ -49,7 +49,6 @@ double particle_mass (double ppm){
 }
 
 Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m){
-    int i, j, k;
     Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m);
     // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (int k = 0; k < nz; ++k) {
@@ -68,6 +67,7 @@ Malla cuatropunto3punto2 (Malla malla){
         for (Particle & particle_pivot : block.particles) {
             for (size_t i = 0; i < neighbours_size; ++i) {
                 for (Particle  const& particle2 : malla.blocks[i].particles) {
+                    if (particle_pivot.id == particle2.id) { continue; }
                     double const increase_d_factor = increase_density(particle_pivot.p, particle2.p, malla.h);
                     particle_pivot.rho = particle_pivot.rho + increase_d_factor;
                     particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
