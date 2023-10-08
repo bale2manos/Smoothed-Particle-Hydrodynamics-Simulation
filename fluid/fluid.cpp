@@ -21,7 +21,8 @@ int main(int argc, const char *argv[]) {
         return -5;
     }
 
-    cuatropunto3punto2 (malla);
+    malla = colisiones_particulas (malla);
+    colisiones_pared(malla);
 
 
 

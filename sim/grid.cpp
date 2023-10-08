@@ -2,6 +2,8 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
+
+#include <math.h>
 #include <iostream>
 Constants calculate_constants(double ppm){
     double const h = smooth_length(ppm);
@@ -61,7 +63,7 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, dou
     return malla;
 }
 
-Malla cuatropunto3punto2 (Malla malla){
+Malla colisiones_particulas (Malla malla){
     for (Block & block : malla.blocks) {
         size_t const neighbours_size = block.neighbours.size();
         for (Particle & particle_pivot : block.particles) {
@@ -73,6 +75,7 @@ Malla cuatropunto3punto2 (Malla malla){
                     particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
                     array<double,3> new_acceleration = acceleration_transfer(particle_pivot,particle2,malla.h,malla.m);
                     particle_pivot.a = new_acceleration;
+
                 }
             }
         }
@@ -124,3 +127,47 @@ array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double 
   }
 
 
+
+Malla colisiones_pared(Malla malla){
+  for (Block & block : malla.blocks){
+        if (block.i == 0 || block.i == malla.nx-1) {
+            for (Particle & particle : block.particles) {
+                particle = colisiones_eje(particle, block.i, 0);
+            }
+        }
+        if (block.j == 0 || block.j == malla.ny-1){
+            for (Particle & particle : block.particles){
+                particle = colisiones_eje(particle,block.j,1);
+            }
+        }
+        if (block.k == 0 || block.k == malla.nz-1){
+            for (Particle & particle : block.particles){
+                particle = colisiones_eje(particle,block.k,2);
+            }
+        }
+  }
+  return malla;
+}
+
+
+Particle colisiones_eje(Particle particula, int extremo, int eje) {
+  double min_limit = NAN;
+  double max_limit = NAN;
+  if (eje == 0){ min_limit= xmin; max_limit = xmax;}
+  if (eje == 1){ min_limit= ymin; max_limit = ymax;}
+  if (eje == 2){ min_limit= zmin; max_limit = zmax;}
+
+  double const coord = particula.p[eje] + particula.hv[eje] * delta_t;
+  if (extremo == 0) {
+        double deltax = d_p - (coord - min_limit);
+        if (deltax > pow(10, -10)) {
+            particula.a[eje] = particula.a[eje] + s_c * deltax - d_v * particula.v[eje];
+        }
+  } else {
+        double deltax = d_p - (max_limit - coord);
+        if (deltax > pow(10, -10)) {
+            particula.a[eje] = particula.a[eje] - s_c * deltax + d_v * particula.v[eje];
+        }
+  }
+  return particula;
+}

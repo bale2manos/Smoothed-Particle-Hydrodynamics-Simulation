@@ -7,10 +7,7 @@
 #include <vector>
 #include <array>
 
-struct Particle1 {
-    double px, py, pz, hvx, hvy, hvz, vx, vy, vz, ax, ay, az, rho;
-    int id;
-};
+
 struct Particle {
     std::array<double,3> p, hv, v, a;
     double rho;
@@ -20,7 +17,7 @@ struct Particle {
 
 
 struct Block {
-    int i, j, k;
+    int i,j,k;
     std::vector<Particle> particles;
     std::vector<int> neighbours;
 };

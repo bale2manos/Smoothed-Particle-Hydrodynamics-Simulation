@@ -50,7 +50,9 @@ double particle_mass (double ppm);
 Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m);
 
 
-Malla cuatropunto3punto2 (Malla malla);
+Malla colisiones_particulas (Malla malla);
+Malla colisiones_pared(Malla malla);
+Particle colisiones_eje(Particle particula, int extremo, int eje);
 array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
