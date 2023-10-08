@@ -52,6 +52,7 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, dou
 
 Malla cuatropunto3punto2 (Malla malla);
 Malla changeaccel ( Malla malla);
+Malla updateparticle(Malla malla);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

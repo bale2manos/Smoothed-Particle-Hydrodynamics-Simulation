@@ -23,6 +23,7 @@ int main(int argc, const char *argv[]) {
 
     cuatropunto3punto2 (malla);
     changeaccel(malla);
+    updateparticle(malla);
 
 
 

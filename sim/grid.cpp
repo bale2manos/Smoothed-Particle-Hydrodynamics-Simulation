@@ -95,8 +95,8 @@ double increase_density(array<double, 3> pivot_coords, array<double, 3> particle
 
 
 double density_transformation(double rho,double h, double m){
-    double first_term = (rho + pow(h,6));
-    double second_term = (315/(64*M_PI*pow(h,9)));
+    double const first_term = (rho + pow(h,6));
+    double const second_term = (315/(64*M_PI*pow(h,9)));
     return first_term*second_term*m;
 }
 
@@ -133,15 +133,40 @@ int increase_accel(Particle Particle1, Particle Particle2, double h, double m){
 }
 
 
+
+
+
 Malla changeaccel ( Malla malla){
-    for (Block & block : malla.blocks) {
+    for (Block  const& block : malla.blocks) {
         size_t const neighbours_size = block.neighbours.size();
-        for (Particle & particle_pivot : block.particles) {
+        for (Particle  const& particle_pivot : block.particles) {
             for (size_t i = 0; i < neighbours_size; ++i) {
                 for (Particle  const& particle2 : malla.blocks[i].particles) {
                     increase_accel(particle_pivot, particle2, malla.h, malla.m);
                 }
             }
+        }
+    }
+    return malla;
+}
+
+
+
+Particle particle_calc(Particle particle){
+    for (int i = 0; i<3; i++) {
+        particle.p[i] = particle.p[i] + (particle.hv[i]*delta_t) + (particle.a[i]*delta_t);
+        particle.v[i] = particle.hv[i] + ((particle.a[i]*delta_t)/2);
+        particle.hv[i] = particle.hv[i] + particle.a[i]*delta_t;
+    }
+    return particle;
+}
+
+
+
+Malla updateparticle(Malla malla){
+    for (Block  const& block : malla.blocks) {
+        for (Particle  const& particle_pivot : block.particles) {
+            particle_calc(particle_pivot);
         }
     }
     return malla;
