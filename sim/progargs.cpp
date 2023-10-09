@@ -182,8 +182,6 @@ void refactor_gordo (const char * in_file, Constants cons, Malla malla) {
             }
         }
 
-        // check particle inside the grid
-        info_particle_double[0] = check_inside_grid(info_particle_double[0]);
 
         array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], cons);
         // Linear mapping para encontrar el bloque correcto
@@ -212,25 +210,18 @@ void refactor_gordo (const char * in_file, Constants cons, Malla malla) {
 }
 
 
-array<double, 3> check_inside_grid(array<double, 3> position){
-    if (position[0] < xmin ){position[0] = xmin;}
-    if (position[0] > xmax ){position[0] = xmax;}
-    if (position[1] < ymin ){position[1] = ymin;}
-    if (position[1] > ymax ){position[1] = ymax;}
-    if (position[2] < zmin ){position[2] = zmin;}
-    if (position[2] > zmax ){position[2] = zmax;}
-    return position;
-}
-
 array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons){
     int i,j,k;
     i = initial_block_index(positions[0], xmin,  cons.sx);
     j = initial_block_index(positions[1], ymin,  cons.sy);
     k = initial_block_index(positions[2], zmin,  cons.sz);
     /* TODO problema coma flotante floor error */
-    if (i == cons.nx) {        i = cons.nx - 1;       }
-    if (j == cons.ny){j = cons.ny - 1;}
-    if (k == cons.nz){k = cons.nz - 1;}
+    if (i<0){i = 0;}
+    if (j<0){j = 0;}
+    if (k<0){k = 0;}
+    if (i >= cons.nx) {i = cons.nx - 1;}
+    if (j >= cons.ny){j = cons.ny - 1;}
+    if (k >= cons.nz){k = cons.nz - 1;}
     return array<int, 3>{i,j,k};
 
 }
