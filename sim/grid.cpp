@@ -63,7 +63,7 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, dou
     return malla;
 }
 
-Malla colisiones_particulas (Malla malla){
+Malla malla_interaction (Malla malla){
     for (Block & block : malla.blocks) {
         size_t const neighbours_size = block.neighbours.size();
         for (Particle & particle_pivot : block.particles) {
@@ -124,7 +124,9 @@ array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double 
     double const distij = sqrt(max(norm,pow(10,-12)));
     double const aux =M_PI*pow(h,6);
     double const const1 = 15/aux;
-    double const const2 = const1*3; // Mejor multiplicar que dividir
+    double const const2 = (3*m*p_s)*0.5;
+    double const const3 = const1*3; // Mejor multiplicar que dividir
+
 
     for (int i=0; i<3; i++){
         double const term1 = (pivot.p[i]-particle2.p[i]);
@@ -132,7 +134,7 @@ array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double 
         double const term3 = (pivot.rho + particle2.rho - (2*rho_f));
         double const term4 = (particle2.v[i] - pivot.v[i]);
         double const denominator = (particle2.rho  * pivot.rho);
-        acc_increase[i] = ((term1*const1*m*term2*term3) + (term4*const2*mu*m))/denominator;
+        acc_increase[i] = ((term1*const1*const2*term2*term3) + (term4*const3*mu*m))/denominator;
         pivot.a[i] = pivot.a[i] + acc_increase[i];
         }
   return pivot.a;
