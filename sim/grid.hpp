@@ -50,10 +50,15 @@ double particle_mass (double ppm);
 Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m);
 
 
-Malla colisiones_particulas (Malla malla);
-Malla colisiones_pared(Malla malla);
-Particle colisiones_eje(Particle particula, int extremo, int eje);
-array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m);
+Malla malla_interaction (Malla malla);
+Particle wall_colissions(Particle particle, Block block, int nx, int ny, int nz);
+std::array<double,3> edge_collisions(Particle particula, int extremo, int eje);
+Particle particle_movement(Particle particle);
+Particle limits_interaction(Particle particle, Block block, int nx, int ny, int nz);
+Particle edge_interaction(Particle particle,int extremo,int eje);
+
+
+std::array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

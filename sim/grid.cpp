@@ -78,6 +78,18 @@ Malla colisiones_particulas (Malla malla){
 
                 }
             }
+            bool block_edge = false;
+            if (block.i == 0||block.j==0||block.k==0||block.i==malla.nx-1||block.j==malla.ny-1||block.k==malla.nz-1){
+                block_edge = true;
+            }
+
+            if (block_edge){
+                particle_pivot = wall_colissions(particle_pivot, block, malla.nx, malla.ny, malla.nz);
+            }
+            particle_pivot = particle_movement(particle_pivot);
+            if (block_edge){
+                particle_pivot = limits_interaction(particle_pivot, block, malla.nx, malla.ny, malla.nz);
+            }
         }
     }
 
@@ -127,30 +139,22 @@ array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double 
   }
 
 
+Particle wall_colissions(Particle particle, Block block, int nx, int ny, int nz){
 
-Malla colisiones_pared(Malla malla){
-  for (Block & block : malla.blocks){
-        if (block.i == 0 || block.i == malla.nx-1) {
-            for (Particle & particle : block.particles) {
-                particle = colisiones_eje(particle, block.i, 0);
-            }
-        }
-        if (block.j == 0 || block.j == malla.ny-1){
-            for (Particle & particle : block.particles){
-                particle = colisiones_eje(particle,block.j,1);
-            }
-        }
-        if (block.k == 0 || block.k == malla.nz-1){
-            for (Particle & particle : block.particles){
-                particle = colisiones_eje(particle,block.k,2);
-            }
-        }
+  if (block.i == 0 || block.i==nx-1){
+        particle.a = edge_collisions(particle, block.i, 0);
   }
-  return malla;
-}
+  if (block.j == 0||block.j == ny-1) {
+        particle.a = edge_collisions(particle, block.j, 1);
+  }
+  if (block.k == 0 || block.k==nz-1){
+        particle.a = edge_collisions(particle, block.k, 2);
+  }
+  return particle;
+};
 
 
-Particle colisiones_eje(Particle particula, int extremo, int eje) {
+std::array<double,3> edge_collisions(Particle particula, int extremo, int eje) {
   double min_limit = NAN;
   double max_limit = NAN;
   if (eje == 0){ min_limit= xmin; max_limit = xmax;}
@@ -169,5 +173,55 @@ Particle colisiones_eje(Particle particula, int extremo, int eje) {
             particula.a[eje] = particula.a[eje] - s_c * deltax + d_v * particula.v[eje];
         }
   }
-  return particula;
+  return particula.a;
 }
+
+
+Particle particle_movement(Particle particle){
+    for(int i =0;i<3;i++){
+        particle.p[i] = particle.p[i] + (particle.hv[i]*delta_t) + (particle.a[i]*pow(delta_t,2));
+        particle.v[i] = particle.hv[i]+(particle.a[i]*delta_t*0.5);
+        particle.hv[i] = particle.hv[i]+(particle.a[i]*delta_t);
+    }
+    return particle;
+}
+
+Particle limits_interaction(Particle particle, Block block, int nx, int ny, int nz){
+
+    if (block.i == 0 || block.i==nx-1){
+        particle = edge_interaction(particle, block.i, 0);
+    }
+    if (block.j == 0||block.j == ny-1) {
+        particle = edge_interaction(particle, block.j, 1);
+    }
+    if (block.k == 0 || block.k==nz-1){
+        particle = edge_interaction(particle, block.k, 2);
+    }
+    return particle;
+
+};
+
+Particle edge_interaction(Particle particle,int extremo,int eje){
+    double min_limit = NAN;
+    double max_limit = NAN;
+    if (eje == 0){ min_limit= xmin; max_limit = xmax;}
+    if (eje == 1){ min_limit= ymin; max_limit = ymax;}
+    if (eje == 2){ min_limit= zmin; max_limit = zmax;}
+    double displacement_edge = 0.0;
+    if (extremo == 0){
+      displacement_edge = particle.p[eje] - min_limit;
+      particle.p[eje] = min_limit - displacement_edge;
+    }
+    else{
+      displacement_edge = max_limit - particle.p[eje];
+      particle.p[eje]= max_limit + displacement_edge;
+    }
+    for (int i = 0; i<3;i++){
+      particle.v[i] = -particle.v[i];
+      particle.hv[i] = -particle.hv[i];
+    }
+    return particle;
+}
+
+
+

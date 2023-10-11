@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-int validate_parameters (int argc, const char * argv[]);
+array<int,2> validate_parameters (int argc, const char * argv[]);
 int validate_time_steps (int nts);
 int validate_input_file(const char* inputFileName);
 int validate_output_file(const char* outputFileName);

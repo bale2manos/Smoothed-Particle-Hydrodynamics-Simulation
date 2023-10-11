@@ -42,20 +42,30 @@ int validate_output_file(const char* outputFileName) {
     return 0;
 }
 
-int validate_parameters(int argc, const char* argv[]) {
+array<int,2> validate_parameters(int argc, const char* argv[]) {
 
+    array <int,2> error_type={0,0};
     if (argc != 4) {
         cerr << "Error: Invalid number of arguments: " << argc << "\n";
-        return -1;
+        error_type[0] = -1;
+        return error_type;
     }
 
-    int nts = stoi(argv[1]);
-    if (validate_time_steps(nts) != 0) return -1;
-    if (validate_input_file(argv[2]) != 0) return -3;
-    if (validate_output_file(argv[3]) != 0)return -4;
-
-
-    return 0;
+    error_type[1] = stoi(argv[1]);
+    error_type[0] = validate_time_steps(error_type[1]);
+    if (error_type[0] != 0) {
+        return error_type;
+    };
+    if (validate_input_file(argv[2]) != 0)
+    {
+        error_type[0] = -3;
+        return error_type;
+    }
+    if (validate_output_file(argv[3]) != 0){
+        error_type[0] = -4;
+        return error_type;
+    }
+    return error_type;
 }
 
 Malla read_input_file (const char * in_file) {
