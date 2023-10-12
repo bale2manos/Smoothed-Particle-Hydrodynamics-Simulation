@@ -50,8 +50,8 @@ double particle_mass (double ppm){
     return static_cast<double>(rho_f)/(pow (ppm,3));
 }
 
-Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m){
-    Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m);
+Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m,double sx, double sy, double sz){
+    Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m,sx,sy,sz);
     // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (int k = 0; k < nz; ++k) {
         for (int j = 0; j < ny; ++j) {
@@ -64,17 +64,20 @@ Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, dou
 }
 
 Malla malla_interaction (Malla malla){
+    vector<Particle> all_iterated_particles;
+
     for (Block & block : malla.blocks) {
         size_t const neighbours_size = block.neighbours.size();
         for (Particle & particle_pivot : block.particles) {
+            Particle particle_updated = particle_pivot;
             for (size_t i = 0; i < neighbours_size; ++i) {
                 for (Particle  const& particle2 : malla.blocks[i].particles) {
-                    if (particle_pivot.id == particle2.id) { continue; }
-                    double const increase_d_factor = increase_density(particle_pivot.p, particle2.p, malla.h);
-                    particle_pivot.rho = particle_pivot.rho + increase_d_factor;
-                    particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
-                    array<double,3> new_acceleration = acceleration_transfer(particle_pivot,particle2,malla.h,malla.m);
-                    particle_pivot.a = new_acceleration;
+                    if (particle_updated.id == particle2.id) { continue; }
+                    double const increase_d_factor = increase_density(particle_updated.p, particle2.p, malla.h);
+                    particle_updated.rho = particle_updated.rho + increase_d_factor;
+                    particle_updated.rho = density_transformation(particle_updated.rho, malla.h, malla.m);
+                    array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
+                    particle_updated.a = new_acceleration;
 
                 }
             }
@@ -84,13 +87,35 @@ Malla malla_interaction (Malla malla){
             }
 
             if (block_edge){
-                particle_pivot = wall_colissions(particle_pivot, block, malla.nx, malla.ny, malla.nz);
+                particle_updated = wall_colissions(particle_updated, block, malla.nx, malla.ny, malla.nz);
             }
             particle_pivot = particle_movement(particle_pivot);
             if (block_edge){
-                particle_pivot = limits_interaction(particle_pivot, block, malla.nx, malla.ny, malla.nz);
+                particle_updated = limits_interaction(particle_updated, block, malla.nx, malla.ny, malla.nz);
             }
+            all_iterated_particles.push_back(particle_updated);
         }
+    }
+
+
+    // Actualizar datos de las particulas
+    for (Block & block : malla.blocks) {
+       block.particles.clear();
+    }
+    for (Particle & particle: all_iterated_particles){
+       int i,j,k;
+       i = initial_block_index(particle.p[0], xmin,  malla.sx);
+       j = initial_block_index(particle.p[1], ymin,  malla.sy);
+       k = initial_block_index(particle.p[2], zmin,  malla.sz);
+       /* TODO problema coma flotante floor error */
+       if (i<0){i = 0;}
+       if (j<0){j = 0;}
+       if (k<0){k = 0;}
+       if (i >= malla.nx) {i = malla.nx - 1;}
+       if (j >= malla.ny){j = malla.ny - 1;}
+       if (k >= malla.nz){k = malla.nz - 1;}
+       int index = calculate_block_index(i,j,k,malla.nx,malla.ny);
+       malla.blocks[index].particles.emplace_back(particle);
     }
 
     return malla;

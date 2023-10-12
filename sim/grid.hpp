@@ -35,7 +35,7 @@ struct Constants{
 struct Malla {
     int np; double ppm; vector<Block> blocks;
     int nx,ny,nz;
-    double h, m;
+    double h, m,sx,sy,sz;
 };
 
 Constants calculate_constants(double ppm);
