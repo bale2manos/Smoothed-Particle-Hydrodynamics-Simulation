@@ -47,15 +47,15 @@ double sy_calc (double ymax, double ymin, double ny);
 double sz_calc (double zmax, double zmin, double nz);
 double smooth_length (double ppm);
 double particle_mass (double ppm);
-Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m);
+void create_fill_grid(Malla& malla, int np,double ppm,int nz, int ny, int nx, double h, double m,double sx, double sy, double sz);
 
 
-Malla malla_interaction (Malla malla);
-Particle wall_colissions(Particle particle, Block block, int nx, int ny, int nz);
-std::array<double,3> edge_collisions(Particle particula, int extremo, int eje);
-Particle particle_movement(Particle particle);
-Particle limits_interaction(Particle particle, Block block, int nx, int ny, int nz);
-Particle edge_interaction(Particle particle,int extremo,int eje);
+void malla_interaction (Malla& malla);
+void wall_colissions(Particle& particle, Block& block, int nx, int ny, int nz);
+std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje);
+void particle_movement(Particle& particle);
+void limits_interaction(Particle& particle, Block& block, int nx, int ny, int nz);
+void edge_interaction(Particle& particle,int extremo,int eje);
 
 
 std::array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m);

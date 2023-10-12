@@ -91,7 +91,7 @@ Malla malla_interaction (Malla malla){
             }
             particle_pivot = particle_movement(particle_pivot);
             if (block_edge){
-                particle_updated = limits_interaction(particle_updated, block, malla.nx, malla.ny, malla.nz);
+                limits_interaction(particle_updated, block, malla.nx, malla.ny, malla.nz);
             }
             all_iterated_particles.push_back(particle_updated);
         }
@@ -118,7 +118,6 @@ Malla malla_interaction (Malla malla){
        malla.blocks[index].particles.emplace_back(particle);
     }
 
-    return malla;
 }
 
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h){
@@ -139,7 +138,7 @@ double density_transformation(double rho,double h, double m){
 }
 
 
-array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m){
+array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,double h,double m){
     array<double,3> acc_increase;
     //Aquí calculamos los términos por separado de la ecuación grande.
     double const norm = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
@@ -228,7 +227,7 @@ Particle limits_interaction(Particle particle, Block block, int nx, int ny, int 
 
 };
 
-Particle edge_interaction(Particle particle,int extremo,int eje){
+void edge_interaction(Particle& particle,int extremo,int eje){
     double min_limit = NAN;
     double max_limit = NAN;
     if (eje == 0){ min_limit= xmin; max_limit = xmax;}
@@ -247,7 +246,6 @@ Particle edge_interaction(Particle particle,int extremo,int eje){
       particle.v[i] = -particle.v[i];
       particle.hv[i] = -particle.hv[i];
     }
-    return particle;
 }
 
 

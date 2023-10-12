@@ -15,14 +15,14 @@ int main(int argc, const char *argv[]) {
 
   // try catch of read_input_file and any exception
   try {
-    malla = read_input_file(args[2].c_str());
+    read_input_file(malla, args[2].c_str());
   } catch (const runtime_error& e) {
     cerr << e.what() << "\n";
     return -5;
   }
 
   //for (int iter=0; iter<params[1]; iter++){
-  malla = malla_interaction(malla);
+  malla_interaction(malla);
   //}
 
 
