@@ -13,8 +13,8 @@ int initial_block_index(double position, double min_limit, double block_size) {
     return floor((position - min_limit) / block_size);
 }
 
-int calculate_block_index(int i,int j, int k,int nx, int ny) {
-    return i + j * nx + k * nx * ny;
+int calculate_block_index(array<int,3> coords,int nx, int ny) {
+    return coords[0] + coords[1] * nx + coords[2] * nx * ny;
 
 }
 

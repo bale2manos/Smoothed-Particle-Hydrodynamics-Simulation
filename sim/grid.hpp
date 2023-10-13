@@ -54,11 +54,11 @@ void malla_interaction (Malla& malla);
 void wall_colissions(Particle& particle, Block& block, int nx, int ny, int nz);
 std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje);
 void particle_movement(Particle& particle);
-void limits_interaction(Particle& particle, Block& block, int nx, int ny, int nz);
+void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks);
 void edge_interaction(Particle& particle,int extremo,int eje);
 
 
-std::array<double,3> acceleration_transfer(Particle pivot, Particle particle2,double h,double m);
+array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,double h,double m);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

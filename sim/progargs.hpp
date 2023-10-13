@@ -20,12 +20,12 @@ int validate_time_steps (int nts);
 int validate_input_file(const char* inputFileName);
 int validate_output_file(const char* outputFileName);
 void read_input_file (Malla& malla, const char * in_file);
-void refactor_gordo (const char * in_file, Constants cons, Malla& malla);
+void refactor_gordo (const char * in_file, Malla& malla);
 void check_np(int np);
 int write_output_file (Malla& malla, const char * out_file);
-array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons);
+array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla);
 void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id);
-void missmatch_particles(int counter, int malla_np);
+void check_missmatch_particles(int counter, int malla_np);
 
 
 

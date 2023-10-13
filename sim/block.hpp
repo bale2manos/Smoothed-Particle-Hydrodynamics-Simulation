@@ -17,12 +17,12 @@ struct Particle {
 
 
 struct Block {
-    int i,j,k;
+    std::array<int,3> coords;             // coords[0] = i, coords[1] = j, coords[2] = k
     std::vector<Particle> particles;
     std::vector<int> neighbours;
 };
 int initial_block_index(double position, double min_limit, double block_size);
-int calculate_block_index(int i,int j, int k,int nx, int ny);
+int calculate_block_index(std::array<int,3> coords,int nx, int ny);
 
-std::vector<int> check_neighbours(int i, int j, int k, double nx, double ny, double nz);
+std::vector<int> check_neighbours(std::array<int,3> coords, std::array<int,3> n_blocks);
 #endif //ARQUITECTURA_DE_COMPUTADORES_BLOCK_HPP

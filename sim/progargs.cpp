@@ -99,9 +99,9 @@ void read_input_file (Malla& malla, const char * in_file) {
   cout << "Particles per meter: " << ppm << "\n";
   cout << "Smoothing length: " << constantes.h << "\n";
   cout << "Particle mass: " << particle_mass(ppm) << "\n";
-  cout << "Grid size: " << constantes.nx << " x " << constantes.ny << " x " << constantes.nz << "\n";
-  cout << "Number of blocks: " <<  constantes.nx *  constantes.ny *  constantes.nz << "\n";
-  cout << "Block size: " << constantes.sx << " x " << constantes.sy << " x " << constantes.sz << "\n";
+  cout << "Grid size: " << malla.n_blocks[0] << " x " << malla.n_blocks[1] << " x " << malla.n_blocks[2] << "\n";
+  cout << "Number of blocks: " <<  malla.n_blocks[0] *  malla.n_blocks[1] *  malla.n_blocks[2] << "\n";
+  cout << "Block size: " << malla.size_blocks[0] << " x " << malla.size_blocks[1] << " x " << malla.size_blocks[2] << "\n";
 }
 
 
@@ -220,16 +220,16 @@ void refactor_gordo (const char * in_file, Constants cons, Malla& malla) {
 
 array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons){
   int i,j,k;
-  i = initial_block_index(positions[0], xmin,  cons.sx);
-  j = initial_block_index(positions[1], ymin,  cons.sy);
-  k = initial_block_index(positions[2], zmin,  cons.sz);
+  i = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
+  j = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
+  k = initial_block_index(positions[2], zmin,  malla.size_blocks[2]);
   /* TODO problema coma flotante floor error */
   if (i<0){i = 0;}
   if (j<0){j = 0;}
   if (k<0){k = 0;}
-  if (i >= cons.nx) {i = cons.nx - 1;}
-  if (j >= cons.ny){j = cons.ny - 1;}
-  if (k >= cons.nz){k = cons.nz - 1;}
+  if (i >= malla.n_blocks[0]) {i = malla.n_blocks[0] - 1;}
+  if (j >= malla.n_blocks[1]){j = malla.n_blocks[1] - 1;}
+  if (k >= malla.n_blocks[2]){k = malla.n_blocks[2] - 1;}
   return array<int, 3>{i,j,k};
 
 }

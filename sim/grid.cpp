@@ -50,20 +50,22 @@ double particle_mass (double ppm){
     return static_cast<double>(rho_f)/(pow (ppm,3));
 }
 
-Malla create_fill_grid(double np,double ppm,double nz, double ny, double nx, double h, double m,double sx, double sy, double sz){
-    Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m,sx,sy,sz);
-    // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
-    for (int k = 0; k < nz; ++k) {
-        for (int j = 0; j < ny; ++j) {
-            for (int i = 0; i < nx; ++i) {
-                malla.blocks.push_back(Block(i, j, k, vector<Particle>(), check_neighbours(i, j, k, nx, ny, nz)));
+void create_fill_grid(Malla& malla, int np,double ppm){
+    //Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m,sx,sy,sz);
+    calculate_constants(ppm, np, malla);
+    malla.blocks = {};
+        // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
+    for (int k = 0; k < malla.n_blocks[2]; ++k) {
+        for (int j = 0; j < malla.n_blocks[1]; ++j) {
+            for (int i = 0; i < malla.n_blocks[0]; ++i) {
+                std::array<int, 3> const indexes = {i,j,k};
+                malla.blocks.push_back(Block(indexes, {}, check_neighbours({i,j,k}, malla.n_blocks)));
             }
         }
     }
-    return malla;
 }
 
-Malla malla_interaction (Malla malla){
+void malla_interaction (Malla& malla){
     vector<Particle> all_iterated_particles;
 
     for (Block & block : malla.blocks) {
@@ -71,7 +73,7 @@ Malla malla_interaction (Malla malla){
         for (Particle & particle_pivot : block.particles) {
             Particle particle_updated = particle_pivot;
             for (size_t i = 0; i < neighbours_size; ++i) {
-                for (Particle  const& particle2 : malla.blocks[i].particles) {
+                for (Particle& particle2 : malla.blocks[i].particles) {
                     if (particle_updated.id == particle2.id) { continue; }
                     double const increase_d_factor = increase_density(particle_updated.p, particle2.p, malla.h);
                     particle_updated.rho = particle_updated.rho + increase_d_factor;
@@ -87,9 +89,9 @@ Malla malla_interaction (Malla malla){
             }
 
             if (block_edge){
-                particle_updated = wall_colissions(particle_updated, block, malla.nx, malla.ny, malla.nz);
+                wall_colissions(particle_updated, block, malla.n_blocks);
             }
-            particle_pivot = particle_movement(particle_pivot);
+            particle_movement(particle_pivot);
             if (block_edge){
                 limits_interaction(particle_updated, block, malla.nx, malla.ny, malla.nz);
             }
@@ -102,19 +104,10 @@ Malla malla_interaction (Malla malla){
     for (Block & block : malla.blocks) {
        block.particles.clear();
     }
-    for (Particle & particle: all_iterated_particles){
-       int i,j,k;
-       i = initial_block_index(particle.p[0], xmin,  malla.sx);
-       j = initial_block_index(particle.p[1], ymin,  malla.sy);
-       k = initial_block_index(particle.p[2], zmin,  malla.sz);
-       /* TODO problema coma flotante floor error */
-       if (i<0){i = 0;}
-       if (j<0){j = 0;}
-       if (k<0){k = 0;}
-       if (i >= malla.nx) {i = malla.nx - 1;}
-       if (j >= malla.ny){j = malla.ny - 1;}
-       if (k >= malla.nz){k = malla.nz - 1;}
-       int index = calculate_block_index(i,j,k,malla.nx,malla.ny);
+    for (Particle  const& particle: all_iterated_particles){
+       /*TODO refactor cuando cambiemos las constantes */
+       array<int,3> const new_indexes = calculate_block_indexes(particle.p, malla);
+       int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
        malla.blocks[index].particles.emplace_back(particle);
     }
 
@@ -164,8 +157,8 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,doubl
   return pivot.a;
   }
 
-
-Particle wall_colissions(Particle particle, Block block, int nx, int ny, int nz){
+/*TODO ampersand block? */
+void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
 
   if (block.i == 0 || block.i==nx-1){
         particle.a = edge_collisions(particle, block.i, 0);
@@ -176,11 +169,10 @@ Particle wall_colissions(Particle particle, Block block, int nx, int ny, int nz)
   if (block.k == 0 || block.k==nz-1){
         particle.a = edge_collisions(particle, block.k, 2);
   }
-  return particle;
 };
 
 
-std::array<double,3> edge_collisions(Particle particula, int extremo, int eje) {
+std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje) {
   double min_limit = NAN;
   double max_limit = NAN;
   if (eje == 0){ min_limit= xmin; max_limit = xmax;}
@@ -203,29 +195,19 @@ std::array<double,3> edge_collisions(Particle particula, int extremo, int eje) {
 }
 
 
-Particle particle_movement(Particle particle){
+void particle_movement(Particle& particle){
     for(int i =0;i<3;i++){
         particle.p[i] = particle.p[i] + (particle.hv[i]*delta_t) + (particle.a[i]*pow(delta_t,2));
         particle.v[i] = particle.hv[i]+(particle.a[i]*delta_t*0.5);
         particle.hv[i] = particle.hv[i]+(particle.a[i]*delta_t);
     }
-    return particle;
 }
 
-Particle limits_interaction(Particle particle, Block block, int nx, int ny, int nz){
-
-    if (block.i == 0 || block.i==nx-1){
-        particle = edge_interaction(particle, block.i, 0);
-    }
-    if (block.j == 0||block.j == ny-1) {
-        particle = edge_interaction(particle, block.j, 1);
-    }
-    if (block.k == 0 || block.k==nz-1){
-        particle = edge_interaction(particle, block.k, 2);
-    }
-    return particle;
-
-};
+void limits_interaction(Particle& particle, Block& block, array<int,3>n_blocks) {
+    if (block.coords[0] == 0 || block.coords[0] == n_blocks[0] - 1) { edge_interaction(particle, block.coords[0], 0); }
+    if (block.coords[1] == 0 || block.coords[1] == n_blocks[1] - 1) { edge_interaction(particle, block.coords[1], 1); }
+    if (block.coords[2] == 0 || block.coords[2] == n_blocks[2] - 1) { edge_interaction(particle, block.coords[2], 2); }
+}
 
 void edge_interaction(Particle& particle,int extremo,int eje){
     double min_limit = NAN;
