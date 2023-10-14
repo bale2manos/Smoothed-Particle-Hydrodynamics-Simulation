@@ -329,6 +329,7 @@ void repos(Malla& malla){
 
             // Si el bloque es distinto al actual, mover la particula
             if (new_block != current_block){
+                cout << "BLOQUE DISTINTO" << "\n";
                 malla.blocks[new_block].particles.push_back(malla.blocks[current_block].particles[part_old]);
                 malla.blocks[current_block].particles.erase(malla.blocks[current_block].particles.begin() + part_old);
             }
