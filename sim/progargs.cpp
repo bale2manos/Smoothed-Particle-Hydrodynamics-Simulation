@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include <algorithm>
 #include "progargs.hpp"
 #include "block.hpp"
 #include "grid.hpp"
@@ -207,7 +208,7 @@ void refactor_gordo (const char * in_file, Malla& malla) {
     array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
     // Linear mapping para encontrar el bloque correcto
     int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
-    insert_particle_info(info_particle_double,malla.blocks[index],counter);
+    insert_particle_info(info_particle_double,malla.blocks[index],counter, index);
 
     counter++;
 
@@ -233,7 +234,7 @@ array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
 
 }
 
-void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id){
+void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index){
   Particle particle;
   particle.p = info[0];
   particle.hv = info[1];
@@ -241,6 +242,7 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   particle.a = {0,g,0};
   particle.rho = 0;
   particle.id = id;
+  particle.current_block = block_index;
   bloque.particles.emplace_back(particle);
 }
 

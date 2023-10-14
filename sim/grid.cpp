@@ -3,7 +3,7 @@
 //
 #include "grid.hpp"
 #include "progargs.hpp"
-
+# define M_PI           3.14159265358979323846  /* pi */
 #include <math.h>
 #include <iostream>
 void calculate_constants(double ppm, int np, Malla& malla){
@@ -227,36 +227,6 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 
 
-/* TODO FUNCION DEBUG */
-void show_current_malla(Malla& malla) {
-    // Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
-    ofstream output_file("./malla_actual.fld", ios::binary);
-
-    vector<Particle> particles_out;
-    // Loop through all the blocks
-    for (Block & block : malla.blocks) {
-      // Loop through all the particles in the block
-      std::uint64_t particleCount = static_cast<std::uint64_t>(block.particles.size());
-      output_file.write(reinterpret_cast<char *>(&particleCount), sizeof(particleCount));
-      for (Particle & particle : block.particles) {
-            // Cast from double to float and write to file
-            output_file.write(reinterpret_cast<char *>(&particle.id), sizeof(particle.id));
-            output_file.write(reinterpret_cast<char *>(&particle.p[0]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.p[1]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.p[2]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.hv[0]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.hv[1]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.hv[2]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.v[0]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.v[1]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.v[2]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.rho), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.a[0]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.a[1]), sizeof(particle.p[0]));
-            output_file.write(reinterpret_cast<char *>(&particle.a[2]), sizeof(particle.p[0]));
-      }
-    }
-}
 
 
 void update_grid(Malla& malla, vector<Particle>& new_particles){
@@ -264,10 +234,7 @@ void update_grid(Malla& malla, vector<Particle>& new_particles){
       block.particles.clear();
     }
     for (Particle  const& particle: new_particles){
-      /*TODO refactor cuando cambiemos las constantes */
-      array<int,3> const new_indexes = calculate_block_indexes(particle.p, malla);
-      int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
-      malla.blocks[index].particles.emplace_back(particle);
+      malla.blocks[particle.current_block].particles.emplace_back(particle);
     }
 }
 
@@ -349,13 +316,18 @@ void boundint(Malla& malla){
 }
 
 void repos(Malla& malla){
+    // Iterar por todos los bloques de la malla
     for (size_t current_block= 0; current_block < malla.blocks.size(); current_block++) {
+      // Iterar por todas las particulas del bloque
       for (size_t current_part= 0; current_part < malla.blocks[current_block].particles.size(); current_part++){
+            // Calcular el nuevo posible bloque de la particula
             array<int,3> const new_indexes =
                 calculate_block_indexes(malla.blocks[current_block].particles[current_part].p, malla);
-            int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
-            size_t new_block = static_cast<size_t>(index);
+            int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
+            size_t new_block = static_cast<size_t>(block_index);
             int part_old = static_cast<int>(current_part);
+
+            // Si el bloque es distinto al actual, mover la particula
             if (new_block != current_block){
                 malla.blocks[new_block].particles.push_back(malla.blocks[current_block].particles[part_old]);
                 malla.blocks[current_block].particles.erase(malla.blocks[current_block].particles.begin() + part_old);
@@ -366,7 +338,7 @@ void repos(Malla& malla){
 
 
 void malla_interaction(Malla& malla){
-    repos(&malla);
+    repos(malla);
     densinc(malla);
     denstransf(malla);
     acctransf(malla);
