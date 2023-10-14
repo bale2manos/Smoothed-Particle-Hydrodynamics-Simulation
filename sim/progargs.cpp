@@ -83,12 +83,11 @@ void read_input_file (Malla& malla, const char * in_file) {
   // Calculate constants TODO crear archivo constantes
   // Check if the number of particles read matches the header
   auto ppm_double = static_cast<double>(ppm);
-  Constants const constantes = calculate_constants(ppm_double);
 
   /* TODO pasar struct constantes a malla*/
   // Creamos la malla y la llenamos de bloques vacíos
-  create_fill_grid(malla, np, ppm_double, constantes.nz, constantes.ny, constantes.nx, constantes.h, constantes.m,constantes.sx,constantes.sy,constantes.sz);
-  refactor_gordo(in_file, constantes, malla);
+  create_fill_grid(malla, np, ppm_double);
+  refactor_gordo(in_file, malla);
 
 
   // Read particle data in a single loop and cast from float to double
@@ -97,7 +96,7 @@ void read_input_file (Malla& malla, const char * in_file) {
 
   cout << "Number of particles: " << np << "\n";
   cout << "Particles per meter: " << ppm << "\n";
-  cout << "Smoothing length: " << constantes.h << "\n";
+  cout << "Smoothing length: " << malla.h << "\n";
   cout << "Particle mass: " << particle_mass(ppm) << "\n";
   cout << "Grid size: " << malla.n_blocks[0] << " x " << malla.n_blocks[1] << " x " << malla.n_blocks[2] << "\n";
   cout << "Number of blocks: " <<  malla.n_blocks[0] *  malla.n_blocks[1] *  malla.n_blocks[2] << "\n";
@@ -179,7 +178,7 @@ void check_np (int np){
 
 
 
-void refactor_gordo (const char * in_file, Constants cons, Malla& malla) {
+void refactor_gordo (const char * in_file, Malla& malla) {
   ifstream input_file(in_file, ios::binary);
   double trash;
   input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
@@ -205,20 +204,20 @@ void refactor_gordo (const char * in_file, Constants cons, Malla& malla) {
     }
 
 
-    array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], cons);
+    array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
     // Linear mapping para encontrar el bloque correcto
-    int index = index_array[0] + index_array[1] * cons.nx + index_array[2] * cons.nx * cons.ny;
+    int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
     insert_particle_info(info_particle_double,malla.blocks[index],counter);
 
     counter++;
 
   }
 
-  missmatch_particles(counter, malla.np);
+  check_missmatch_particles(counter, malla.np);
 }
 
 
-array<int, 3> calculate_block_indexes(array <double,3> positions, Constants cons){
+array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
   int i,j,k;
   i = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
   j = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
@@ -245,7 +244,7 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   bloque.particles.emplace_back(particle);
 }
 
-void missmatch_particles(int counter, int malla_np) {
+void check_missmatch_particles(int counter, int malla_np) {
   if (counter != malla_np) {
     string errorMsg =
         "Error: Number of particles mismatch. Header: " + to_string(malla_np) + ", Found: " + to_string(counter) +

@@ -19,13 +19,15 @@ int calculate_block_index(array<int,3> coords,int nx, int ny) {
 }
 
 
-vector<int> check_neighbours(int i, int j, int k, double nx, double ny, double nz){
+vector<int> check_neighbours(array<int,3> coords, array<int,3> n_blocks){
     vector<int> neighbours;
     for (int i_aux = 1; i_aux>-2; i_aux--){
         for (int j_aux = 1; j_aux>-2; j_aux--){
             for (int k_aux = 1; k_aux>-2; k_aux--){
-                if (i+i_aux>-1 && i+i_aux<nx && j+j_aux>-1 && j+j_aux<ny && k+k_aux>-1 && k+k_aux<nz){
-                    neighbours.push_back(calculate_block_index(i+i_aux,j+j_aux,k+k_aux,nx,ny));
+                if (coords[0]+i_aux>-1 && coords[0]+i_aux<n_blocks[0] &&
+                  coords[1]+j_aux>-1 && coords[1]+j_aux<n_blocks[1] &&
+                  coords[2]+k_aux>-1 && coords[2]+k_aux<n_blocks[2]){
+                    neighbours.push_back(calculate_block_index({coords[0]+i_aux,coords[1]+j_aux,coords[2]+k_aux},n_blocks[0],n_blocks[1]));
                 }
             }
         }

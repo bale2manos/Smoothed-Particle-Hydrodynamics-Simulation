@@ -2,20 +2,21 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
+#include "progargs.hpp"
 
 #include <math.h>
 #include <iostream>
-Constants calculate_constants(double ppm){
-    double const h = smooth_length(ppm);
-    double const m = particle_mass(ppm);
-    int const nx = nx_calc(xmax, xmin, h);
-    int const ny = ny_calc(ymax, ymin, h);
-    int const nz = nz_calc(zmax, zmin, h);
-    double const sx = sx_calc(xmax, xmin, nx);
-    double const sy = sy_calc(ymax, ymin, ny);
-    double const sz = sz_calc(zmax, zmin, nz);
-    Constants constants(nx, ny, nz, h, m, sx, sy, sz);
-    return constants;
+void calculate_constants(double ppm, int np, Malla& malla){
+    malla.ppm = ppm;
+    malla.np = np;
+    malla.h = smooth_length(ppm);
+    malla.m = particle_mass(ppm);
+    malla.n_blocks[0] = nx_calc(xmax, xmin, malla.h);
+    malla.n_blocks[1] = ny_calc(ymax, ymin, malla.h);
+    malla.n_blocks[2] = nz_calc(zmax, zmin, malla.h);
+    malla.size_blocks[0] = sx_calc(xmax, xmin, malla.n_blocks[0]);
+    malla.size_blocks[1] = sy_calc(ymax, ymin, malla.n_blocks[1]);
+    malla.size_blocks[2] = sz_calc(zmax, zmin, malla.n_blocks[2]);
 }
 
 
@@ -34,15 +35,15 @@ double smooth_length (double ppm){
     return static_cast<double>(radio) / ppm;
 }
 
-double sx_calc (double x_max, double x_min, double n_x){
+double sx_calc (double x_max, double x_min, int n_x){
     return (x_max-x_min)/n_x;
 }
 
-double sy_calc (double y_max, double y_min, double n_y){
+double sy_calc (double y_max, double y_min, int n_y){
     return (y_max-y_min)/n_y;
 }
 
-double sz_calc (double z_max, double z_min, double n_z){
+double sz_calc (double z_max, double z_min, int n_z){
     return (z_max-z_min)/n_z;
 }
 
@@ -65,7 +66,7 @@ void create_fill_grid(Malla& malla, int np,double ppm){
     }
 }
 
-void malla_interaction (Malla& malla){
+void malla_interaction_old (Malla& malla){
     vector<Particle> all_iterated_particles;
 
     for (Block & block : malla.blocks) {
@@ -81,10 +82,12 @@ void malla_interaction (Malla& malla){
                     array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
                     particle_updated.a = new_acceleration;
 
+
                 }
             }
             bool block_edge = false;
-            if (block.i == 0||block.j==0||block.k==0||block.i==malla.nx-1||block.j==malla.ny-1||block.k==malla.nz-1){
+            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
                 block_edge = true;
             }
 
@@ -93,7 +96,7 @@ void malla_interaction (Malla& malla){
             }
             particle_movement(particle_pivot);
             if (block_edge){
-                limits_interaction(particle_updated, block, malla.nx, malla.ny, malla.nz);
+                limits_interaction(particle_updated, block, malla.n_blocks);
             }
             all_iterated_particles.push_back(particle_updated);
         }
@@ -101,15 +104,7 @@ void malla_interaction (Malla& malla){
 
 
     // Actualizar datos de las particulas
-    for (Block & block : malla.blocks) {
-       block.particles.clear();
-    }
-    for (Particle  const& particle: all_iterated_particles){
-       /*TODO refactor cuando cambiemos las constantes */
-       array<int,3> const new_indexes = calculate_block_indexes(particle.p, malla);
-       int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
-       malla.blocks[index].particles.emplace_back(particle);
-    }
+    update_grid(malla, all_iterated_particles);
 
 }
 
@@ -160,14 +155,14 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,doubl
 /*TODO ampersand block? */
 void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
 
-  if (block.i == 0 || block.i==nx-1){
-        particle.a = edge_collisions(particle, block.i, 0);
+  if (block.coords[0] == 0 || block.coords[0]==n_blocks[0]-1){
+        particle.a = edge_collisions(particle, block.coords[0], 0);
   }
-  if (block.j == 0||block.j == ny-1) {
-        particle.a = edge_collisions(particle, block.j, 1);
+  if (block.coords[1] == 0||block.coords[1] == n_blocks[1]-1) {
+        particle.a = edge_collisions(particle, block.coords[1], 1);
   }
-  if (block.k == 0 || block.k==nz-1){
-        particle.a = edge_collisions(particle, block.k, 2);
+  if (block.coords[2] == 0 || block.coords[2]==n_blocks[2]-1){
+        particle.a = edge_collisions(particle, block.coords[2], 2);
   }
 };
 
@@ -183,12 +178,12 @@ std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje) 
   if (extremo == 0) {
         double deltax = d_p - (coord - min_limit);
         if (deltax > pow(10, -10)) {
-            particula.a[eje] = particula.a[eje] + s_c * deltax - d_v * particula.v[eje];
+            particula.a[eje] = particula.a[eje] + (s_c * deltax - d_v * particula.v[eje]);
         }
   } else {
         double deltax = d_p - (max_limit - coord);
         if (deltax > pow(10, -10)) {
-            particula.a[eje] = particula.a[eje] - s_c * deltax + d_v * particula.v[eje];
+            particula.a[eje] = particula.a[eje] - (s_c * deltax + d_v * particula.v[eje]);
         }
   }
   return particula.a;
@@ -232,3 +227,150 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 
 
+/* TODO FUNCION DEBUG */
+void show_current_malla(Malla& malla) {
+    // Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
+    ofstream output_file("./malla_actual.fld", ios::binary);
+
+    vector<Particle> particles_out;
+    // Loop through all the blocks
+    for (Block & block : malla.blocks) {
+      // Loop through all the particles in the block
+      std::uint64_t particleCount = static_cast<std::uint64_t>(block.particles.size());
+      output_file.write(reinterpret_cast<char *>(&particleCount), sizeof(particleCount));
+      for (Particle & particle : block.particles) {
+            // Cast from double to float and write to file
+            output_file.write(reinterpret_cast<char *>(&particle.id), sizeof(particle.id));
+            output_file.write(reinterpret_cast<char *>(&particle.p[0]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.p[1]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.p[2]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.hv[0]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.hv[1]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.hv[2]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.v[0]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.v[1]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.v[2]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.rho), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.a[0]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.a[1]), sizeof(particle.p[0]));
+            output_file.write(reinterpret_cast<char *>(&particle.a[2]), sizeof(particle.p[0]));
+      }
+    }
+}
+
+
+void update_grid(Malla& malla, vector<Particle>& new_particles){
+    for (Block & block : malla.blocks) {
+      block.particles.clear();
+    }
+    for (Particle  const& particle: new_particles){
+      /*TODO refactor cuando cambiemos las constantes */
+      array<int,3> const new_indexes = calculate_block_indexes(particle.p, malla);
+      int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
+      malla.blocks[index].particles.emplace_back(particle);
+    }
+}
+
+void densinc(Malla& malla){
+    vector<Particle> all_iterated_particles;
+    for (Block & block : malla.blocks) {
+      size_t const neighbours_size = block.neighbours.size();
+      for (Particle & particle_pivot : block.particles) {
+            Particle particle_updated = particle_pivot;
+            for (size_t i = 0; i < neighbours_size; ++i) {
+                for (Particle & particle2 : malla.blocks[i].particles) {
+                    if (particle_updated.id == particle2.id) { continue; }
+                    double const increase_d_factor =
+                        increase_density(particle_updated.p, particle2.p, malla.h);
+                    particle_updated.rho = particle_updated.rho + increase_d_factor;
+                }
+            }
+            all_iterated_particles.push_back(particle_updated);
+      }
+    }
+    update_grid(malla, all_iterated_particles);
+}
+
+void denstransf(Malla& malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            particle_pivot.rho = density_transformation(particle_pivot.rho, malla.h, malla.m);
+      }
+    }
+}
+
+void acctransf(Malla& malla){
+    vector<Particle> all_iterated_particles;
+    for (Block & block : malla.blocks) {
+      size_t const neighbours_size = block.neighbours.size();
+      for (Particle & particle_pivot : block.particles) {
+            Particle particle_updated = particle_pivot;
+            for (size_t i = 0; i < neighbours_size; ++i) {
+                for (Particle & particle2 : malla.blocks[i].particles) {
+                    if (particle_updated.id == particle2.id) { continue; }
+                    array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
+                    particle_updated.a = new_acceleration;
+                }
+            }
+            all_iterated_particles.push_back(particle_updated);
+      }
+    }
+    update_grid(malla, all_iterated_particles);
+}
+
+void partcol(Malla& malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
+                wall_colissions(particle_pivot, block, malla.n_blocks);
+            }
+      }
+    }
+}
+
+void motion(Malla& malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            particle_movement(particle_pivot);
+      }
+    }
+}
+
+void boundint(Malla& malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
+                limits_interaction(particle_pivot, block, malla.n_blocks);
+            }
+      }
+    }
+}
+
+void repos(Malla& malla){
+    for (size_t current_block= 0; current_block < malla.blocks.size(); current_block++) {
+      for (size_t current_part= 0; current_part < malla.blocks[current_block].particles.size(); current_part++){
+            array<int,3> const new_indexes =
+                calculate_block_indexes(malla.blocks[current_block].particles[current_part].p, malla);
+            int const index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
+            size_t new_block = static_cast<size_t>(index);
+            int part_old = static_cast<int>(current_part);
+            if (new_block != current_block){
+                malla.blocks[new_block].particles.push_back(malla.blocks[current_block].particles[part_old]);
+                malla.blocks[current_block].particles.erase(malla.blocks[current_block].particles.begin() + part_old);
+            }
+      }
+    }
+}
+
+
+void malla_interaction(Malla& malla){
+    repos(&malla);
+    densinc(malla);
+    denstransf(malla);
+    acctransf(malla);
+    partcol(malla);
+    motion(malla);
+    boundint(malla);
+}
