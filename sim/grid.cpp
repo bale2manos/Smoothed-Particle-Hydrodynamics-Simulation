@@ -129,8 +129,8 @@ double density_transformation(double rho,double h, double m){
 array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,double h,double m){
     array<double,3> acc_increase;
     //Aquí calculamos los términos por separado de la ecuación grande.
-    double const norm = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
-                        + pow((particle2.p[2] - particle2.p[2]),2);
+    double const norm = pow(pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
+                        + pow((particle2.p[2] - particle2.p[2]),2),0.5);
     double const norm_squared = pow(norm,2);
     if (norm_squared>=pow(h,2)){return {0,0,0};}
     double const distij = sqrt(max(norm,pow(10,-12)));
