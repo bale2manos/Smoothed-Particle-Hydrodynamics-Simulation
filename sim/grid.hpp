@@ -65,8 +65,10 @@ void malla_interaction (Malla& malla);
 void show_current_malla(Malla& malla);
 void update_grid(Malla& malla, vector<Particle>& new_particles);
 void repos(Malla& malla);
+void initacc(Malla& malla);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);
 void acctransf(Malla& malla);
 void partcol(Malla& malla);
+
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

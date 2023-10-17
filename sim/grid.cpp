@@ -109,11 +109,11 @@ void malla_interaction_old (Malla& malla){
 }
 
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h){
-    double const norm = pow((pivot_coords[0] - particle2_coords[0]),2) + pow((pivot_coords[1] - particle2_coords[1]),2)
+    double const norm_squared = pow((pivot_coords[0] - particle2_coords[0]),2) + pow((pivot_coords[1] - particle2_coords[1]),2)
             + pow((pivot_coords[2] - particle2_coords[2]),2);
     double const h_squared = pow(h,2);
-    if (norm < h_squared){
-        return pow(h_squared-norm,3);
+    if (norm_squared < h_squared){
+        return pow(h_squared-norm_squared,3);
     }
     return 0;
 }
@@ -129,11 +129,11 @@ double density_transformation(double rho,double h, double m){
 array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,double h,double m){
     array<double,3> acc_increase;
     //Aquí calculamos los términos por separado de la ecuación grande.
-    double const norm = pow(pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
-                        + pow((particle2.p[2] - particle2.p[2]),2),0.5);
-    double const norm_squared = pow(norm,2);
+    double const norm_squared = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
+                        + pow((particle2.p[2] - particle2.p[2]),2);
+
     if (norm_squared>=pow(h,2)){return {0,0,0};}
-    double const distij = sqrt(max(norm,pow(10,-12)));
+    double const distij = sqrt(max(norm_squared,pow(10,-12)));
     double const aux =M_PI*pow(h,6);
     double const const1 = 15/aux;
     double const const2 = (3*m*p_s)*0.5;
@@ -337,9 +337,18 @@ void repos(Malla& malla){
     }
 }
 
+void initacc(Malla& malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            particle_pivot.a = {0, -g, 0};
+            particle_pivot.rho = 0;
+      }
+    }
+}
 
 void malla_interaction(Malla& malla){
     repos(malla);
+    initacc(malla);
     densinc(malla);
     denstransf(malla);
     acctransf(malla);
