@@ -75,12 +75,12 @@ void malla_interaction_old (Malla& malla){
             Particle particle_updated = particle_pivot;
             for (size_t i = 0; i < neighbours_size; ++i) {
                 for (Particle& particle2 : malla.blocks[i].particles) {
-                    if (particle_updated.id == particle2.id) { continue; }
-                    double const increase_d_factor = increase_density(particle_updated.p, particle2.p, malla.h);
-                    particle_updated.rho = particle_updated.rho + increase_d_factor;
-                    particle_updated.rho = density_transformation(particle_updated.rho, malla.h, malla.m);
-                    array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
-                    particle_updated.a = new_acceleration;
+                  if (particle_updated.id == particle2.id) { continue; }
+                  double const increase_d_factor = increase_density(particle_updated.p, particle2.p, malla.h);
+                  particle_updated.rho = particle_updated.rho + increase_d_factor;
+                  particle_updated.rho = density_transformation(particle_updated.rho, malla.h, malla.m);
+                  array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
+                  particle_updated.a = new_acceleration;
 
 
                 }
@@ -147,9 +147,11 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,doubl
         double const term4 = (particle2.v[i] - pivot.v[i]);
         double const denominator = (particle2.rho  * pivot.rho);
         acc_increase[i] = ((term1*const1*const2*term2*term3) + (term4*const3*mu*m))/denominator;
-        pivot.a[i] = pivot.a[i] + acc_increase[i];
+        //Hacer return solo del increase
+        //pivot.a[i] = pivot.a[i] + acc_increase[i];
         }
-  return pivot.a;
+  //return pivot.a;
+    return acc_increase;
   }
 
 /*TODO ampersand block? */
@@ -241,11 +243,10 @@ void update_grid(Malla& malla, vector<Particle>& new_particles){
 void densinc(Malla& malla){
     vector<Particle> all_iterated_particles;
     for (Block & block : malla.blocks) {
-      size_t const neighbours_size = block.neighbours.size();
       for (Particle & particle_pivot : block.particles) {
             Particle particle_updated = particle_pivot;
-            for (size_t i = 0; i < neighbours_size; ++i) {
-                for (Particle & particle2 : malla.blocks[i].particles) {
+            for (auto index: block.neighbours) {
+                for (Particle & particle2 : malla.blocks[index].particles) {
                     if (particle_updated.id == particle2.id) { continue; }
                     double const increase_d_factor =
                         increase_density(particle_updated.p, particle2.p, malla.h);
@@ -269,14 +270,13 @@ void denstransf(Malla& malla){
 void acctransf(Malla& malla){
     vector<Particle> all_iterated_particles;
     for (Block & block : malla.blocks) {
-      size_t const neighbours_size = block.neighbours.size();
       for (Particle & particle_pivot : block.particles) {
             Particle particle_updated = particle_pivot;
-            for (size_t i = 0; i < neighbours_size; ++i) {
-                for (Particle & particle2 : malla.blocks[i].particles) {
+            for (auto index: block.neighbours) {
+                for (Particle & particle2 : malla.blocks[index].particles) {
                     if (particle_updated.id == particle2.id) { continue; }
                     array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
-                    particle_updated.a = new_acceleration;
+                    for(int i=0;i<3;i++) { particle_updated.a[i] += new_acceleration[i]; }
                 }
             }
             all_iterated_particles.push_back(particle_updated);
@@ -340,7 +340,7 @@ void repos(Malla& malla){
 void initacc(Malla& malla){
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
-            particle_pivot.a = {0, -g, 0};
+            particle_pivot.a = {0, g, 0};
             particle_pivot.rho = 0;
       }
     }

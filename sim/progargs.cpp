@@ -239,7 +239,7 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   particle.p = info[0];
   particle.hv = info[1];
   particle.v = info[2];
-  particle.a = {0,g,0};
+  particle.a = {0,0,0};
   particle.rho = 0;
   particle.id = id;
   particle.current_block = block_index;
