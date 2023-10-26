@@ -51,7 +51,7 @@ void create_fill_grid(Malla& malla, int np,double ppm);
 
 void malla_interaction_old (Malla& malla);
 void wall_colissions(Particle& particle, Block& block, array<int,3> n_blocks);
-std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje);
+void edge_collisions(Particle& particula, int extremo, int eje);
 void particle_movement(Particle& particle);
 void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks);
 void edge_interaction(Particle& particle,int extremo,int eje);

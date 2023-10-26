@@ -21,9 +21,9 @@ int main(int argc, const char *argv[]) {
     return -5;
   }
 
-  //for (int iter=0; iter<params[1]; iter++){
-  malla_interaction(malla);
-  //}
+  for (int iter=0; iter<1; iter++){
+    malla_interaction(malla);
+  }
 
 
 

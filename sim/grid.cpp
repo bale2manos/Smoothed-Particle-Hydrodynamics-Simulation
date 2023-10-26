@@ -130,7 +130,7 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,doubl
     array<double,3> acc_increase;
     //Aquí calculamos los términos por separado de la ecuación grande.
     double const norm_squared = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
-                        + pow((particle2.p[2] - particle2.p[2]),2);
+                        + pow((pivot.p[2] - particle2.p[2]),2);
 
     if (norm_squared>=pow(h,2)){return {0,0,0};}
     double const distij = sqrt(max(norm_squared,pow(10,-12)));
@@ -158,18 +158,18 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,doubl
 void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
 
   if (block.coords[0] == 0 || block.coords[0]==n_blocks[0]-1){
-        particle.a = edge_collisions(particle, block.coords[0], 0);
+        edge_collisions(particle, block.coords[0], 0);
   }
   if (block.coords[1] == 0||block.coords[1] == n_blocks[1]-1) {
-        particle.a = edge_collisions(particle, block.coords[1], 1);
+        edge_collisions(particle, block.coords[1], 1);
   }
   if (block.coords[2] == 0 || block.coords[2]==n_blocks[2]-1){
-        particle.a = edge_collisions(particle, block.coords[2], 2);
+        edge_collisions(particle, block.coords[2], 2);
   }
 };
 
 
-std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje) {
+void edge_collisions(Particle& particula, int extremo, int eje) {
   double min_limit = NAN;
   double max_limit = NAN;
   if (eje == 0){ min_limit= xmin; max_limit = xmax;}
@@ -188,7 +188,6 @@ std::array<double,3> edge_collisions(Particle& particula, int extremo, int eje) 
             particula.a[eje] = particula.a[eje] - (s_c * deltax + d_v * particula.v[eje]);
         }
   }
-  return particula.a;
 }
 
 
@@ -207,23 +206,27 @@ void limits_interaction(Particle& particle, Block& block, array<int,3>n_blocks) 
 }
 
 void edge_interaction(Particle& particle,int extremo,int eje){
-    double min_limit = NAN;
-    double max_limit = NAN;
+    double min_limit = 0;
+    double max_limit = 0;
     if (eje == 0){ min_limit= xmin; max_limit = xmax;}
     if (eje == 1){ min_limit= ymin; max_limit = ymax;}
     if (eje == 2){ min_limit= zmin; max_limit = zmax;}
     double displacement_edge = 0.0;
     if (extremo == 0){
       displacement_edge = particle.p[eje] - min_limit;
-      particle.p[eje] = min_limit - displacement_edge;
+      if(displacement_edge<0) {
+            particle.p[eje] = min_limit - displacement_edge;
+      }
     }
     else{
       displacement_edge = max_limit - particle.p[eje];
-      particle.p[eje]= max_limit + displacement_edge;
+      if(displacement_edge<0) {
+            particle.p[eje] = max_limit + displacement_edge;
+      }
     }
-    for (int i = 0; i<3;i++){
-      particle.v[i] = -particle.v[i];
-      particle.hv[i] = -particle.hv[i];
+    if(displacement_edge<0) {
+        particle.v[eje]  *= -1;
+        particle.hv[eje] *= -1;
     }
 }
 
@@ -275,8 +278,8 @@ void acctransf(Malla& malla){
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
                     if (particle_updated.id == particle2.id) { continue; }
-                    array<double,3> new_acceleration = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
-                    for(int i=0;i<3;i++) { particle_updated.a[i] += new_acceleration[i]; }
+                    array<double,3> acc_incr = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
+                    for(int i=0;i<3;i++) { particle_updated.a[i] += acc_incr[i]; }
                 }
             }
             all_iterated_particles.push_back(particle_updated);
@@ -324,12 +327,14 @@ void repos(Malla& malla){
             array<int,3> const new_indexes =
                 calculate_block_indexes(malla.blocks[current_block].particles[current_part].p, malla);
             int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
-            size_t new_block = static_cast<size_t>(block_index);
-            int part_old = static_cast<int>(current_part);
+            auto new_block = static_cast<size_t>(block_index);
+            int const part_old = static_cast<int>(current_part);
 
             // Si el bloque es distinto al actual, mover la particula
             if (new_block != current_block){
-                cout << "BLOQUE DISTINTO" << "\n";
+                if (malla.blocks[current_block].particles[part_old].id == 0){
+                    cout << "NEW: " << new_block << "OLD: " << current_block<< "\n";
+                }
                 malla.blocks[new_block].particles.push_back(malla.blocks[current_block].particles[part_old]);
                 malla.blocks[current_block].particles.erase(malla.blocks[current_block].particles.begin() + part_old);
             }
