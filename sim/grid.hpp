@@ -65,6 +65,7 @@ void malla_interaction (Malla& malla);
 void show_current_malla(Malla& malla);
 void update_grid(Malla& malla, vector<Particle>& new_particles);
 void repos(Malla& malla);
+void repos_old(Malla& malla);
 void initacc(Malla& malla);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);

@@ -318,7 +318,7 @@ void boundint(Malla& malla){
     }
 }
 
-void repos(Malla& malla){
+void repos_old(Malla& malla){
     // Iterar por todos los bloques de la malla
     for (size_t current_block= 0; current_block < malla.blocks.size(); current_block++) {
       // Iterar por todas las particulas del bloque
@@ -350,6 +350,28 @@ void initacc(Malla& malla){
       }
     }
 }
+
+void repos(Malla& malla){
+    vector<Particle> particles;
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            particles.push_back(particle_pivot);
+      }
+      block.particles.clear();
+    }
+
+    for (Particle & particle : particles) {
+      array<int,3> const new_indexes =
+              calculate_block_indexes(particle.p, malla);
+      int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
+      auto new_block = static_cast<size_t>(block_index);
+      malla.blocks[new_block].particles.push_back(particle);
+    }
+
+
+}
+
+
 
 void malla_interaction(Malla& malla){
     repos(malla);
