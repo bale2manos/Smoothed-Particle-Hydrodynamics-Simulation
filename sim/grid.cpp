@@ -5,6 +5,7 @@
 #include "progargs.hpp"
 # define M_PI           3.14159265358979323846  /* pi */
 #include <math.h>
+#include <unordered_map>
 #include <iostream>
 void calculate_constants(double ppm, int np, Malla& malla){
     malla.ppm = ppm;
@@ -243,7 +244,7 @@ void update_grid(Malla& malla, vector<Particle>& new_particles){
     }
 }
 
-void densinc(Malla& malla){
+void densinc_old(Malla& malla){
     vector<Particle> all_iterated_particles;
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
@@ -261,6 +262,54 @@ void densinc(Malla& malla){
     }
     update_grid(malla, all_iterated_particles);
 }
+
+void densinc(Malla& malla){
+    //vector<Particle> all_iterated_particles;
+    unordered_map<int, vector<int>> colisiones_map;
+    vector<double> new_densities(malla.np, 0);
+
+
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            //Particle particle_updated = particle_pivot
+            for (auto index: block.neighbours) {
+                for (Particle & particle2 : malla.blocks[index].particles) {
+                    // TODO esto optimiza? // TODO extraer metodo de check colisions?
+                    // int particle1_id = particle_updated.id; particle2_id = particle2.id;
+                    if (particle_pivot.id == particle2.id
+                        || already_iterated(particle_pivot.id, particle2.id, colisiones_map)) {
+                      continue;}
+                    colisiones_map[particle_pivot.id].push_back(particle2.id);
+                    colisiones_map[particle2.id].push_back(particle_pivot.id);
+                    double const increase_d_factor =
+                        increase_density(particle_pivot.p, particle2.p, malla.h);
+                    new_densities[particle_pivot.id] += increase_d_factor;
+                    new_densities[particle2.id] += increase_d_factor;
+                }
+            }
+            //all_iterated_particles.push_back(particle_updated);
+      }
+    }
+
+    for (Block & block : malla.blocks) {
+      for (Particle & particle : block.particles) { particle.rho = new_densities[particle.id]; }
+    }
+    //update_grid(malla, all_iterated_particles);
+}
+
+
+bool already_iterated(int pivot_id, int particle2_id, unordered_map<int, vector<int>> &hash_map){
+  const std::vector<int>& lista = hash_map[particle2_id];
+
+  for (const int& valor : lista) {
+    if (valor == pivot_id) {
+          return true;
+    }
+  }
+  return false;
+}
+
+
 
 void denstransf(Malla& malla){
     for (Block & block : malla.blocks) {

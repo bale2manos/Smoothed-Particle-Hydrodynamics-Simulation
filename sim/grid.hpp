@@ -8,6 +8,7 @@
 #include <vector>
 #include "block.hpp"
 #include <cmath>
+#include <unordered_map>
 
 
 using namespace std;
@@ -67,6 +68,8 @@ void update_grid(Malla& malla, vector<Particle>& new_particles);
 void repos(Malla& malla);
 void repos_old(Malla& malla);
 void initacc(Malla& malla);
+void densinc_old(Malla& malla);
+bool already_iterated(int pivot_id, int particle2_id, unordered_map<int, vector<int>> &hash_map);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);
 void acctransf(Malla& malla);
