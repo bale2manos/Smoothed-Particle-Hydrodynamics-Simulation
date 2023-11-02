@@ -270,13 +270,14 @@ void densinc(Malla& malla){
 
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
+            vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
             //Particle particle_updated = particle_pivot
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
                     // TODO esto optimiza? // TODO extraer metodo de check colisions?
                     // int particle1_id = particle_updated.id; particle2_id = particle2.id;
                     if (particle_pivot.id == particle2.id
-                        || already_iterated(particle_pivot.id, particle2.id, colisiones_map)) {
+                        || already_iterated(colisiones_pivote, particle2.id)) {
                       continue;}
                     colisiones_map[particle_pivot.id].push_back(particle2.id);
                     colisiones_map[particle2.id].push_back(particle_pivot.id);
@@ -297,11 +298,11 @@ void densinc(Malla& malla){
 }
 
 
-bool already_iterated(int pivot_id, int particle2_id, unordered_map<int, vector<int>> &hash_map){
-  const std::vector<int>& lista = hash_map[particle2_id];
+bool already_iterated(vector<int> &pivot_list, int particle2_id){
 
-  for (const int& valor : lista) {
-    if (valor == pivot_id) {
+  for (const int& valor : pivot_list) {
+    if (valor == particle2_id) {
+          cout<<"ENTRO: ID PIVOTE: "<< valor<<"ID 2: "<<"\n";
           return true;
     }
   }
@@ -342,11 +343,12 @@ void acctransf(Malla& malla){
     vector<Acceleration> new_accelerations(malla.np, {0,g,0});
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
+            vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
             //Particle particle_updated = particle_pivot;
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
                     if (particle_pivot.id == particle2.id
-                        || already_iterated(particle_pivot.id, particle2.id, colisiones_map)) {
+                        || already_iterated(colisiones_pivote, particle2.id)) {
                       continue;}
                     colisiones_map[particle_pivot.id].push_back(particle2.id);
                     colisiones_map[particle2.id].push_back(particle_pivot.id);

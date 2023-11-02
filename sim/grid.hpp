@@ -75,7 +75,7 @@ void repos(Malla& malla);
 void repos_old(Malla& malla);
 void initacc(Malla& malla);
 void densinc_old(Malla& malla);
-bool already_iterated(int pivot_id, int particle2_id, unordered_map<int, vector<int>> &hash_map);
+bool already_iterated(vector<int> &pivot_list, int particle2_id);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);
 void acctransf_old(Malla& malla);
