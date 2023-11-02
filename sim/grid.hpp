@@ -38,6 +38,12 @@ struct Malla {
     //double sx,sy,sz;
 };
 
+struct Acceleration {
+    double accx, accy, accz;
+};
+
+
+
 void calculate_constants(double ppm, int np, Malla& malla);
 int nx_calc (double xmax, double xmin, double h);
 int ny_calc (double ymax, double ymin, double h);
@@ -72,6 +78,7 @@ void densinc_old(Malla& malla);
 bool already_iterated(int pivot_id, int particle2_id, unordered_map<int, vector<int>> &hash_map);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);
+void acctransf_old(Malla& malla);
 void acctransf(Malla& malla);
 void partcol(Malla& malla);
 

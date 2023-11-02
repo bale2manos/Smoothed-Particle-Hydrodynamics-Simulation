@@ -69,7 +69,6 @@ void create_fill_grid(Malla& malla, int np,double ppm){
 
 void malla_interaction_old (Malla& malla){
     vector<Particle> all_iterated_particles;
-
     for (Block & block : malla.blocks) {
         size_t const neighbours_size = block.neighbours.size();
         for (Particle & particle_pivot : block.particles) {
@@ -319,7 +318,7 @@ void denstransf(Malla& malla){
     }
 }
 
-void acctransf(Malla& malla){
+void acctransf_old(Malla& malla){
     vector<Particle> all_iterated_particles;
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
@@ -335,6 +334,43 @@ void acctransf(Malla& malla){
       }
     }
     update_grid(malla, all_iterated_particles);
+}
+
+void acctransf(Malla& malla){
+    //vector<Particle> all_iterated_particles;
+    unordered_map<int, vector<int>> colisiones_map;
+    vector<Acceleration> new_accelerations(malla.np, {0,g,0});
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            //Particle particle_updated = particle_pivot;
+            for (auto index: block.neighbours) {
+                for (Particle & particle2 : malla.blocks[index].particles) {
+                    if (particle_pivot.id == particle2.id
+                        || already_iterated(particle_pivot.id, particle2.id, colisiones_map)) {
+                      continue;}
+                    colisiones_map[particle_pivot.id].push_back(particle2.id);
+                    colisiones_map[particle2.id].push_back(particle_pivot.id);
+                    array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,malla.h,malla.m);
+                    new_accelerations[particle_pivot.id].accx += acc_incr[0];
+                    new_accelerations[particle_pivot.id].accy += acc_incr[1];
+                    new_accelerations[particle_pivot.id].accz += acc_incr[2];
+                    new_accelerations[particle2.id].accx -= acc_incr[0];
+                    new_accelerations[particle2.id].accy -= acc_incr[1];
+                    new_accelerations[particle2.id].accz -= acc_incr[2];
+                }
+            }
+            //all_iterated_particles.push_back(particle_updated);
+      }
+    }
+    for (Block & block : malla.blocks) {
+      for (Particle & particle : block.particles) {
+            // TODO creo que PARTICLE puede ser un struct Acceleration
+            particle.a[0] = new_accelerations[particle.id].accx;
+            particle.a[1] = new_accelerations[particle.id].accy;
+            particle.a[2] = new_accelerations[particle.id].accz;
+      }
+    }
+    //update_grid(malla, all_iterated_particles);
 }
 
 void partcol(Malla& malla){
