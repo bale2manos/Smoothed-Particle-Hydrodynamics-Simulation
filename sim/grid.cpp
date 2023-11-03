@@ -271,6 +271,7 @@ void densinc(Malla& malla){
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
             vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
+            cout << "DENSIDAD - SOY LA PARTICULA: "<< particle_pivot.id << "\n";
             //Particle particle_updated = particle_pivot
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
@@ -302,10 +303,11 @@ bool already_iterated(vector<int> &pivot_list, int particle2_id){
 
   for (const int& valor : pivot_list) {
     if (valor == particle2_id) {
-          cout<<"ENTRO: ID PIVOTE: "<< valor<<"ID 2: "<<"\n";
+          cout<<"YA ITERADO "<<"\n";
           return true;
     }
   }
+  cout << "Iteración nueva" << "\n";
   return false;
 }
 
@@ -343,6 +345,7 @@ void acctransf(Malla& malla){
     vector<Acceleration> new_accelerations(malla.np, {0,g,0});
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
+            cout << "ACCELERATION - SOY LA PARTICULA: "<< particle_pivot.id << "\n";
             vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
             //Particle particle_updated = particle_pivot;
             for (auto index: block.neighbours) {
@@ -464,9 +467,9 @@ void repos(Malla& malla){
 void malla_interaction(Malla& malla){
     repos(malla);
     initacc(malla);
-    densinc(malla);
+    densinc_old(malla);
     denstransf(malla);
-    acctransf(malla);
+    acctransf_old(malla);
     partcol(malla);
     motion(malla);
     boundint(malla);

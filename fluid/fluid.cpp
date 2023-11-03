@@ -4,10 +4,14 @@
 #include <iostream>
 
 using namespace std;                                /* TODO mala practica?? */
-
+#include <chrono>
+using namespace std::chrono;
 
 
 int main(int argc, const char *argv[]) {
+
+  auto start = high_resolution_clock::now();
+
   vector<string> const args(argv, argv + argc);
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
@@ -21,7 +25,7 @@ int main(int argc, const char *argv[]) {
     return -5;
   }
 
-  for (int iter=0; iter<5; iter++){
+  for (int iter=0; iter<1; iter++){
     malla_interaction(malla);
   }
 
@@ -29,6 +33,12 @@ int main(int argc, const char *argv[]) {
 
 
   write_output_file(malla, argv[3]);
+  auto stop = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>(stop - start);
+
+  // To get the value of duration use the count()
+  // member function on the duration object
+  cout << duration.count() << "\n";
 
 
 
