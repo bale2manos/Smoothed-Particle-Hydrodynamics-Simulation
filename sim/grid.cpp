@@ -166,7 +166,7 @@ void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
   if (block.coords[2] == 0 || block.coords[2]==n_blocks[2]-1){
         edge_collisions(particle, block.coords[2], 2);
   }
-};
+}
 
 
 void edge_collisions(Particle& particula, int extremo, int eje) {
@@ -250,7 +250,7 @@ void densinc_old(Malla& malla){
             Particle particle_updated = particle_pivot;
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
-                    if (particle_updated.id == particle2.id) { continue; }
+                    if (particle_updated.id == particle2.id || particle_updated.id<particle2.id) { continue; }
                     double const increase_d_factor =
                         increase_density(particle_updated.p, particle2.p, malla.h);
                     particle_updated.rho = particle_updated.rho + increase_d_factor;
@@ -264,51 +264,28 @@ void densinc_old(Malla& malla){
 
 void densinc(Malla& malla){
     //vector<Particle> all_iterated_particles;
-    unordered_map<int, vector<int>> colisiones_map;
     vector<double> new_densities(malla.np, 0);
-
 
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
-            vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
-            cout << "DENSIDAD - SOY LA PARTICULA: "<< particle_pivot.id << "\n";
             //Particle particle_updated = particle_pivot
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
                     // TODO esto optimiza? // TODO extraer metodo de check colisions?
                     // int particle1_id = particle_updated.id; particle2_id = particle2.id;
-                    if (particle_pivot.id == particle2.id
-                        || already_iterated(colisiones_pivote, particle2.id)) {
-                      continue;}
-                    colisiones_map[particle_pivot.id].push_back(particle2.id);
-                    colisiones_map[particle2.id].push_back(particle_pivot.id);
+                    if (particle_pivot.id <= particle2.id) { continue; }
                     double const increase_d_factor =
                         increase_density(particle_pivot.p, particle2.p, malla.h);
                     new_densities[particle_pivot.id] += increase_d_factor;
                     new_densities[particle2.id] += increase_d_factor;
                 }
             }
-            //all_iterated_particles.push_back(particle_updated);
       }
     }
 
     for (Block & block : malla.blocks) {
       for (Particle & particle : block.particles) { particle.rho = new_densities[particle.id]; }
     }
-    //update_grid(malla, all_iterated_particles);
-}
-
-
-bool already_iterated(vector<int> &pivot_list, int particle2_id){
-
-  for (const int& valor : pivot_list) {
-    if (valor == particle2_id) {
-          cout<<"YA ITERADO "<<"\n";
-          return true;
-    }
-  }
-  cout << "Iteración nueva" << "\n";
-  return false;
 }
 
 
@@ -328,7 +305,7 @@ void acctransf_old(Malla& malla){
             Particle particle_updated = particle_pivot;
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
-                    if (particle_updated.id == particle2.id) { continue; }
+                    if (particle_updated.id == particle2.id || particle_updated.id<particle2.id) { continue; }
                     array<double,3> acc_incr = acceleration_transfer(particle_updated,particle2,malla.h,malla.m);
                     for(int i=0;i<3;i++) { particle_updated.a[i] += acc_incr[i]; }
                 }
@@ -340,21 +317,12 @@ void acctransf_old(Malla& malla){
 }
 
 void acctransf(Malla& malla){
-    //vector<Particle> all_iterated_particles;
-    unordered_map<int, vector<int>> colisiones_map;
     vector<Acceleration> new_accelerations(malla.np, {0,g,0});
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
-            cout << "ACCELERATION - SOY LA PARTICULA: "<< particle_pivot.id << "\n";
-            vector<int> colisiones_pivote = colisiones_map[particle_pivot.id];
-            //Particle particle_updated = particle_pivot;
             for (auto index: block.neighbours) {
                 for (Particle & particle2 : malla.blocks[index].particles) {
-                    if (particle_pivot.id == particle2.id
-                        || already_iterated(colisiones_pivote, particle2.id)) {
-                      continue;}
-                    colisiones_map[particle_pivot.id].push_back(particle2.id);
-                    colisiones_map[particle2.id].push_back(particle_pivot.id);
+                    if (particle_pivot.id <= particle2.id) {continue;}
                     array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,malla.h,malla.m);
                     new_accelerations[particle_pivot.id].accx += acc_incr[0];
                     new_accelerations[particle_pivot.id].accy += acc_incr[1];
@@ -364,7 +332,6 @@ void acctransf(Malla& malla){
                     new_accelerations[particle2.id].accz -= acc_incr[2];
                 }
             }
-            //all_iterated_particles.push_back(particle_updated);
       }
     }
     for (Block & block : malla.blocks) {
@@ -375,7 +342,6 @@ void acctransf(Malla& malla){
             particle.a[2] = new_accelerations[particle.id].accz;
       }
     }
-    //update_grid(malla, all_iterated_particles);
 }
 
 void partcol(Malla& malla){
@@ -467,9 +433,9 @@ void repos(Malla& malla){
 void malla_interaction(Malla& malla){
     repos(malla);
     initacc(malla);
-    densinc_old(malla);
+    densinc(malla);
     denstransf(malla);
-    acctransf_old(malla);
+    acctransf(malla);
     partcol(malla);
     motion(malla);
     boundint(malla);
