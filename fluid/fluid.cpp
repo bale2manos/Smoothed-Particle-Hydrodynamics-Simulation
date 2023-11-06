@@ -8,6 +8,8 @@ using namespace std;                                /* TODO mala practica?? */
 
 
 int main(int argc, const char *argv[]) {
+
+
   vector<string> const args(argv, argv + argc);
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
@@ -21,14 +23,19 @@ int main(int argc, const char *argv[]) {
     return -5;
   }
 
-  for (int iter=0; iter<1; iter++){
+  int const num_iterations = atoi(argv[1]);
+
+  for (int iter = 0; iter < num_iterations; iter++) {
+
+    cout << "**************************************" << "\n";
+    cout << "ITERACION NUMERO: " << iter << "\n";
     malla_interaction(malla);
   }
 
 
 
-
   write_output_file(malla, argv[3]);
+
 
 
 

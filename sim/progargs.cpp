@@ -7,7 +7,7 @@
 #include "block.hpp"
 #include "grid.hpp"
 
-
+#include <filesystem>
 
 using namespace std;
 int validate_time_steps(int nts) {
@@ -26,6 +26,8 @@ int validate_input_file(const char* inputFileName) {
   cout << "Input file: " << inputFileName << "\n";
   ifstream input_file(inputFileName);
   if (!input_file.is_open()) {
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::cout << "Current working directory: " << currentPath << std::endl;
     cerr << "Error: Cannot open " << inputFileName << " for reading." << "\n";
     return -1;
   }
