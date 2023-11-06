@@ -64,7 +64,7 @@ void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks)
 void edge_interaction(Particle& particle,int extremo,int eje);
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2,double h,double m);
+array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, double acc_const, double numerator2);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 

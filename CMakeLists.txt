@@ -39,4 +39,4 @@ add_subdirectory(ftest)
 # Copy small.fld to the main build directory
 # Copy "small.fld" to the build directory
 configure_file(small.fld small.fld COPYONLY)
-configure_file(large.fld large.fld COPYONLY)
+#configure_file(large.fld large.fld COPYONLY)

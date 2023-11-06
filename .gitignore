@@ -32,4 +32,4 @@
 *.app
 
 # Ignore CMake build directory
-cmake-build-debug/
+cmake-build-debug/*
