@@ -31,7 +31,6 @@ double const g = -9.8;
 
 struct Malla {
     int np; double ppm; vector<Block> blocks;
-    //int nx,ny,nz;
     std::array<int,3>n_blocks;
     std::array<double,3> size_blocks;
     double h, m;
@@ -83,5 +82,5 @@ void denstransf(Malla& malla);
 void acctransf_old(Malla& malla);
 void acctransf(Malla& malla);
 void partcol(Malla& malla);
-
+void triplete(Malla &malla);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

@@ -20,6 +20,12 @@ void calculate_constants(double ppm, int np, Malla& malla){
     malla.size_blocks[0] = sx_calc(xmax, xmin, malla.n_blocks[0]);
     malla.size_blocks[1] = sy_calc(ymax, ymin, malla.n_blocks[1]);
     malla.size_blocks[2] = sz_calc(zmax, zmin, malla.n_blocks[2]);
+    double const acc_aux =M_PI*pow(malla.h,6);
+    malla.acc_const[0] = 15/acc_aux * (3*malla.m*p_s)*0.5;
+    malla.acc_const[1] = 15/acc_aux*3*mu*malla.m;
+
+
+
 }
 
 
@@ -100,7 +106,7 @@ double density_transformation(double rho,double h, double m){
 }
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, double acc_const, double numerator2){
+array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2> acc_const){
     //Aquí calculamos los términos por separado de la ecuación grande.
     double const norm_squared = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
                         + pow((pivot.p[2] - particle2.p[2]),2);
@@ -123,7 +129,7 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
     for (int i=0; i<3; i++){
         double const term1 = (pivot.p[i]-particle2.p[i]);
         double const term4 = (particle2.v[i] - pivot.v[i]);
-        acc_increase[i] = ((term1*numerator1) + (term4*numerator2))/denominator;
+        acc_increase[i] = ((term1*numerator1) + (term4*acc_const[1]))/denominator;
 
         }
 
@@ -251,7 +257,7 @@ void densinc_old(Malla& malla){
 
 void densinc(Malla& malla){
     //vector<Particle> all_iterated_particles;
-    vector<double> new_densities(malla.np, 0);
+    //vector<double> new_densities(malla.np, 0);
 
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
@@ -264,16 +270,18 @@ void densinc(Malla& malla){
                     if (particle_pivot.id <= particle2.id) { continue; }
                     double const increase_d_factor =
                         increase_density(particle_pivot.p, particle2.p, malla.h);
-                    new_densities[particle_pivot.id] += increase_d_factor;
-                    new_densities[particle2.id] += increase_d_factor;
+                    //new_densities[particle_pivot.id] += increase_d_factor;
+                    //new_densities[particle2.id] += increase_d_factor;
+                    particle_pivot.rho += increase_d_factor;
+                    particle2.rho += increase_d_factor;
                 }
             }
       }
     }
 
-    for (Block & block : malla.blocks) {
-      for (Particle & particle : block.particles) { particle.rho = new_densities[particle.id]; }
-    }
+    //for (Block & block : malla.blocks) {
+    //  for (Particle & particle : block.particles) { particle.rho = new_densities[particle.id]; }
+    //}
 }
 
 
@@ -288,7 +296,7 @@ void denstransf(Malla& malla){
 
 
 void acctransf(Malla& malla){
-    vector<Acceleration> new_accelerations(malla.np, {0,g,0});
+    //vector<Acceleration> new_accelerations(malla.np, {0,g,0});
 
     double const h_value = malla.h;
     array<double,2> const acc_constants = malla.acc_const;
@@ -303,16 +311,26 @@ void acctransf(Malla& malla){
                     if (pivot_id > particle2_id) {continue;}
 
                     array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
+                    /*
                     new_accelerations[pivot_id].accx += acc_incr[0];
                     new_accelerations[pivot_id].accy += acc_incr[1];
                     new_accelerations[pivot_id].accz += acc_incr[2];
                     new_accelerations[particle2_id].accx -= acc_incr[0];
                     new_accelerations[particle2_id].accy -= acc_incr[1];
                     new_accelerations[particle2_id].accz -= acc_incr[2];
+                    */
+                    particle_pivot.a[0] += acc_incr[0];
+                    particle_pivot.a[1] += acc_incr[1];
+                    particle_pivot.a[2] += acc_incr[2];
+                    particle2.a[0] -= acc_incr[0];
+                    particle2.a[1] -= acc_incr[1];
+                    particle2.a[2] -= acc_incr[2];
                 }
             }
       }
     }
+
+    /*
     for (Block & block : malla.blocks) {
       for (Particle & particle : block.particles) {
             int const particle_id=particle.id;
@@ -322,6 +340,8 @@ void acctransf(Malla& malla){
             particle.a[2] = new_accelerations[particle_id].accz;
       }
     }
+    */
+
 }
 
 void partcol(Malla& malla){
@@ -353,6 +373,24 @@ void boundint(Malla& malla){
       }
     }
 }
+
+
+void triplete(Malla &malla){
+    for (Block & block : malla.blocks) {
+      for (Particle & particle_pivot : block.particles) {
+            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
+                wall_colissions(particle_pivot, block, malla.n_blocks);
+            }
+            particle_movement(particle_pivot);
+            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
+                limits_interaction(particle_pivot, block, malla.n_blocks);
+            }
+      }
+    }
+}
+
 
 void repos_old(Malla& malla){
     // Iterar por todos los bloques de la malla
@@ -416,59 +454,36 @@ void repos(Malla& malla){
 
 
 void malla_interaction(Malla& malla){
-    auto startTime = std::chrono::high_resolution_clock::now();
+    auto startTimeTotal = std::chrono::high_resolution_clock::now();
+
     repos(malla);
+
+    initacc(malla);
+
+    auto startTime = std::chrono::high_resolution_clock::now();
+    densinc(malla);
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo REPOS: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
+    std::cout << "TIEMPO densinc: " << duration.count() << " microsegundos" << "\n";
 
-    startTime = std::chrono::high_resolution_clock::now();
-    initacc(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo initacc: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
-
-    startTime = std::chrono::high_resolution_clock::now();
-    densinc(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo densinc: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
-
-    startTime = std::chrono::high_resolution_clock::now();
     denstransf(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo denstransf: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
 
     startTime = std::chrono::high_resolution_clock::now();
     acctransf(malla);
     endTime = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo acctransf: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
+    std::cout << "TIEMPO acctransf: " << duration.count() << " microsegundos" << "\n";
 
-    startTime = std::chrono::high_resolution_clock::now();
-    partcol(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo partcol: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
+    //partcol(malla);
 
-    startTime = std::chrono::high_resolution_clock::now();
-    motion(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo motion: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
+    //motion(malla);
 
-    startTime = std::chrono::high_resolution_clock::now();
-    boundint(malla);
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Tiempo boundint: " << duration.count() << " microsegundos" << "\n";
+    //boundint(malla);
+
+    triplete(malla);
+
+    auto endTimeTotal = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTimeTotal - startTimeTotal);
+    std::cout << "TIEMPO ITERACION: " << duration.count() << " microsegundos" << "\n";
     cout << "**************************************" << "\n";
 }
