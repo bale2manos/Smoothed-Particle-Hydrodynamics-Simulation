@@ -26,6 +26,9 @@ int main(int argc, const char *argv[]) {
   int const num_iterations = atoi(argv[1]);
 
   for (int iter = 0; iter < num_iterations; iter++) {
+
+    cout << "**************************************" << "\n";
+    cout << "ITERACION NUMERO: " << iter << "\n";
     malla_interaction(malla);
   }
 

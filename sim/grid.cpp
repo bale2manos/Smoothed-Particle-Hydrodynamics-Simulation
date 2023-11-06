@@ -117,7 +117,7 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
     double const term3 = (density_pivot + density_2 - (2*rho_f));
     double const denominator = (density_2  * density_pivot);
 
-    double const numerator1 = acc_const*term2*term3;
+    double const numerator1 = acc_const[0]*term2*term3;
 
 
     for (int i=0; i<3; i++){
@@ -289,9 +289,9 @@ void denstransf(Malla& malla){
 
 void acctransf(Malla& malla){
     vector<Acceleration> new_accelerations(malla.np, {0,g,0});
-    double const acc_aux =M_PI*pow(malla.h,6);
-    double const acc_const = 15/acc_aux * (3*malla.m*p_s)*0.5;
-    double const numerator2 = 15/acc_aux*3*mu*malla.m;
+
+    double const h_value = malla.h;
+    array<double,2> const acc_constants = malla.acc_const;
 
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
@@ -300,8 +300,9 @@ void acctransf(Malla& malla){
                 Block& neighbour_block = malla.blocks[index];
                 for (Particle & particle2 : neighbour_block.particles) {
                     int const particle2_id = particle2.id;
-                    if (pivot_id <= particle2_id) {continue;}
-                    array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,malla.h,acc_const,numerator2);
+                    if (pivot_id > particle2_id) {continue;}
+
+                    array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
                     new_accelerations[pivot_id].accx += acc_incr[0];
                     new_accelerations[pivot_id].accy += acc_incr[1];
                     new_accelerations[pivot_id].accz += acc_incr[2];

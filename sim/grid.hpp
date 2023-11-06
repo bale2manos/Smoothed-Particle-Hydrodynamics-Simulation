@@ -35,7 +35,9 @@ struct Malla {
     std::array<int,3>n_blocks;
     std::array<double,3> size_blocks;
     double h, m;
-    //double sx,sy,sz;
+
+    std::array<double,2>acc_const;
+
 };
 
 struct Acceleration {
@@ -64,7 +66,7 @@ void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks)
 void edge_interaction(Particle& particle,int extremo,int eje);
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, double acc_const, double numerator2);
+array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2> acc_const);
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 
