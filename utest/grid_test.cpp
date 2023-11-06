@@ -1,5 +1,7 @@
-//
-// Created by bale2 on 26/09/2023.
-//
+#include <gtest/gtest.h>
+#include "sim/grid.hpp"
 
-#include "grid_test.hpp"
+
+
+
+
