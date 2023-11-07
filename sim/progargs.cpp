@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cmath>
 #include <algorithm>
 #include "progargs.hpp"
 #include "block.hpp"
@@ -149,7 +148,7 @@ int write_output_file (Malla& malla, const char * out_file){
     output_file.write(reinterpret_cast<char*>(&vy_float), sizeof(vy_float));
     output_file.write(reinterpret_cast<char*>(&vz_float), sizeof(vz_float));
 
-
+    if (particle.id == 0){
     cout << "Particle " << particle.id << " Data:" << "\n";
     cout << "px: " << particle.p[0] << "\n";
     cout << "py: " << particle.p[1] << "\n";
@@ -160,6 +159,7 @@ int write_output_file (Malla& malla, const char * out_file){
     cout << "vx: " << particle.v[0] << "\n";
     cout << "vy: " << particle.v[1] << "\n";
     cout << "vz: " <<particle.v[2] << "\n";
+    }
 
 
 
