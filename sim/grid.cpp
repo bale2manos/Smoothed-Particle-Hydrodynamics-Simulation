@@ -76,18 +76,6 @@ void create_fill_grid(Malla& malla, int np,double ppm){
     }
 }
 
-/*
-
-double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h){
-    double const norm_squared = pow((pivot_coords[0] - particle2_coords[0]),2) + pow((pivot_coords[1] - particle2_coords[1]),2)
-            + pow((pivot_coords[2] - particle2_coords[2]),2);
-    double const h_squared = pow(h,2);
-    if (norm_squared < h_squared){
-        return pow(h_squared-norm_squared,3);
-    }
-    return 0;
-}
- */
 
 double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h) {
     double const h_squared = h * h;
@@ -118,7 +106,7 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
     // aqui estaba aux
 
     double const term2 = pow(h-distij,2)/distij;
-
+    //Sacamos todas las constantes fuera del bucle.
     double const density_pivot = pivot.rho;
     double const density_2 = particle2.rho;
     double const term3 = (density_pivot + density_2 - (2*rho_f));
@@ -138,7 +126,6 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
   }
 
 
-/*TODO ampersand block? */
 void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
 
   if (block.coords[0] == 0 || block.coords[0]==n_blocks[0]-1){
@@ -226,36 +213,6 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 
 
-
-
-void update_grid(Malla& malla, vector<Particle>& new_particles){
-    for (Block & block : malla.blocks) {
-      block.particles.clear();
-    }
-    for (Particle  const& particle: new_particles){
-      malla.blocks[particle.current_block].particles.emplace_back(particle);
-    }
-}
-
-void densinc_old(Malla& malla){
-    vector<Particle> all_iterated_particles;
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            Particle particle_updated = particle_pivot;
-            for (auto index: block.neighbours) {
-                for (Particle & particle2 : malla.blocks[index].particles) {
-                    if (particle_updated.id == particle2.id || particle_updated.id<particle2.id) { continue; }
-                    double const increase_d_factor =
-                        increase_density(particle_updated.p, particle2.p, malla.h);
-                    particle_updated.rho = particle_updated.rho + increase_d_factor;
-                }
-            }
-            all_iterated_particles.push_back(particle_updated);
-      }
-    }
-    //update_grid(malla, all_iterated_particles);
-}
-
 void densinc(Malla& malla){
     //vector<Particle> all_iterated_particles;
     //vector<double> new_densities(malla.np, 0);
@@ -307,6 +264,7 @@ void acctransf(Malla& malla){
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
             int const pivot_id = particle_pivot.id;
+
             for (auto index: block.neighbours) {
                 Block& neighbour_block = malla.blocks[index];
                 for (Particle & particle2 : neighbour_block.particles) {
@@ -347,35 +305,6 @@ void acctransf(Malla& malla){
 
 }
 
-void partcol(Malla& malla){
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
-                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
-                wall_colissions(particle_pivot, block, malla.n_blocks);
-            }
-      }
-    }
-}
-
-void motion(Malla& malla){
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            particle_movement(particle_pivot);
-      }
-    }
-}
-
-void boundint(Malla& malla){
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
-                block.coords[0]==malla.n_blocks[0]-1||block.coords[1]==malla.n_blocks[1]-1||block.coords[2]==malla.n_blocks[2]-1){
-                limits_interaction(particle_pivot, block, malla.n_blocks);
-            }
-      }
-    }
-}
 
 
 void triplete(Malla &malla){
@@ -393,40 +322,6 @@ void triplete(Malla &malla){
             if (extremo){
                 limits_interaction(particle_pivot, block, n_blocks);
             }
-      }
-    }
-}
-
-
-void repos_old(Malla& malla){
-    // Iterar por todos los bloques de la malla
-    for (size_t current_block= 0; current_block < malla.blocks.size(); current_block++) {
-      // Iterar por todas las particulas del bloque
-      for (size_t current_part= 0; current_part < malla.blocks[current_block].particles.size(); current_part++){
-            // Calcular el nuevo posible bloque de la particula
-            array<int,3> const new_indexes =
-                calculate_block_indexes(malla.blocks[current_block].particles[current_part].p, malla);
-            int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
-            auto new_block = static_cast<size_t>(block_index);
-            int const part_old = static_cast<int>(current_part);
-
-            // Si el bloque es distinto al actual, mover la particula
-            if (new_block != current_block){
-                if (malla.blocks[current_block].particles[part_old].id == 0){
-                    cout << "NEW: " << new_block << "OLD: " << current_block<< "\n";
-                }
-                malla.blocks[new_block].particles.push_back(malla.blocks[current_block].particles[part_old]);
-                malla.blocks[current_block].particles.erase(malla.blocks[current_block].particles.begin() + part_old);
-            }
-      }
-    }
-}
-
-void initacc(Malla& malla){
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            particle_pivot.a = {0, g, 0};
-            particle_pivot.rho = 0;
       }
     }
 }

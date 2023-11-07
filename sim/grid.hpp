@@ -39,10 +39,6 @@ struct Malla {
 
 };
 
-struct Acceleration {
-    double accx, accy, accz;
-};
-
 
 
 void calculate_constants(double ppm, int np, Malla& malla);
@@ -57,7 +53,6 @@ double particle_mass (double ppm);
 void create_fill_grid(Malla& malla, int np,double ppm);
 
 
-void malla_interaction_old (Malla& malla);
 void wall_colissions(Particle& particle, Block& block, array<int,3> n_blocks);
 void edge_collisions(Particle& particula, int extremo, int eje);
 void particle_movement(Particle& particle);
@@ -70,17 +65,9 @@ double increase_density(array<double, 3> pivot_coords, array<double, 3> particle
 double density_transformation(double rho,double h, double m);
 
 void malla_interaction (Malla& malla);
-void show_current_malla(Malla& malla);
-void update_grid(Malla& malla, vector<Particle>& new_particles);
 void repos(Malla& malla);
-void repos_old(Malla& malla);
-void initacc(Malla& malla);
-void densinc_old(Malla& malla);
-bool already_iterated(vector<int> &pivot_list, int particle2_id);
 void densinc(Malla& malla);
 void denstransf(Malla& malla);
-void acctransf_old(Malla& malla);
 void acctransf(Malla& malla);
-void partcol(Malla& malla);
 void triplete(Malla &malla);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

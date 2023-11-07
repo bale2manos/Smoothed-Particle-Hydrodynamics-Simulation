@@ -12,7 +12,7 @@ using namespace std::chrono;
 int main(int argc, const char *argv[]) {
 
   // Time start
-        auto start = high_resolution_clock::now();
+  auto start = high_resolution_clock::now();
   vector<string> const args(argv, argv + argc);
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
