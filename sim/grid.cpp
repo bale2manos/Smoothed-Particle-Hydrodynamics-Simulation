@@ -77,14 +77,17 @@ void create_fill_grid(Malla& malla, int np,double ppm){
 }
 
 
-double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h) {
+void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) {
     double const h_squared = h * h;
     double const dx = pivot_coords[0] - particle2_coords[0];
     double const dy = pivot_coords[1] - particle2_coords[1];
     double const dz = pivot_coords[2] - particle2_coords[2];
     double const norm_squared = dx * dx + dy * dy + dz * dz;
-
-    return (norm_squared < h_squared) ? pow(h_squared - norm_squared, 3) : 0;
+    if (norm_squared < h_squared) {
+        double increase =  pow(h_squared - norm_squared, 3);
+        pivot_rho += increase;
+        particle2_rho += increase;
+    }
 }
 
 
@@ -95,15 +98,13 @@ double density_transformation(double rho,double h, double m){
 }
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2> acc_const){
+void acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2>& acc_const){
     //Aquí calculamos los términos por separado de la ecuación grande.
     double const norm_squared = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
                         + pow((pivot.p[2] - particle2.p[2]),2);
 
-    if (norm_squared>=pow(h,2)){return {0,0,0};}
-    array<double, 3> acc_increase = {0.0, 0.0, 0.0};
+    if (norm_squared>=pow(h,2)){return;}
     double const distij = sqrt(max(norm_squared,pow(10,-12)));
-    // aqui estaba aux
 
     double const term2 = pow(h-distij,2)/distij;
     //Sacamos todas las constantes fuera del bucle.
@@ -111,18 +112,16 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
     double const density_2 = particle2.rho;
     double const term3 = (density_pivot + density_2 - (2*rho_f));
     double const denominator = (density_2  * density_pivot);
-
     double const numerator1 = acc_const[0]*term2*term3;
 
 
     for (int i=0; i<3; i++){
         double const term1 = (pivot.p[i]-particle2.p[i]);
         double const term4 = (particle2.v[i] - pivot.v[i]);
-        acc_increase[i] = ((term1*numerator1) + (term4*acc_const[1]))/denominator;
-
+        pivot.a[i] += ((term1*numerator1) + (term4*acc_const[1]))/denominator;
+        particle2.a[i] -= ((term1*numerator1) + (term4*acc_const[1]))/denominator;
         }
 
-    return acc_increase;
   }
 
 
@@ -216,30 +215,24 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 void densinc(Malla& malla){
     //vector<Particle> all_iterated_particles;
     //vector<double> new_densities(malla.np, 0);
-
+    double const h_value = malla.h;
     for (Block & block : malla.blocks) {
-      double const h_value = malla.h;
       for (Particle & particle_pivot : block.particles) {
             //Particle particle_updated = particle_pivot
+            int const pivot_id = particle_pivot.id;
+            array<double,3>& pivot_coords = particle_pivot.p;
+            double& pivot_rho = particle_pivot.rho;
             for (auto index: block.neighbours) {
                 Block& neighbour_block = malla.blocks[index];
                 for (Particle & particle2 : neighbour_block.particles) {
                     // int particle1_id = particle_updated.id; particle2_id = particle2.id;
-                    if (particle_pivot.id <= particle2.id) { continue; }
-                    double const increase_d_factor =
-                        increase_density(particle_pivot.p, particle2.p, h_value);
-                    //new_densities[particle_pivot.id] += increase_d_factor;
-                    //new_densities[particle2.id] += increase_d_factor;
-                    particle_pivot.rho += increase_d_factor;
-                    particle2.rho += increase_d_factor;
+                    if (pivot_id > particle2.id) {
+                      increase_density(pivot_coords, particle2.p, h_value, pivot_rho, particle2.rho);
+                    }
                 }
             }
       }
     }
-
-    //for (Block & block : malla.blocks) {
-    //  for (Particle & particle : block.particles) { particle.rho = new_densities[particle.id]; }
-    //}
 }
 
 
@@ -259,35 +252,22 @@ void acctransf(Malla& malla){
     //vector<Acceleration> new_accelerations(malla.np, {0,g,0});
 
     double const h_value = malla.h;
-    array<double,2> const acc_constants = malla.acc_const;
+    array<double,2> acc_constants = malla.acc_const;
 
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
             int const pivot_id = particle_pivot.id;
-
+            //int const block_index = particle_pivot.current_block;
             for (auto index: block.neighbours) {
-                Block& neighbour_block = malla.blocks[index];
-                for (Particle & particle2 : neighbour_block.particles) {
-                    int const particle2_id = particle2.id;
-                    if (pivot_id >= particle2_id) {continue;}
-
-                    array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
-                    /*
-                    new_accelerations[pivot_id].accx += acc_incr[0];
-                    new_accelerations[pivot_id].accy += acc_incr[1];
-                    new_accelerations[pivot_id].accz += acc_incr[2];
-                    new_accelerations[particle2_id].accx -= acc_incr[0];
-                    new_accelerations[particle2_id].accy -= acc_incr[1];
-                    new_accelerations[particle2_id].accz -= acc_incr[2];
-                    */
-                    particle_pivot.a[0] += acc_incr[0];
-                    particle_pivot.a[1] += acc_incr[1];
-                    particle_pivot.a[2] += acc_incr[2];
-                    particle2.a[0] -= acc_incr[0];
-                    particle2.a[1] -= acc_incr[1];
-                    particle2.a[2] -= acc_incr[2];
+                    //if (index < block_index) { continue; }
+                    Block & neighbour_block = malla.blocks[index];
+                    for (Particle & particle2 : neighbour_block.particles) {
+                      if (pivot_id > particle2.id) {
+                      acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
+                      }
+                    }
                 }
-            }
+
       }
     }
 
