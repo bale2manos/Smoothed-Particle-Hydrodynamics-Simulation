@@ -10,6 +10,22 @@
 #include <gtest/gtest.h>
 
 
+TEST(CheckIteracion1, Test1){
+  Malla malla;
+  read_input_file(malla, "small.fld");
+  for (int i = 0; i ++; i < 5){
+    malla_interaction(malla);
+  }
+  compare_iteration(malla, )
+
+}
+TEST(CheckIteracion2, Test2){
+
+}
+TEST(CheckIteracion3, Test3){
+
+}
+//TEST(CheckItera)
 int compare_iteration(Malla&malla, const char* inputFileName){
   vector<Particle> particles_out1, particles_out2;
   particles_out2 = traceread(inputFileName);
