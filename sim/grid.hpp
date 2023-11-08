@@ -53,15 +53,15 @@ double particle_mass (double ppm);
 void create_fill_grid(Malla& malla, int np,double ppm);
 
 
-void wall_colissions(Particle& particle, Block& block, array<int,3> n_blocks);
+void wall_colissions(Particle& particle, Block& block, std::array<int,3> n_blocks);
 void edge_collisions(Particle& particula, int extremo, int eje);
 void particle_movement(Particle& particle);
-void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks);
+void limits_interaction(Particle& particle, Block& block, std::array<int,3> n_blocks);
 void edge_interaction(Particle& particle,int extremo,int eje);
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2> acc_const);
-double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h);
+std::array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, std::array<double,2> acc_const);
+double increase_density(std::array<double, 3> pivot_coords, std::array<double, 3> particle2_coords, double h);
 double density_transformation(double rho,double h, double m);
 
 void malla_interaction (Malla& malla);
@@ -70,4 +70,7 @@ void densinc(Malla& malla);
 void denstransf(Malla& malla);
 void acctransf(Malla& malla);
 void triplete(Malla &malla);
+void densincinside(Malla&malla, Block & block);
+void acctransfinside(Malla &malla, Block& block);
+
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

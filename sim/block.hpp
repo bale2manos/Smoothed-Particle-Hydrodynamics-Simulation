@@ -9,10 +9,11 @@
 
 
 struct Particle {
-    std::array<double,3> p, hv, v, a;
-    double rho;
-    int id;
     int current_block;
+    int id;
+    double rho;
+    std::array<double,3> p, hv, v, a;
+
 };
 
 
@@ -23,6 +24,8 @@ struct Block {
     std::vector<Particle> particles;
     std::vector<int> neighbours;
 };
+
+
 int initial_block_index(double position, double min_limit, double block_size);
 int calculate_block_index(std::array<int,3> coords,int nx, int ny);
 

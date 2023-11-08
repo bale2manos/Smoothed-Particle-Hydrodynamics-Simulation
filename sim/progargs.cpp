@@ -44,9 +44,9 @@ int validate_output_file(const char* outputFileName) {
   return 0;
 }
 
-array<int,2> validate_parameters(int argc, const char* argv[]) {
+std::array<int,2> validate_parameters(int argc, const char* argv[]) {
 
-  array <int,2> error_type={0,0};
+  std::array <int,2> error_type={0,0};
   if (argc != 4) {
     cerr << "Error: Invalid number of arguments: " << argc << "\n";
     error_type[0] = -1;
@@ -185,8 +185,8 @@ void refactor_gordo (const char * in_file, Malla& malla) {
   ifstream input_file(in_file, ios::binary);
   double trash;
   input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
-  array<array<float, 3>, 3> info_particle;
-  array<array<double, 3>, 3> info_particle_double;
+  std::array<std::array<float, 3>, 3> info_particle;
+  std::array<std::array<double, 3>, 3> info_particle_double;
   int counter = 0;
 
   while (input_file.read(reinterpret_cast<char *>(&info_particle[0][0]), sizeof(info_particle[0][0]))) {
@@ -207,7 +207,7 @@ void refactor_gordo (const char * in_file, Malla& malla) {
     }
 
 
-    array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
+    std::array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
     // Linear mapping para encontrar el bloque correcto
     int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
     insert_particle_info(info_particle_double,malla.blocks[index],counter, index);
@@ -220,7 +220,7 @@ void refactor_gordo (const char * in_file, Malla& malla) {
 }
 
 
-array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
+std::array<int, 3> calculate_block_indexes(std::array <double,3> positions, Malla& malla){
   int i,j,k;
   i = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
   j = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
@@ -232,11 +232,11 @@ array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
   if (i >= malla.n_blocks[0]) {i = malla.n_blocks[0] - 1;}
   if (j >= malla.n_blocks[1]){j = malla.n_blocks[1] - 1;}
   if (k >= malla.n_blocks[2]){k = malla.n_blocks[2] - 1;}
-  return array<int, 3>{i,j,k};
+  return std::array<int, 3>{i,j,k};
 
 }
 
-void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index){
+void insert_particle_info(std::array<std::array<double, 3>, 3> info, Block& bloque, int id, int block_index){
   Particle particle;
   particle.p = info[0];
   particle.hv = info[1];

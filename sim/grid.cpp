@@ -64,7 +64,7 @@ void create_fill_grid(Malla& malla, int np,double ppm){
     //Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m,sx,sy,sz);
     calculate_constants(ppm, np, malla);
     malla.blocks = {};
-    array<int,3> const n_blocks = malla.n_blocks;
+    std::array<int,3> const n_blocks = malla.n_blocks;
         // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (int k = 0; k < n_blocks[2]; ++k) {
         for (int j = 0; j < n_blocks[1]; ++j) {
@@ -77,7 +77,7 @@ void create_fill_grid(Malla& malla, int np,double ppm){
 }
 
 
-double increase_density(array<double, 3> pivot_coords, array<double, 3> particle2_coords, double h) {
+double increase_density(std::array<double, 3> pivot_coords, std::array<double, 3> particle2_coords, double h) {
     double const h_squared = h * h;
     double const dx = pivot_coords[0] - particle2_coords[0];
     double const dy = pivot_coords[1] - particle2_coords[1];
@@ -95,13 +95,13 @@ double density_transformation(double rho,double h, double m){
 }
 
 
-array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2> acc_const){
+std::array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, double h, std::array<double,2> acc_const){
     //Aquí calculamos los términos por separado de la ecuación grande.
     double const norm_squared = pow((pivot.p[0] - particle2.p[0]),2) + pow((pivot.p[1] - particle2.p[1]),2)
                         + pow((pivot.p[2] - particle2.p[2]),2);
 
     if (norm_squared>=pow(h,2)){return {0,0,0};}
-    array<double, 3> acc_increase = {0.0, 0.0, 0.0};
+    std::array<double, 3> acc_increase = {0.0, 0.0, 0.0};
     double const distij = sqrt(max(norm_squared,pow(10,-12)));
     // aqui estaba aux
 
@@ -126,7 +126,7 @@ array<double,3> acceleration_transfer(Particle& pivot, Particle& particle2, doub
   }
 
 
-void wall_colissions(Particle& particle, Block& block, array<int,3>n_blocks){
+void wall_colissions(Particle& particle, Block& block, std::array<int,3>n_blocks){
 
   if (block.coords[0] == 0 || block.coords[0]==n_blocks[0]-1){
         edge_collisions(particle, block.coords[0], 0);
@@ -180,7 +180,7 @@ void particle_movement(Particle& particle){
 
 
 
-void limits_interaction(Particle& particle, Block& block, array<int,3>n_blocks) {
+void limits_interaction(Particle& particle, Block& block, std::array<int,3>n_blocks) {
     if (block.coords[0] == 0 || block.coords[0] == n_blocks[0] - 1) { edge_interaction(particle, block.coords[0], 0); }
     if (block.coords[1] == 0 || block.coords[1] == n_blocks[1] - 1) { edge_interaction(particle, block.coords[1], 1); }
     if (block.coords[2] == 0 || block.coords[2] == n_blocks[2] - 1) { edge_interaction(particle, block.coords[2], 2); }
@@ -218,14 +218,15 @@ void densinc(Malla& malla){
     //vector<double> new_densities(malla.np, 0);
 
     for (Block & block : malla.blocks) {
+        densincinside(malla, block);
       double const h_value = malla.h;
+      for (auto index: block.neighbours) {
       for (Particle & particle_pivot : block.particles) {
             //Particle particle_updated = particle_pivot
-            for (auto index: block.neighbours) {
                 Block& neighbour_block = malla.blocks[index];
                 for (Particle & particle2 : neighbour_block.particles) {
                     // int particle1_id = particle_updated.id; particle2_id = particle2.id;
-                    if (particle_pivot.id <= particle2.id) { continue; }
+                    if (particle_pivot.current_block >= particle2.current_block) { continue; }
                     double const increase_d_factor =
                         increase_density(particle_pivot.p, particle2.p, h_value);
                     //new_densities[particle_pivot.id] += increase_d_factor;
@@ -242,7 +243,22 @@ void densinc(Malla& malla){
     //}
 }
 
-
+void densincinside(Malla&malla, Block & block){
+    double const h_value = malla.h;
+    for (Particle & particle_pivot : block.particles) {
+      //Particle particle_updated = particle_pivot
+      for (Particle & particle2 : block.particles) {
+            // int particle1_id = particle_updated.id; particle2_id = particle2.id;
+            if (particle_pivot.id >= particle2.id) { continue; }
+            double const increase_d_factor =
+                increase_density(particle_pivot.p, particle2.p, h_value);
+            //new_densities[particle_pivot.id] += increase_d_factor;
+            //new_densities[particle2.id] += increase_d_factor;
+            particle_pivot.rho += increase_d_factor;
+            particle2.rho += increase_d_factor;
+      }
+    }
+}
 
 void denstransf(Malla& malla){
     double const h_value = malla.h;
@@ -254,24 +270,47 @@ void denstransf(Malla& malla){
     }
 }
 
+void acctransfinside(Malla &malla, Block& block){
+    double const h_value = malla.h;
+    std::array<double,2> const acc_constants = malla.acc_const;
+    for (Particle & particle_pivot : block.particles) {
+      for (Particle & particle2 : block.particles) {
+            if (particle_pivot.id <= particle2.id) {continue;}
+
+            std::array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
+            /*
+            new_accelerations[pivot_id].accx += acc_incr[0];
+            new_accelerations[pivot_id].accy += acc_incr[1];
+            new_accelerations[pivot_id].accz += acc_incr[2];
+            new_accelerations[particle2_id].accx -= acc_incr[0];
+            new_accelerations[particle2_id].accy -= acc_incr[1];
+            new_accelerations[particle2_id].accz -= acc_incr[2];
+            */
+            particle_pivot.a[0] += acc_incr[0];
+            particle_pivot.a[1] += acc_incr[1];
+            particle_pivot.a[2] += acc_incr[2];
+            particle2.a[0] -= acc_incr[0];
+            particle2.a[1] -= acc_incr[1];
+            particle2.a[2] -= acc_incr[2];
+      }
+    }
+}
 
 void acctransf(Malla& malla){
     //vector<Acceleration> new_accelerations(malla.np, {0,g,0});
 
     double const h_value = malla.h;
-    array<double,2> const acc_constants = malla.acc_const;
+    std::array<double,2> const acc_constants = malla.acc_const;
 
     for (Block & block : malla.blocks) {
+      acctransfinside(malla, block);
+      for (auto index: block.neighbours) {
       for (Particle & particle_pivot : block.particles) {
-            int const pivot_id = particle_pivot.id;
-
-            for (auto index: block.neighbours) {
                 Block& neighbour_block = malla.blocks[index];
                 for (Particle & particle2 : neighbour_block.particles) {
-                    int const particle2_id = particle2.id;
-                    if (pivot_id >= particle2_id) {continue;}
+                    if (particle_pivot.current_block <= particle2.current_block) {continue;}
 
-                    array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
+                    std::array<double,3> acc_incr = acceleration_transfer(particle_pivot,particle2,h_value,acc_constants);
                     /*
                     new_accelerations[pivot_id].accx += acc_incr[0];
                     new_accelerations[pivot_id].accy += acc_incr[1];
@@ -308,7 +347,7 @@ void acctransf(Malla& malla){
 
 
 void triplete(Malla &malla){
-    array<int,3> const n_blocks = malla.n_blocks;
+    std::array<int,3> const n_blocks = malla.n_blocks;
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
             bool extremo = false;
@@ -337,7 +376,7 @@ void repos(Malla& malla){
     }
 
     for (Particle & particle : particles) {
-      array<int,3> const new_indexes =
+      std::array<int,3> const new_indexes =
               calculate_block_indexes(particle.p, malla);
       int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
       particle.current_block = block_index;
