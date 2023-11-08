@@ -70,7 +70,7 @@ array<int,2> validate_parameters(int argc, const char* argv[]) {
   return error_type;
 }
 
-void read_input_file (Malla& malla, const char * in_file) {
+void read_input_file (Malla& malla, const char * in_file, vector<Particle>& particles) {
 
   ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
@@ -89,7 +89,7 @@ void read_input_file (Malla& malla, const char * in_file) {
   /* TODO pasar struct constantes a malla*/
   // Creamos la malla y la llenamos de bloques vacíos
   create_fill_grid(malla, np, ppm_double);
-  refactor_gordo(in_file, malla);
+  refactor_gordo(in_file, malla, particles);
 
 
   // Read particle data in a single loop and cast from float to double
@@ -181,7 +181,7 @@ void check_np (int np){
 
 
 
-void refactor_gordo (const char * in_file, Malla& malla) {
+void refactor_gordo (const char * in_file, Malla& malla, vector<Particle>& particles){
   ifstream input_file(in_file, ios::binary);
   double trash;
   input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
@@ -210,7 +210,7 @@ void refactor_gordo (const char * in_file, Malla& malla) {
     array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
     // Linear mapping para encontrar el bloque correcto
     int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
-    insert_particle_info(info_particle_double,malla.blocks[index],counter, index);
+    insert_particle_info(info_particle_double,malla.blocks[index],counter, index, particles);
 
     counter++;
 
@@ -236,7 +236,7 @@ array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
 
 }
 
-void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index){
+void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index, vector<Particle>& particles) {
   Particle particle;
   particle.p = info[0];
   particle.hv = info[1];
@@ -245,7 +245,10 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   particle.rho = 0;
   particle.id = id;
   particle.current_block = block_index;
-  bloque.particles.emplace_back(particle);
+  // add particle reference to block
+  bloque.particles.push_back(id);
+  // add particle to vector
+  particles.push_back(particle);
 }
 
 void check_missmatch_particles(int counter, int malla_np) {
