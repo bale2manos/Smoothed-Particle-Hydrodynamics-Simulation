@@ -78,7 +78,7 @@ void create_fill_grid(Malla& malla, int np,double ppm){
 
 
 void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) {
-    double const h_squared = h * h;
+    const static auto h_squared = h * h;
     double const dx = pivot_coords[0] - particle2_coords[0];
     double const dy = pivot_coords[1] - particle2_coords[1];
     double const dz = pivot_coords[2] - particle2_coords[2];
