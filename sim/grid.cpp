@@ -111,15 +111,15 @@ void acceleration_transfer(Particle& pivot, Particle& particle2, double h, array
     double const density_pivot = pivot.rho;
     double const density_2 = particle2.rho;
     double const term3 = (density_pivot + density_2 - (2*rho_f));
-    double const denominator = (density_2  * density_pivot);
+    double const denominator = 1/(density_2  * density_pivot);
     double const numerator1 = acc_const[0]*term2*term3;
 
 
     for (int i=0; i<3; i++){
         double const term1 = (pivot.p[i]-particle2.p[i]);
         double const term4 = (particle2.v[i] - pivot.v[i]);
-        pivot.a[i] += ((term1*numerator1) + (term4*acc_const[1]))/denominator;
-        particle2.a[i] -= ((term1*numerator1) + (term4*acc_const[1]))/denominator;
+        pivot.a[i] += ((term1*numerator1) + (term4*acc_const[1]))*denominator;
+        particle2.a[i] -= ((term1*numerator1) + (term4*acc_const[1]))*denominator;
         }
 
   }
@@ -254,7 +254,10 @@ void acctransf(Malla& malla){
     double const h_value = malla.h;
     array<double,2> acc_constants = malla.acc_const;
 
+
+    int i=0;
     for (Block & block : malla.blocks) {
+        auto startTime = std::chrono::high_resolution_clock::now();
       for (Particle & particle_pivot : block.particles) {
             int const pivot_id = particle_pivot.id;
             //int const block_index = particle_pivot.current_block;
@@ -269,20 +272,13 @@ void acctransf(Malla& malla){
                 }
 
       }
-    }
-
-    /*
-    for (Block & block : malla.blocks) {
-      for (Particle & particle : block.particles) {
-            int const particle_id=particle.id;
-            // TODO creo que PARTICLE puede ser un struct Acceleration
-            particle.a[0] = new_accelerations[particle_id].accx;
-            particle.a[1] = new_accelerations[particle_id].accy;
-            particle.a[2] = new_accelerations[particle_id].accz;
+      auto endTime = std::chrono::high_resolution_clock::now();
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
+      if (duration.count()>1000){
+      std::cout << "TIEMPO Para bloque: "<< i<< "es: " << duration.count() << " microsegundos" << "\n";
       }
+      i++;
     }
-    */
-
 }
 
 
