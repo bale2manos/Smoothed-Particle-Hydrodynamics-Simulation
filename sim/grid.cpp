@@ -346,5 +346,5 @@ void malla_interaction(Malla& malla, vector<Particle>& particles){
     auto endTimeTotal = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(endTimeTotal - startTimeTotal);
     std::cout << "TIEMPO ITERACION: " << duration.count() << " microsegundos" << "\n";
-    cout << "**************************************" << "\n";
+    cout << "***************************************" << "\n";
 }
