@@ -255,31 +255,24 @@ void acctransf(Malla& malla){
     array<double,2> acc_constants = malla.acc_const;
 
 
-    int i=0;
+    int current_block_index=0;    // index del bloque del particle pivot
     for (Block & block : malla.blocks) {
-        auto startTime = std::chrono::high_resolution_clock::now();
       for (Particle & particle_pivot : block.particles) {
-            int const pivot_id = particle_pivot.id;
-            //int const block_index = particle_pivot.current_block;
             for (auto index: block.neighbours) {
-                    //if (index < block_index) { continue; }
-                    Block & neighbour_block = malla.blocks[index];
-                    for (Particle & particle2 : neighbour_block.particles) {
-                      if (pivot_id > particle2.id) {
-                      acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
+                    if (index <= current_block_index) {
+                      Block & neighbour_block = malla.blocks[index];
+                      for (Particle & particle2 : neighbour_block.particles) {
+                        acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
                       }
                     }
                 }
 
       }
-      auto endTime = std::chrono::high_resolution_clock::now();
-      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-      if (duration.count()>1000){
-      std::cout << "TIEMPO Para bloque:  "<< i<< "es: " << duration.count() << " microsegundos" << "\n";
-      }
-      i++;
+      current_block_index++;
     }
+
 }
+
 
 
 
