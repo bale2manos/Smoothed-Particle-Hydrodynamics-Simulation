@@ -314,6 +314,7 @@ void repos(Malla& malla){
             particles.push_back(particle_pivot);
       }
       block.particles.clear();
+      block.particles.shrink_to_fit();
     }
 
     for (Particle & particle : particles) {
@@ -328,7 +329,7 @@ void repos(Malla& malla){
       // fin antiguo initacc
 
       auto new_block = static_cast<size_t>(block_index);
-      malla.blocks[new_block].particles.push_back(particle);
+      malla.blocks[new_block].particles.emplace_back(particle);
     }
 
 

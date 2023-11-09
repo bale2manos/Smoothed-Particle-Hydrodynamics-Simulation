@@ -246,6 +246,7 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   particle.id = id;
   particle.current_block = block_index;
   bloque.particles.emplace_back(particle);
+
 }
 
 void check_missmatch_particles(int counter, int malla_np) {
