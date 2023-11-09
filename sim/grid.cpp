@@ -212,105 +212,84 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 
 
-void densinc(Malla& malla){
+void densinc(Malla& malla, vector<Particle>& particles){
     //vector<Particle> all_iterated_particles;
     //vector<double> new_densities(malla.np, 0);
     double const h_value = malla.h;
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            //Particle particle_updated = particle_pivot
-            int const pivot_id = particle_pivot.id;
-            array<double,3>& pivot_coords = particle_pivot.p;
-            double& pivot_rho = particle_pivot.rho;
-            for (auto index: block.neighbours) {
-                Block& neighbour_block = malla.blocks[index];
-                for (Particle & particle2 : neighbour_block.particles) {
-                    // int particle1_id = particle_updated.id; particle2_id = particle2.id;
-                    if (pivot_id > particle2.id) {
-                      increase_density(pivot_coords, particle2.p, h_value, pivot_rho, particle2.rho);
-                    }
+    for (Particle& particle_pivot: particles){
+        int const pivot_id = particle_pivot.id;
+        Block const& pivot_block = malla.blocks[particle_pivot.current_block];
+        for (auto index: pivot_block.neighbours){
+            Block const& neighbour_block = malla.blocks[index];
+            for (int const particle2_id: neighbour_block.particles_ids){
+                if (pivot_id > particle2_id){
+                    Particle& particle2 = particles[particle2_id];
+                    increase_density(particle_pivot.p, particle2.p, h_value, particle_pivot.rho, particle2.rho);
                 }
             }
-      }
+        }
     }
 }
 
 
 
-void denstransf(Malla& malla){
+void denstransf(Malla& malla, vector<Particle>& particles){
     double const h_value = malla.h;
     double const m_value = malla.m;
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            particle_pivot.rho = density_transformation(particle_pivot.rho, h_value, m_value);
-      }
+    for (Particle & particle_pivot : particles) {
+      particle_pivot.rho = density_transformation(particle_pivot.rho, h_value, m_value);
     }
 }
 
 
-void acctransf(Malla& malla){
+void acctransf(Malla& malla, vector<Particle>& particles){
     //vector<Acceleration> new_accelerations(malla.np, {0,g,0});
 
     double const h_value = malla.h;
     array<double,2> acc_constants = malla.acc_const;
 
-
-    int i=0;
-    for (Block & block : malla.blocks) {
-        auto startTime = std::chrono::high_resolution_clock::now();
-      for (Particle & particle_pivot : block.particles) {
-            int const pivot_id = particle_pivot.id;
-            //int const block_index = particle_pivot.current_block;
-            for (auto index: block.neighbours) {
-                    //if (index < block_index) { continue; }
-                    Block & neighbour_block = malla.blocks[index];
-                    for (Particle & particle2 : neighbour_block.particles) {
-                      if (pivot_id > particle2.id) {
-                      acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
-                      }
-                    }
+    for (Particle& particle_pivot: particles) {
+      int const pivot_id        = particle_pivot.id;
+      Block const & pivot_block = malla.blocks[particle_pivot.current_block];
+      for (auto index : pivot_block.neighbours) {
+            Block const & neighbour_block = malla.blocks[index];
+            for (int const particle2_id : neighbour_block.particles_ids) {
+                if (pivot_id > particle2_id) {
+                    Particle & particle2 = particles[particle2_id];
+                    acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
                 }
-
+            }
       }
-      auto endTime = std::chrono::high_resolution_clock::now();
-      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-      if (duration.count()>1000){
-      std::cout << "TIEMPO Para bloque: "<< i<< "es: " << duration.count() << " microsegundos" << "\n";
-      }
-      i++;
     }
+
+
 }
 
 
 
-void triplete(Malla &malla){
+void triplete(Malla &malla,vector<Particle>& particles){
     array<int,3> const n_blocks = malla.n_blocks;
-    for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            bool extremo = false;
-
-            if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
-                block.coords[0]==n_blocks[0]-1||block.coords[1]==n_blocks[1]-1||block.coords[2]==n_blocks[2]-1){
-                extremo = true;
-                wall_colissions(particle_pivot, block, n_blocks);
-            }
-            particle_movement(particle_pivot);
-            if (extremo){
-                limits_interaction(particle_pivot, block, n_blocks);
-            }
-      }
+    for (Particle& particle: particles){
+      bool extremo = false;
+        int const block_index = particle.current_block;
+        Block & block = malla.blocks[block_index];
+        if (block.coords[0] == 0||block.coords[1]==0||block.coords[2]==0||
+            block.coords[0]==n_blocks[0]-1||block.coords[1]==n_blocks[1]-1||block.coords[2]==n_blocks[2]-1){
+            extremo = true;
+            wall_colissions(particle, block, n_blocks);
+        }
+        particle_movement(particle);
+        if (extremo){
+            limits_interaction(particle, block, n_blocks);
+        }
     }
 }
 
 
-void repos(Malla& malla){
-    vector<Particle> particles;
+void repos(Malla& malla, vector<Particle>& particles){
+
     for (Block & block : malla.blocks) {
-      for (Particle & particle_pivot : block.particles) {
-            particles.push_back(particle_pivot);
-      }
-      block.particles.clear();
-      block.particles.shrink_to_fit();
+      block.particles_ids.clear();
     }
 
     for (Particle & particle : particles) {
@@ -318,14 +297,12 @@ void repos(Malla& malla){
               calculate_block_indexes(particle.p, malla);
       int const block_index = calculate_block_index(new_indexes,malla.n_blocks[0],malla.n_blocks[1]);
       particle.current_block = block_index;
+      malla.blocks[block_index].particles_ids.emplace_back(particle.id);
 
       // antiguo initacc
       particle.rho = 0;
       particle.a = {0, g, 0};
       // fin antiguo initacc
-
-      auto new_block = static_cast<size_t>(block_index);
-      malla.blocks[new_block].particles.emplace_back(particle);
     }
 
 
@@ -337,7 +314,7 @@ void repos(Malla& malla){
 
 
 
-void malla_interaction(Malla& malla){
+void malla_interaction(Malla& malla, vector<Particle>& particles){
     auto startTimeTotal = std::chrono::high_resolution_clock::now();
 
     repos(malla);

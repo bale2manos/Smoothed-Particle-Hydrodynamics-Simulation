@@ -20,7 +20,7 @@ struct Particle {
 
 struct Block {
     std::array<int,3> coords;             // coords[0] = i, coords[1] = j, coords[2] = k
-    std::vector<Particle> particles;
+    std::vector<int> particles_ids;
     std::vector<int> neighbours;
 };
 int initial_block_index(double position, double min_limit, double block_size);
