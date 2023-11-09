@@ -17,11 +17,10 @@ int main(int argc, const char *argv[]) {
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
   Malla malla;
-  vector<Particle> particles;
 
   // try catch of read_input_file and any exception
   try {
-    read_input_file(malla, args[2].c_str(), particles);
+    read_input_file(malla, args[2].c_str());
   } catch (const runtime_error& e) {
     cerr << e.what() << "\n";
     return -5;
@@ -35,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
     cout << "**************************************" << "\n";
     cout << "ITERACION NUMERO: " << iter << "\n";
-    malla_interaction(malla, particles);
+    malla_interaction(malla);
   }
 
 

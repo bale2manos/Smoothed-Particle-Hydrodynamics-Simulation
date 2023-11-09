@@ -64,10 +64,10 @@ void acceleration_transfer(Particle& pivot, Particle& particle2, double h, array
 void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) ;
 double density_transformation(double rho,double h, double m);
 
-void malla_interaction (Malla& malla, vector<Particle>& particles);
-void repos(Malla& malla, vector<Particle>& particles);
-void densinc(Malla& malla,vector<Particle>& particles);
-void denstransf(Malla& malla,vector<Particle>& particles);
-void acctransf(Malla& malla, vector<Particle>& particles);
-void triplete(Malla &malla, vector<Particle>& particles);
+void malla_interaction (Malla& malla);
+void repos(Malla& malla);
+void densinc(Malla& malla);
+void denstransf(Malla& malla);
+void acctransf(Malla& malla);
+void triplete(Malla &malla);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

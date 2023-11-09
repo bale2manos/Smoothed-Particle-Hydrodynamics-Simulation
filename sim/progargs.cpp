@@ -70,7 +70,7 @@ array<int,2> validate_parameters(int argc, const char* argv[]) {
   return error_type;
 }
 
-void read_input_file (Malla& malla, const char * in_file, vector<Particle>& particles) {
+void read_input_file (Malla& malla, const char * in_file) {
 
   ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
@@ -89,7 +89,7 @@ void read_input_file (Malla& malla, const char * in_file, vector<Particle>& part
   /* TODO pasar struct constantes a malla*/
   // Creamos la malla y la llenamos de bloques vacíos
   create_fill_grid(malla, np, ppm_double);
-  refactor_gordo(in_file, malla, particles);
+  refactor_gordo(in_file, malla);
 
 
   // Read particle data in a single loop and cast from float to double
@@ -107,7 +107,7 @@ void read_input_file (Malla& malla, const char * in_file, vector<Particle>& part
 
 
 
-int write_output_file (Malla& malla, const char * out_file, vector<Particle>& particles){
+int write_output_file (Malla& malla, const char * out_file){
   int np = malla.np;
   float ppm = malla.ppm;
   //Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
@@ -118,10 +118,13 @@ int write_output_file (Malla& malla, const char * out_file, vector<Particle>& pa
   float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
   vector<Particle> particles_out;
   // Loop through all the blocks
-  for (Particle& particle : particles) {
-    particles_out.emplace_back(particle);
+  for (Block & block : malla.blocks) {
+    // Loop through all the particles in the block
+    for (Particle & particle : block.particles) {
+      // Cast from double to float and write to file
+      particles_out.push_back(particle);
+    }
   }
-
   // Sort particles_out by id
   sort(particles_out.begin(), particles_out.end(), [](Particle & a, Particle & b) { return a.id < b.id; });
 
@@ -178,7 +181,7 @@ void check_np (int np){
 
 
 
-void refactor_gordo (const char * in_file, Malla& malla, vector<Particle>& particles) {
+void refactor_gordo (const char * in_file, Malla& malla) {
   ifstream input_file(in_file, ios::binary);
   double trash;
   input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
@@ -207,7 +210,7 @@ void refactor_gordo (const char * in_file, Malla& malla, vector<Particle>& parti
     array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
     // Linear mapping para encontrar el bloque correcto
     int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
-    insert_particle_info(info_particle_double,malla.blocks[index],counter, index, particles);
+    insert_particle_info(info_particle_double,malla.blocks[index],counter, index);
 
     counter++;
 
@@ -235,7 +238,7 @@ array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
 
 }
 
-void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index, vector<Particle>& particles){
+void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index){
   Particle particle{};
   particle.p = info[0];
   particle.hv = info[1];
@@ -244,8 +247,8 @@ void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id
   particle.rho = 0;
   particle.id = id;
   particle.current_block = block_index;
-  bloque.particles_ids.emplace_back(id);
-  particles.emplace_back(particle);
+  bloque.particles.emplace_back(particle);
+
 }
 
 void check_missmatch_particles(int counter, int malla_np) {
