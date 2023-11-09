@@ -221,23 +221,25 @@ void refactor_gordo (const char * in_file, Malla& malla) {
 
 
 array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
-  int i,j,k;
-  i = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
-  j = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
-  k = initial_block_index(positions[2], zmin,  malla.size_blocks[2]);
+  int i_index=0;
+  int j_index=0;
+  int k_index=0;
+  i_index = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
+  j_index = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
+  k_index = initial_block_index(positions[2], zmin,  malla.size_blocks[2]);
   /* TODO problema coma flotante floor error */
-  if (i<0){i = 0;}
-  if (j<0){j = 0;}
-  if (k<0){k = 0;}
-  if (i >= malla.n_blocks[0]) {i = malla.n_blocks[0] - 1;}
-  if (j >= malla.n_blocks[1]){j = malla.n_blocks[1] - 1;}
-  if (k >= malla.n_blocks[2]){k = malla.n_blocks[2] - 1;}
-  return array<int, 3>{i,j,k};
+  if (i_index<0){i_index = 0;}
+  if (j_index<0){j_index = 0;}
+  if (k_index<0){k_index = 0;}
+  if (i_index >= malla.n_blocks[0]) {i_index = malla.n_blocks[0] - 1;}
+  if (j_index >= malla.n_blocks[1]){j_index = malla.n_blocks[1] - 1;}
+  if (k_index >= malla.n_blocks[2]){k_index = malla.n_blocks[2] - 1;}
+  return array<int, 3>{i_index,j_index,k_index};
 
 }
 
 void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index){
-  Particle particle;
+  Particle particle{};
   particle.p = info[0];
   particle.hv = info[1];
   particle.v = info[2];
