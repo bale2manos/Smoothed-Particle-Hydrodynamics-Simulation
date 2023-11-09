@@ -216,7 +216,7 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 
 void densinc(Malla& malla, vector<Particle>& particles){
-    double const h_value = malla.h;
+    double const  h_value = malla.h;
 
     for (Particle & particle_pivot: particles){
         int const particle_pivot_id = particle_pivot.id;
@@ -245,11 +245,8 @@ void denstransf(Malla& malla, vector<Particle>& particles){
 
 
 void acctransf(Malla& malla, vector<Particle>& particles){
-
     double const h_value = malla.h;
     array<double,2> acc_constants = malla.acc_const;
-
-
     for (Particle & particle_pivot: particles){
        int const particle_pivot_id = particle_pivot.id;
        Block & current_block =  malla.blocks[particle_pivot.current_block];
@@ -259,9 +256,7 @@ void acctransf(Malla& malla, vector<Particle>& particles){
                acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
            }
        }
-
     }
-
 }
 
 
