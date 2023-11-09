@@ -22,6 +22,7 @@ struct Block {
     std::array<int,3> coords;             // coords[0] = i, coords[1] = j, coords[2] = k
     std::vector<int> particles;           // vector de ids de particulas
     std::vector<int> neighbours;
+    std::vector<int> neighbours_particles;
 };
 
 

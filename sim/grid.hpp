@@ -67,6 +67,7 @@ double density_transformation(double rho,double h, double m);
 void malla_interaction(Malla& malla, vector<Particle>& particles);
 void repos(Malla& malla, vector<Particle>& particles);
 void densinc(Malla& malla, vector<Particle>& particles);
+void denstransf(Malla& malla, vector<Particle>& particles);
 void acctransf(Malla& malla, vector<Particle>& particles);
 void triplete(Malla &malla, vector<Particle>& particles);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP
