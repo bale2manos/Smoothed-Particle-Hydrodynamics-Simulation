@@ -234,7 +234,6 @@ void densinc(Malla& malla, vector<Particle>& particles){
 
 
 void acctransf(Malla& malla, vector<Particle>& particles){
-    //vector<Acceleration> new_accelerations(malla.np, {0,g,0});
 
     double const h_value = malla.h;
     array<double,2> acc_constants = malla.acc_const;

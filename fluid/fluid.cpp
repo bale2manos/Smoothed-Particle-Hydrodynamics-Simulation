@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
 
   // try catch of read_input_file and any exception
   try {
-    read_input_file(malla, args[2].c_str());
+    read_input_file(malla, args[2].c_str(), particles);
   } catch (const runtime_error& e) {
     cerr << e.what() << "\n";
     return -5;
@@ -38,8 +38,7 @@ int main(int argc, const char *argv[]) {
   }
 
 
-
-  write_output_file(malla, argv[3]);
+  write_output_file(malla, argv[3], particles);
   // time end
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(stop - start);
