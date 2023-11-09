@@ -259,10 +259,18 @@ void acctransf(Malla& malla){
     for (Block & block : malla.blocks) {
       for (Particle & particle_pivot : block.particles) {
             for (auto index: block.neighbours) {
-                    if (index <= current_block_index) {
+                    if (index < current_block_index) {
                       Block & neighbour_block = malla.blocks[index];
                       for (Particle & particle2 : neighbour_block.particles) {
                         acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
+
+                      }
+                    }else if(index == current_block_index){
+                      Block & neighbour_block = malla.blocks[index];
+                      for (Particle & particle2 : neighbour_block.particles) {
+                          if (particle2.id < particle_pivot.id) {
+                            acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
+                          }
                       }
                     }
                 }
