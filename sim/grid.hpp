@@ -60,14 +60,13 @@ void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks)
 void edge_interaction(Particle& particle,int extremo,int eje);
 
 
-void acceleration_transfer(Particle& pivot, Particle& particle2, double h, array<double,2>& acc_const);
+void acceleration_transfer(Particle & pivot, Particle & particle2, double h,const array<double, 2> & acc_const) ;
 void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) ;
 double density_transformation(double rho,double h, double m);
 
-void malla_interaction (Malla& malla);
-void repos(Malla& malla);
-void densinc(Malla& malla);
-void denstransf(Malla& malla);
-void acctransf(Malla& malla);
-void triplete(Malla &malla);
+void malla_interaction(Malla& malla, vector<Particle>& particles);
+void repos(Malla& malla, vector<Particle>& particles);
+void densinc(Malla& malla, vector<Particle>& particles);
+void acctransf(Malla& malla, vector<Particle>& particles);
+void triplete(Malla &malla, vector<Particle>& particles);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

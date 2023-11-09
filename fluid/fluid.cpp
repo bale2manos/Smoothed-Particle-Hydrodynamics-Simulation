@@ -17,6 +17,7 @@ int main(int argc, const char *argv[]) {
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
   Malla malla;
+  vector<Particle> particles;
 
   // try catch of read_input_file and any exception
   try {
@@ -31,10 +32,9 @@ int main(int argc, const char *argv[]) {
 
 
   for (int iter = 0; iter < num_iterations; iter++) {
-
     cout << "**************************************" << "\n";
     cout << "ITERACION NUMERO: " << iter << "\n";
-    malla_interaction(malla);
+    malla_interaction(malla, particles);
   }
 
 
