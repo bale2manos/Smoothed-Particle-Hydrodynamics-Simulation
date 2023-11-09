@@ -275,7 +275,7 @@ void acctransf(Malla& malla){
       auto endTime = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
       if (duration.count()>1000){
-      std::cout << "TIEMPO Para bloque: "<< i<< "es: " << duration.count() << " microsegundos" << "\n";
+      std::cout << "TIEMPO Para bloque:  "<< i<< "es: " << duration.count() << " microsegundos" << "\n";
       }
       i++;
     }
