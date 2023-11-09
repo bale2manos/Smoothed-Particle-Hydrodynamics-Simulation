@@ -11,8 +11,8 @@
 struct Particle {
     int current_block;
     int id;
-    double rho;
     std::array<double,3> p, hv, v, a;
+    double rho;
 
 };
 
