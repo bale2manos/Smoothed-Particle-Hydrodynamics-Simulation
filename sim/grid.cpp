@@ -340,20 +340,20 @@ void repos(Malla& malla){
 void malla_interaction(Malla& malla){
     auto startTimeTotal = std::chrono::high_resolution_clock::now();
 
-    repos(malla,particles);
+    repos(malla);
 
     //initacc(malla);
 
     auto startTime = std::chrono::high_resolution_clock::now();
-    densinc(malla,particles);
+    densinc(malla);
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
     std::cout << "TIEMPO densinc: " << duration.count() << " microsegundos" << "\n";
 
-    denstransf(malla,particles);
+    denstransf(malla);
 
     startTime = std::chrono::high_resolution_clock::now();
-    acctransf(malla,particles);
+    acctransf(malla);
     endTime = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
     std::cout << "TIEMPO acctransf: " << duration.count() << " microsegundos" << "\n";
@@ -364,7 +364,7 @@ void malla_interaction(Malla& malla){
 
     //boundint(malla);
 
-    triplete(malla,particles);
+    triplete(malla);
 
     auto endTimeTotal = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(endTimeTotal - startTimeTotal);
