@@ -28,47 +28,58 @@ double const zmax = 0.065;
 double const zmin = -0.065;
 double const g = -9.8;
 
+class Malla {
+  public:
+    Malla(int np, double ppm);
 
-struct Malla {
-    int np; double ppm;
+    vector<Block> createFillGrid();
+    void insert_particles (const char * in_file);
+    void insert_particle_info(array<array<double, 3>, 3> info, int id, int block_index);
+    array<int, 3> calculate_block_indexes(array <double,3> positions);
+    void repos();
+    void densinc();
+    void acctransf();
+    void triplete();
+    void mallaInteraction();
+    int getNp() const;
+    double getPpm() const;
+    double getH() const;
+    array<int, 3>  getNBlocks() const;
+    array<double, 3>  getSizeBlocks() const;
+    std::vector<Particle> getParticles() const; // New method to retrieve particles
+    int nx_calc (double xmax, double xmin, double h);
+    int ny_calc (double ymax, double ymin, double h);
+    int nz_calc (double zmax, double zmin, double h);
+    double sx_calc (double xmax, double xmin, int nx);
+    double sy_calc (double ymax, double ymin, int ny);
+    double sz_calc (double zmax, double zmin, int nz);
+    double smooth_length ();
+    double particle_mass ();
+
+
+    void wall_colissions(Particle& particle, Block& block);
+    void edge_collisions(Particle& particula, int extremo, int eje);
+    void particle_movement(Particle& particle);
+    void limits_interaction(Particle& particle, Block& block);
+    void edge_interaction(Particle& particle,int extremo,int eje);
+
+
+    void acceleration_transfer(Particle & pivot, Particle & particle2) ;
+    void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho);
+    double density_transformation(double rho);
+  private:
+    int np;
+    double ppm;
     std::vector<Block> blocks;
-    std::array<int,3>n_blocks;
-    std::array<double,3> size_blocks;
+    std::array<int, 3> nBlocks;
+    std::array<double, 3> sizeBlocks;
     double h, m;
-
-    std::array<double,2>acc_const;
-
+    std::array<double, 2> accConst;
+    std::vector<Particle> particles;
 };
 
 
 
-void calculate_constants(double ppm, int np, Malla& malla);
-int nx_calc (double xmax, double xmin, double h);
-int ny_calc (double ymax, double ymin, double h);
-int nz_calc (double zmax, double zmin, double h);
-double sx_calc (double xmax, double xmin, int nx);
-double sy_calc (double ymax, double ymin, int ny);
-double sz_calc (double zmax, double zmin, int nz);
-double smooth_length (double ppm);
-double particle_mass (double ppm);
-void create_fill_grid(Malla& malla, int np,double ppm);
 
 
-void wall_colissions(Particle& particle, Block& block, array<int,3> n_blocks);
-void edge_collisions(Particle& particula, int extremo, int eje);
-void particle_movement(Particle& particle);
-void limits_interaction(Particle& particle, Block& block, array<int,3> n_blocks);
-void edge_interaction(Particle& particle,int extremo,int eje);
-
-
-void acceleration_transfer(Particle & pivot, Particle & particle2, double h, const array<double, 2> & acc_const) ;
-void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) ;
-double density_transformation(double rho,double h, double m);
-
-void malla_interaction(Malla& malla, vector<Particle>& particles);
-void repos(Malla& malla, vector<Particle>& particles);
-void densinc(Malla& malla, vector<Particle>& particles);
-void denstransf(Malla& malla, vector<Particle>& particles);
-void acctransf(Malla& malla, vector<Particle>& particles);
-void triplete(Malla &malla, vector<Particle>& particles);
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP

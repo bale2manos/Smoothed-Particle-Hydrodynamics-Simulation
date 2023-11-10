@@ -16,40 +16,29 @@ int main(int argc, const char *argv[]) {
   vector<string> const args(argv, argv + argc);
   array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
-  Malla malla;
-  vector<Particle> particles;
 
   // try catch of read_input_file and any exception
+  int const num_iterations = atoi(argv[1]);
   try {
-    read_input_file(malla, args[2].c_str(), particles);
+    Malla malla = read_input_file(args[2].c_str());
+    for (int iter = 0; iter < num_iterations; iter++) {
+      cout << "**************************************" << "\n";
+      cout << "ITERACION NUMERO: " << iter << "\n";
+      malla.mallaInteraction();
+    }
+    write_output_file(malla, argv[3]);
+
   } catch (const runtime_error& e) {
     cerr << e.what() << "\n";
     return -5;
   }
-
-  int const num_iterations = atoi(argv[1]);
-
-
-
-  for (int iter = 0; iter < num_iterations; iter++) {
-    cout << "**************************************" << "\n";
-    cout << "ITERACION NUMERO: " << iter << "\n";
-    malla_interaction(malla, particles);
-  }
-
-
-  write_output_file(malla, argv[3], particles);
-  // time end
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(stop - start);
   cout << "Time taken by function: " << duration.count() << " microseconds" << endl;
   // cast from micoseconds to minutes and seconds
-        int minutes = duration.count() / 60000000;
-        int seconds = (duration.count() - minutes * 60000000) / 1000000;
-        cout << "Time taken by function: " << minutes << " minutes and " << seconds << " seconds" << endl;
-
-
-
+  int minutes = duration.count() / 60000000;
+  int seconds = (duration.count() - minutes * 60000000) / 1000000;
+  cout << "Time taken by function: " << minutes << " minutes and " << seconds << " seconds" << endl;
 
   return 0;
 }

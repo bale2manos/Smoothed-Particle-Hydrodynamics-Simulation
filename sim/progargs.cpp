@@ -70,7 +70,7 @@ array<int,2> validate_parameters(int argc, const char* argv[]) {
   return error_type;
 }
 
-void read_input_file (Malla& malla, const char * in_file, vector<Particle>& particles) {
+Malla read_input_file (const char * in_file) {
 
   ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
 
@@ -88,9 +88,9 @@ void read_input_file (Malla& malla, const char * in_file, vector<Particle>& part
 
   /* TODO pasar struct constantes a malla*/
   // Creamos la malla y la llenamos de bloques vacíos
-  create_fill_grid(malla, np, ppm_double);
-  refactor_gordo(in_file, malla, particles);
-
+  //create_fill_grid(malla, np, ppm_double);
+  Malla grid(np, ppm_double);
+  grid.insert_particles(in_file);
 
   // Read particle data in a single loop and cast from float to double
 
@@ -98,18 +98,19 @@ void read_input_file (Malla& malla, const char * in_file, vector<Particle>& part
 
   cout << "Number of particles: " << np << "\n";
   cout << "Particles per meter: " << ppm << "\n";
-  cout << "Smoothing length: " << malla.h << "\n";
-  cout << "Particle mass: " << particle_mass(ppm) << "\n";
-  cout << "Grid size: " << malla.n_blocks[0] << " x " << malla.n_blocks[1] << " x " << malla.n_blocks[2] << "\n";
-  cout << "Number of blocks: " <<  malla.n_blocks[0] *  malla.n_blocks[1] *  malla.n_blocks[2] << "\n";
-  cout << "Block size: " << malla.size_blocks[0] << " x " << malla.size_blocks[1] << " x " << malla.size_blocks[2] << "\n";
+  cout << "Smoothing length: " << grid.getH() << "\n";
+  cout << "Particle mass: " << grid.particle_mass() << "\n";
+  cout << "Grid size: " << grid.getNBlocks()[0] << " x " << grid.getNBlocks()[1]  << " x " << grid.getNBlocks()[2] << "\n";
+  cout << "Number of blocks: " <<  grid.getNBlocks()[0] *  grid.getNBlocks()[1] *  grid.getNBlocks()[2] << "\n";
+  cout << "Block size: " << grid.getSizeBlocks()[0] << " x " << grid.getSizeBlocks()[1] << " x " << grid.getSizeBlocks()[2] << "\n";
+  return grid;
 }
 
 
 
-int write_output_file (Malla& malla, const char * out_file, vector<Particle>& particles){
-  int np = malla.np;
-  float ppm = malla.ppm;
+int write_output_file (Malla& malla, const char * out_file){
+  int np = malla.getNp();
+  double ppm = malla.getPpm();
   //Escribir en el archivo np y ppm antes de entrar en el bucle para las partículas
   ofstream output_file(out_file, ios::binary);
   output_file.write(reinterpret_cast<char*>(&ppm), sizeof(ppm));
@@ -118,7 +119,7 @@ int write_output_file (Malla& malla, const char * out_file, vector<Particle>& pa
   float px_float, py_float, pz_float, hvx_float, hvy_float, hvz_float, vx_float, vy_float, vz_float;
   vector<Particle> particles_out;
   // Loop through all the blocks
-  for (Particle & particle: particles){
+  for (Particle & particle: malla.getParticles()){
       particles_out.push_back(particle);
   }
 
@@ -179,75 +180,10 @@ void check_np (int np){
 
 
 
-void refactor_gordo (const char * in_file, Malla& malla, vector<Particle>& particles) {
-  ifstream input_file(in_file, ios::binary);
-  double trash;
-  input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
-  array<array<float, 3>, 3> info_particle;
-  array<array<double, 3>, 3> info_particle_double;
-  int counter = 0;
-
-  while (input_file.read(reinterpret_cast<char *>(&info_particle[0][0]), sizeof(info_particle[0][0]))) {
-    // if i < np then read the next 8 floats, else continue
-    input_file.read(reinterpret_cast<char *>(&info_particle[0][1]), sizeof(info_particle[0][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[0][2]), sizeof(info_particle[0][2]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][0]), sizeof(info_particle[1][0]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][1]), sizeof(info_particle[1][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][2]), sizeof(info_particle[1][2]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][0]), sizeof(info_particle[2][0]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][1]), sizeof(info_particle[2][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][2]), sizeof(info_particle[2][2]));
-
-    for (size_t i = 0; i < info_particle.size(); ++i) {
-      for (size_t j = 0; j < info_particle[i].size(); ++j) {
-        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);
-      }
-    }
 
 
-    array<int, 3> index_array = calculate_block_indexes(info_particle_double[0], malla);
-    // Linear mapping para encontrar el bloque correcto
-    int index = index_array[0] + index_array[1] * malla.n_blocks[0] + index_array[2] * malla.n_blocks[0] * malla.n_blocks[1];
-    insert_particle_info(info_particle_double,malla.blocks[index],counter, index, particles);
-
-    counter++;
-
-  }
-
-  check_missmatch_particles(counter, malla.np);
-}
 
 
-array<int, 3> calculate_block_indexes(array <double,3> positions, Malla& malla){
-  int i_index=0;
-  int j_index=0;
-  int k_index=0;
-  i_index = initial_block_index(positions[0], xmin,  malla.size_blocks[0]);
-  j_index = initial_block_index(positions[1], ymin,  malla.size_blocks[1]);
-  k_index = initial_block_index(positions[2], zmin,  malla.size_blocks[2]);
-  /* TODO problema coma flotante floor error */
-  if (i_index<0){i_index = 0;}
-  if (j_index<0){j_index = 0;}
-  if (k_index<0){k_index = 0;}
-  if (i_index >= malla.n_blocks[0]) {i_index = malla.n_blocks[0] - 1;}
-  if (j_index >= malla.n_blocks[1]){j_index = malla.n_blocks[1] - 1;}
-  if (k_index >= malla.n_blocks[2]){k_index = malla.n_blocks[2] - 1;}
-  return array<int, 3>{i_index,j_index,k_index};
-
-}
-
-void insert_particle_info(array<array<double, 3>, 3> info, Block& bloque, int id, int block_index, vector<Particle>& particles){
-  Particle particle{};
-  particle.p = info[0];
-  particle.hv = info[1];
-  particle.v = info[2];
-  particle.a = {0,0,0};
-  particle.rho = 0;
-  particle.id = id;
-  particle.current_block = block_index;
-  bloque.particles.emplace_back(id);
-  particles.emplace_back(particle);
-}
 
 void check_missmatch_particles(int counter, int malla_np) {
   if (counter != malla_np) {
