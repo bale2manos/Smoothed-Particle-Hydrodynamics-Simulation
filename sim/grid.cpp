@@ -119,11 +119,12 @@ void acceleration_transfer(Particle & pivot, Particle & particle2, double h,
     );
 
     if (norm <= h) {
-        static auto factor    = sqrt(pow(10, -12));
-        static auto doble_rho = 2 * rho_f;
+        const static auto factor    = 1e-6;
+        const static auto doble_rho = 2 * rho_f;
         double const distij         = max(norm, factor);
+        double const difference_h_distij = h - distij;
 
-        double const term2 = pow(h - distij, 2) / distij;
+        double const term2 = difference_h_distij*difference_h_distij / distij;
         // Sacamos todas las constantes fuera del bucle.
         double const density_pivot = pivot.rho;
         double const density_2     = particle2.rho;
@@ -179,7 +180,7 @@ void edge_collisions(Particle& particula, int extremo, int eje) {
 
 void particle_movement(Particle& particle){
 
-    double delta_t_squared = pow(delta_t,2);
+    double delta_t_squared = delta_t * delta_t;
     double delta_t_half = delta_t*0.5;
 
     for(int i =0;i<3;i++){
