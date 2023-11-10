@@ -18,12 +18,32 @@ struct Particle {
 
 
 
-struct Block {
+struct Block2 {
     std::array<int,3> coords;             // coords[0] = i, coords[1] = j, coords[2] = k
     std::vector<int> particles;           // vector de ids de particulas
     std::vector<int> neighbours;
     std::vector<int> neighbours_particles;
 };
+
+
+class Block {
+  public:
+    Block(const std::array<int, 3>& block_coords, const std::array<int, 3>& n_blocks);
+
+    // Other member functions or variables can be added here as needed
+
+  private:
+    std::vector<int> check_neighbours(const std::array<int, 3>& n_blocks);
+
+  public:
+    std::array<int, 3> coords;
+    std::vector<int> particles;
+    std::vector<int> neighbours;
+    std::vector<int> neighbours_particles;
+};
+
+
+
 
 
 int initial_block_index(double position, double min_limit, double block_size);

@@ -72,7 +72,8 @@ void create_fill_grid(Malla& malla, int np,double ppm){
         for (int j = 0; j < n_blocks[1]; ++j) {
             for (int i = 0; i < n_blocks[0]; ++i) {
                 std::array<int, 3> const indexes = {i,j,k};
-                malla.blocks.push_back(Block(indexes, {}, check_neighbours({i,j,k}, n_blocks), {}));
+                //malla.blocks.push_back(Block(indexes, {}, check_neighbours({i,j,k}, n_blocks), {}));
+                malla.blocks.emplace_back(indexes, n_blocks);
             }
         }
     }

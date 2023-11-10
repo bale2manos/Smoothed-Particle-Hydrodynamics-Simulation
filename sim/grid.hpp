@@ -30,7 +30,8 @@ double const g = -9.8;
 
 
 struct Malla {
-    int np; double ppm; vector<Block> blocks;
+    int np; double ppm;
+    std::vector<Block> blocks;
     std::array<int,3>n_blocks;
     std::array<double,3> size_blocks;
     double h, m;

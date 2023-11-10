@@ -39,3 +39,35 @@ vector<int> check_neighbours(array<int,3> coords, array<int,3> n_blocks){
     }
     return neighbours;
 }
+
+
+
+Block::Block(const std::array<int, 3>& block_coords, const std::array<int, 3>& n_blocks)
+  : coords(block_coords) {
+    neighbours = check_neighbours(n_blocks);
+}
+
+
+
+std::vector<int> Block::check_neighbours(const std::array<int, 3>& n_blocks) {
+    // first push back the block itself
+    // TODO revisar si esto mejora el calculo de vecinos (agrupa vecinos)
+    neighbours.push_back(calculate_block_index(coords, n_blocks[0], n_blocks[1]));
+
+    for (int k_aux = -1; k_aux < 2; k_aux++) {
+        for (int j_aux = -1; j_aux < 2; j_aux++) {
+            for (int i_aux = -1; i_aux < 2; i_aux++) {
+              if (i_aux != 0 || j_aux != 0 || k_aux != 0) { // no queremos que se añada el bloque en si mismo de nuevo
+                if (coords[0] + i_aux > -1 && coords[0] + i_aux < n_blocks[0] &&
+                    coords[1] + j_aux > -1 && coords[1] + j_aux < n_blocks[1] &&
+                    coords[2] + k_aux > -1 && coords[2] + k_aux < n_blocks[2]) {
+                    neighbours.push_back(calculate_block_index({coords[0] + i_aux, coords[1] + j_aux, coords[2] + k_aux}, n_blocks[0], n_blocks[1]));
+                }
+              }
+            }
+        }
+    }
+    return neighbours;
+}
+
+
