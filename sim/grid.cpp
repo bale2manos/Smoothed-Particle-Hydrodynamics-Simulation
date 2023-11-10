@@ -65,14 +65,18 @@ double particle_mass (double ppm){
 void create_fill_grid(Malla& malla, int np,double ppm){
     //Malla malla(np, ppm, vector<Block>(),nx,ny,nz,h,m,sx,sy,sz);
     calculate_constants(ppm, np, malla);
-    malla.blocks = {};
     array<int,3> const n_blocks = malla.n_blocks;
         // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
+
     for (int k = 0; k < n_blocks[2]; ++k) {
         for (int j = 0; j < n_blocks[1]; ++j) {
             for (int i = 0; i < n_blocks[0]; ++i) {
                 std::array<int, 3> const indexes = {i,j,k};
-                malla.blocks.push_back(Block(indexes, {}, check_neighbours({i,j,k}, n_blocks), {}));
+                Block block;
+                block.coords = indexes;
+                block.particles = {};
+                block.neighbours = check_neighbours(indexes, n_blocks);
+                malla.blocks.emplace_back(block);
             }
         }
     }
