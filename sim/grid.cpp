@@ -2,6 +2,8 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
+
+#include <math.h>
 #include "progargs.hpp"
 # define M_PI           3.14159265358979323846  /* pi */
 #include <cmath>
@@ -79,10 +81,10 @@ void create_fill_grid(Malla& malla, int np,double ppm){
 
 void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double h, double& pivot_rho, double& particle2_rho) {
     const static auto h_squared = h * h;
-    double const dx = pivot_coords[0] - particle2_coords[0];
-    double const dy = pivot_coords[1] - particle2_coords[1];
-    double const dz = pivot_coords[2] - particle2_coords[2];
-    double const norm_squared = dx * dx + dy * dy + dz * dz;
+    double const dx_differ = pivot_coords[0] - particle2_coords[0];
+    double const dy_differ = pivot_coords[1] - particle2_coords[1];
+    double const dz_differ = pivot_coords[2] - particle2_coords[2];
+    double const norm_squared = dx_differ * dx_differ + dy_differ * dy_differ + dz_differ * dz_differ;
     if (norm_squared < h_squared) {
         double const diff = (h_squared - norm_squared);
         double const increase =  diff *  diff * diff;
@@ -121,13 +123,13 @@ void acceleration_transfer(Particle & pivot, Particle & particle2, double h,
         static auto doble_rho = 2 * rho_f;
         double const distij         = max(norm, factor);
 
-    double const term2 = pow(h - distij, 2) / distij;
-    // Sacamos todas las constantes fuera del bucle.
-    double const density_pivot = pivot.rho;
-    double const density_2     = particle2.rho;
-    double const term3         = (density_pivot + density_2 - (2 * rho_f));
-    double const denominator   = 1 / (density_2 * density_pivot);
-    double const numerator1    = acc_const[0] * term2 * term3;
+        double const term2 = pow(h - distij, 2) / distij;
+        // Sacamos todas las constantes fuera del bucle.
+        double const density_pivot = pivot.rho;
+        double const density_2     = particle2.rho;
+        double const term3         = (density_pivot + density_2 - (doble_rho));
+        double const denominator   = 1 / (density_2 * density_pivot);
+        double const numerator1    = acc_const[0] * term2 * term3;
 
         for (int i = 0; i < 3; i++) {
             double const term1  = (pivot.p[i] - particle2.p[i]);
@@ -228,7 +230,7 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 void densinc(Malla& malla, vector<Particle>& particles){
     double const  h_value = malla.h;
     double const  m_value = malla.m;
-
+    
     for (Particle & particle_pivot: particles){
         int const particle_pivot_id = particle_pivot.id;
         Block & current_block =  malla.blocks[particle_pivot.current_block];
