@@ -9,7 +9,7 @@
 
 
 struct Particle {
-    std::array<double,3> p, hv, v, a;
+    std::array<double,3> hv, p, v, a;
     double rho;
     int id;
     int current_block;

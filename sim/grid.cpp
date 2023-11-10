@@ -4,7 +4,7 @@
 #include "grid.hpp"
 #include "progargs.hpp"
 # define M_PI           3.14159265358979323846  /* pi */
-#include <math.h>
+#include <cmath>
 #include <unordered_map>
 #include <iostream>
 #include <chrono>
@@ -84,7 +84,8 @@ void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle
     double const dz = pivot_coords[2] - particle2_coords[2];
     double const norm_squared = dx * dx + dy * dy + dz * dz;
     if (norm_squared < h_squared) {
-        double increase =  pow(h_squared - norm_squared, 3);
+        double const diff = (h_squared - norm_squared);
+        double const increase =  diff *  diff * diff;
         pivot_rho += increase;
         particle2_rho += increase;
     }
@@ -102,15 +103,23 @@ double density_transformation(double rho, double h, double m){
 void acceleration_transfer(Particle & pivot, Particle & particle2, double h,
                            const array<double, 2> & acc_const) {
     // Aquí calculamos los términos por separado de la ecuación grande.
+    // Aquí calculamos los términos por separado de la ecuación grande.
+    array<double,3>& position_pivot = pivot.p;
+    array<double,3>& position_2 = particle2.p;
+
+
+    double const differ_x = position_pivot[0] - position_2[0];
+    double const differ_y = position_pivot[1] - position_2[1];
+    double const differ_z = position_pivot[2] - position_2[2];
+
     double const norm = sqrt(
-        (pivot.p[0] - particle2.p[0]) * (pivot.p[0] - particle2.p[0]) +
-        (pivot.p[1] - particle2.p[1]) * (pivot.p[1] - particle2.p[1]) +
-        (pivot.p[2] - particle2.p[2]) * (pivot.p[2] - particle2.p[2]));
+        differ_x * differ_x + differ_y * differ_y + differ_z * differ_z
+    );
 
-    if (norm >= h) { return; }
-
-    const static auto factor = sqrt(pow(10, -12));
-    double const distij = max(norm, factor);
+    if (norm <= h) {
+        static auto factor    = sqrt(pow(10, -12));
+        static auto doble_rho = 2 * rho_f;
+        double const distij         = max(norm, factor);
 
     double const term2 = pow(h - distij, 2) / distij;
     // Sacamos todas las constantes fuera del bucle.
@@ -120,11 +129,12 @@ void acceleration_transfer(Particle & pivot, Particle & particle2, double h,
     double const denominator   = 1 / (density_2 * density_pivot);
     double const numerator1    = acc_const[0] * term2 * term3;
 
-    for (int i = 0; i < 3; i++) {
-        double const term1  = (pivot.p[i] - particle2.p[i]);
-        double const term4  = (particle2.v[i] - pivot.v[i]);
-        pivot.a[i]         += ((term1 * numerator1) + (term4 * acc_const[1])) * denominator;
-        particle2.a[i]     -= ((term1 * numerator1) + (term4 * acc_const[1])) * denominator;
+        for (int i = 0; i < 3; i++) {
+            double const term1  = (pivot.p[i] - particle2.p[i]);
+            double const term4  = (particle2.v[i] - pivot.v[i]);
+            pivot.a[i]         += ((term1 * numerator1) + (term4 * acc_const[1])) * denominator;
+            particle2.a[i]     -= ((term1 * numerator1) + (term4 * acc_const[1])) * denominator;
+        }
     }
 }
 
@@ -248,11 +258,11 @@ void denstransf(Malla& malla, vector<Particle>& particles){
 
 void acctransf(Malla& malla, vector<Particle>& particles){
     double const h_value = malla.h;
-    array<double,2> acc_constants = malla.acc_const;
+    array<double,2> const acc_constants = malla.acc_const;
     for (Particle & particle_pivot: particles){
         int const particle_pivot_id = particle_pivot.id;
-        Block & current_block =  malla.blocks[particle_pivot.current_block];
-        vector<int>& neighbours_particles = current_block.neighbours_particles;
+        Block const & current_block =  malla.blocks[particle_pivot.current_block];
+        vector<int> const & neighbours_particles = current_block.neighbours_particles;
         for (auto particle2_id: neighbours_particles){
            if(particle_pivot_id < particle2_id){
                Particle & particle2 = particles[particle2_id];
