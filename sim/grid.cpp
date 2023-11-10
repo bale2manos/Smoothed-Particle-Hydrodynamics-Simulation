@@ -217,17 +217,19 @@ void edge_interaction(Particle& particle,int extremo,int eje){
 
 void densinc(Malla& malla, vector<Particle>& particles){
     double const  h_value = malla.h;
+    double const  m_value = malla.m;
 
     for (Particle & particle_pivot: particles){
         int const particle_pivot_id = particle_pivot.id;
         Block & current_block =  malla.blocks[particle_pivot.current_block];
-        for (auto particle2_id: current_block.neighbours_particles){
+        vector<int>& neighbours_particles = current_block.neighbours_particles;
+        for (auto particle2_id: neighbours_particles){
             if(particle_pivot_id < particle2_id){
                 Particle & particle2 = particles[particle2_id];
                 increase_density(particle_pivot.p, particle2.p, h_value, particle_pivot.rho, particle2.rho);
             }
         }
-        particle_pivot.rho = density_transformation(particle_pivot.rho, h_value, malla.m);
+        particle_pivot.rho = density_transformation(particle_pivot.rho, h_value, m_value);
     }
 
 
@@ -248,9 +250,10 @@ void acctransf(Malla& malla, vector<Particle>& particles){
     double const h_value = malla.h;
     array<double,2> acc_constants = malla.acc_const;
     for (Particle & particle_pivot: particles){
-       int const particle_pivot_id = particle_pivot.id;
-       Block & current_block =  malla.blocks[particle_pivot.current_block];
-       for (auto particle2_id: current_block.neighbours_particles){
+        int const particle_pivot_id = particle_pivot.id;
+        Block & current_block =  malla.blocks[particle_pivot.current_block];
+        vector<int>& neighbours_particles = current_block.neighbours_particles;
+        for (auto particle2_id: neighbours_particles){
            if(particle_pivot_id < particle2_id){
                Particle & particle2 = particles[particle2_id];
                acceleration_transfer(particle_pivot, particle2, h_value, acc_constants);
