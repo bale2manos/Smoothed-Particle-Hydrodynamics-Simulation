@@ -8,10 +8,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Werror -pedantic -pedantic-errors)
 
 # Optimization flags for RELEASE build
-if(CMAKE_BUILD_TYPE STREQUAL "RELEASE")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
-    # Add any additional optimization flags you find suitable
-endif()
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -DNDEBUG -flto")
+
 
 # Enable GoogleTest Library
 include(FetchContent)
