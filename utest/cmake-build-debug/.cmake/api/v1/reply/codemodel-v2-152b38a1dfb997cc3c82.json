@@ -1,0 +1,74 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "block_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-block_test-Debug-aeb17f42813a45346561.json",
+					"name" : "block_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "grid_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-grid_test-Debug-fa7603e96ac74a50af38.json",
+					"name" : "grid_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "progargs_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-progargs_test-Debug-beb28fccb6c37745b029.json",
+					"name" : "progargs_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug",
+		"source" : "/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

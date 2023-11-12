@@ -1,0 +1,6 @@
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/block_test.dir
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/progargs_test.dir
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/grid_test.dir
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/test.dir
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/CMakeFiles/rebuild_cache.dir

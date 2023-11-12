@@ -1,0 +1,5 @@
+if(EXISTS "/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/block_test[1]_tests.cmake")
+  include("/mnt/c/Users/Usuario/CLionProjects/ac_p1/utest/cmake-build-debug/block_test[1]_tests.cmake")
+else()
+  add_test(block_test_NOT_BUILT block_test_NOT_BUILT)
+endif()

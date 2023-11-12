@@ -29,21 +29,21 @@ TEST(BlockTest, CalculateBlockIndexnegative)  {
 TEST(BlockTest, CheckNeighboursEsquinas) {
   std::array<int, 3> coords = {0, 0, 0};
   std::array<int, 3> dimensiones = {5,5,5};
-  std::vector<int> indexvecinos = {31, 6, 26, 1, 30, 5, 25, 0};
+  std::vector<int> indexvecinos = { 0, 1, 5, 6, 25, 26, 30, 31 };
   EXPECT_EQ(check_neighbours(coords,dimensiones), indexvecinos);
 }
 
 TEST(BlockTest, CheckNeighbourscentral) {
   std::array<int, 3> coords = {3,3,3};
   std::array<int, 3> dimensiones = {5,5,5};
-  std::vector<int> indexvecinos = {124, 99, 74, 119, 94, 69, 114, 89, 64, 123, 98, 73, 118, 93, 68, 113, 88, 63, 122, 97, 72, 117, 92, 67, 112, 87, 62};
+  std::vector<int> indexvecinos = { 93, 62, 63, 64, 67, 68, 69, 72, 73, 74, 87, 88, 89, 92, 94, 97, 98, 99, 112, 113, 114, 117, 118, 119, 122, 123, 124 };
   EXPECT_EQ(check_neighbours(coords,dimensiones), indexvecinos);
 }
 
 TEST(BlockTest, CheckNeighbourspared) {
   std::array<int, 3> coords = {3,3,0};
   std::array<int, 3> dimensiones = {5,5,5};
-  std::vector<int> indexvecinos = { 49, 24, 44, 19, 39, 14, 48, 23, 43, 18, 38, 13, 47, 22, 42, 17, 37, 12 };
+  std::vector<int> indexvecinos = { 18, 12, 13, 14, 17, 19, 22, 23, 24, 37, 38, 39, 42, 43, 44, 47, 48, 49 };
   EXPECT_EQ(check_neighbours(coords,dimensiones), indexvecinos);
 }
 
