@@ -9,24 +9,31 @@ using namespace std;                                /* TODO mala practica?? */
 using namespace std::chrono;
 
 
+
+
+
 int main(int argc, const char *argv[]) {
 
   // Time start
   auto start = high_resolution_clock::now();
-  vector<string> const args(argv, argv + argc);
-  array<int,2> params = validate_parameters(argc, argv);        /* TODO esto se puede mejorar */
+  vector<string> argvparams;
+  int argcparam = argc;
+  for(int i = 0; i < argcparam; i++){
+    argvparams.push_back(argv[i]);
+  }
+  array<int,2> params = validate_parameters(argcparam, argvparams); /* TODO esto se puede mejorar */
   if (params[0] < 0) { return params[0];}
 
   // try catch of read_input_file and any exception
-  int const num_iterations = atoi(argv[1]);
+  int const num_iterations = stoi(argvparams[1]);
   try {
-    Malla malla = read_input_file(args[2].c_str());
+    Malla malla = read_input_file(argvparams[2].c_str());
     for (int iter = 0; iter < num_iterations; iter++) {
       cout << "**************************************" << "\n";
       cout << "ITERACION NUMERO: " << iter << "\n";
       malla.mallaInteraction();
     }
-    write_output_file(malla, argv[3]);
+    write_output_file(malla, argvparams[3].c_str());
 
   } catch (const runtime_error& e) {
     cerr << e.what() << "\n";
@@ -42,3 +49,7 @@ int main(int argc, const char *argv[]) {
 
   return 0;
 }
+
+
+
+

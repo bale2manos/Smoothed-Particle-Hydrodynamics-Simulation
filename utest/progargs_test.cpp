@@ -28,7 +28,7 @@ TEST(TestValidateInputFile, Test2){
 }
 
 TEST(TestValidateOutputFile, Test3){
-  testpath = testpath + "outputest/output.fld";
+  testpath = testpath + "output.fld";
   string nopath = "";
   string corrpath = "output.fld";
   EXPECT_EQ(validate_output_file(testpath.c_str()), 0);
@@ -36,36 +36,42 @@ TEST(TestValidateOutputFile, Test3){
   //EXPECT_EQ(validate_output_file(corrpath.c_str()), -1);
 }
 
-//TEST(TestValidateParameters, Test4){
-  //array <int,2> errortype;
-  //errortype = {0,0};
-  //EXPECT_EQ(validate_parameters(5 ,"small.fld" ,"final.fld", 1000), errortype);
-  //EXPECT_EQ(validate_parameters(-1 ,"small.fld" ,"final.fld"), errortype);
-  //EXPECT_EQ(validate_parameters(5, "small", "final.fld"), errortype);
+TEST(TestValidateParameters, Test4){
+  array <int,2> errortype1,errortype2,errortype3, errortype4;
+  string const file = testpath + "small.fld";
+  string const file2 = testpath + "output.fld";
+  errortype1 = {-3, 5};
+  errortype2 = {-2,-1};
+  errortype3 = {-1,0};
+  errortype4 = {0,5};
+
+  EXPECT_EQ(validate_parameters(4, {"fluid.cpp", "5" ,"small.fld" ,"final.fld", "1000"}), errortype1);
+  EXPECT_EQ(validate_parameters(4, {"fluid.cpp", "-1" ,"small.fld" ,"final.fld"}), errortype2);
+  EXPECT_EQ(validate_parameters(3, {"fluid.cpp","5", "small.fld", "final.fld"}), errortype3);
+  EXPECT_EQ(validate_parameters(4, {"fluid.cpp","5", testpath, "final.fld"}), errortype4);
 
 
-//}
+}
 
 
 TEST(TestReadInputFile, Test5){
-  Malla malla;
-  string file = testpath + "small.fld";
-  read_input_file(malla, file.c_str());
-  EXPECT_EQ(malla.np, 4800);
-  EXPECT_EQ(malla.blocks.size(), 4725);
+  string const file = testpath + "small.fld";
+  Malla const malla = read_input_file(file.c_str());
+  Malla const mallaux(4800, 204);
+  EXPECT_EQ(malla.getNp() , 4800);
+  int nblocks = malla.getNBlocks()[0] *  malla.getNBlocks()[1] *  malla.getNBlocks()[2];
+  EXPECT_EQ(nblocks , 4725);
 }
 
 TEST(TestWriteOutputFile, Test6){
-  Malla malla;
-  Malla mallaaux;
   string file = testpath + "small.fld";
   string outfile = testpath + "output.fld";
-  read_input_file(malla, file.c_str());
+  Malla malla = read_input_file(file.c_str());
   write_output_file(malla, outfile.c_str());
-  read_input_file(mallaaux, outfile.c_str());
+  Malla mallaaux = read_input_file(outfile.c_str());
 
-  EXPECT_EQ(malla.np, mallaaux.np);
-  EXPECT_EQ(malla.ppm, mallaaux.ppm);
+  EXPECT_EQ(malla.getNp(), mallaaux.getNp());
+  EXPECT_EQ(malla.getPpm(), mallaaux.getPpm());
 
 }
 
@@ -75,16 +81,7 @@ TEST(TestCheckNP, Test7){
   EXPECT_THROW(check_np(-1), runtime_error);
 }
 
-//TEST(TestRefactorGordo, Test8){
-  // EXPECT_EQ
-//}
-//
-//TEST(TestCalculateBlockIndexes Test9){
-//  EXPECT_EQ
-//}
-//TEST(TestInsertParticleInfo, Test10){
-//  EXPECT_EQ
-//}
+
 TEST(TestCheckMissmatch, Test11){
   EXPECT_THROW(check_missmatch_particles(0,1), runtime_error);
   EXPECT_THROW(check_missmatch_particles(1,0), runtime_error);

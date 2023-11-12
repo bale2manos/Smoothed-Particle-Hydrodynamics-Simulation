@@ -69,8 +69,9 @@ int validate_output_file(const char* outputFileName) {
  * @param argv An array of C-style strings containing the arguments passed to the program.
  * @return An array of integers representing the error type. If the first element is 0, there is no error. If it is negative, there is an error. The second element contains the number of time steps.
  */
-array<int,2> validate_parameters(int argc, const char* argv[]) {
 
+
+std::array<int, 2> validate_parameters(int argc, vector<string> argv){
   array <int,2> error_type={0,0};
   if (argc != 4) {
     cerr << "Error: Invalid number of arguments: " << argc << "\n";
@@ -83,18 +84,17 @@ array<int,2> validate_parameters(int argc, const char* argv[]) {
   if (error_type[0] != 0) {
     return error_type;
   };
-  if (validate_input_file(argv[2]) != 0)
+  if (validate_input_file(argv[2].c_str()) != 0)
   {
     error_type[0] = -3;
     return error_type;
   }
-  if (validate_output_file(argv[3]) != 0){
+  if (validate_output_file(argv[3].c_str()) != 0){
     error_type[0] = -4;
     return error_type;
   }
   return error_type;
 }
-
 
 /**
  * Reads an input file and creates a Malla object with the particle data.
