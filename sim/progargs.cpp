@@ -9,6 +9,12 @@
 #include <filesystem>
 
 using namespace std;
+
+/**
+ * Validates the number of time steps.
+ * @param nts The number of time steps to validate.
+ * @return 0 if the number of time steps is valid, -1 if it's not numeric, -2 if it's negative.
+ */
 int validate_time_steps(int nts) {
   if (nts == 0) {
     cerr << "Error: time steps must be numeric." << "\n";
@@ -21,6 +27,13 @@ int validate_time_steps(int nts) {
   return 0;
 }
 
+
+/**
+ * Validates if the input file can be opened for reading.
+ * 
+ * @param inputFileName The name of the input file to be validated.
+ * @return Returns 0 if the input file can be opened for reading, -1 otherwise.
+ */
 int validate_input_file(const char* inputFileName) {
   cout << "Input file: " << inputFileName << "\n";
   ifstream input_file(inputFileName);
@@ -35,6 +48,12 @@ int validate_input_file(const char* inputFileName) {
   return 0;
 }
 
+
+/**
+ * Validates if the output file can be opened for writing.
+ * @param outputFileName The name of the output file.
+ * @return 0 if the file can be opened for writing, -1 otherwise.
+ */
 int validate_output_file(const char* outputFileName) {
   ofstream output_file(outputFileName);
   if (!output_file.is_open()) {
@@ -44,6 +63,12 @@ int validate_output_file(const char* outputFileName) {
   return 0;
 }
 
+/**
+ * Validates the parameters passed to the program.
+ * @param argc The number of arguments passed to the program.
+ * @param argv An array of C-style strings containing the arguments passed to the program.
+ * @return An array of integers representing the error type. If the first element is 0, there is no error. If it is negative, there is an error. The second element contains the number of time steps.
+ */
 array<int,2> validate_parameters(int argc, const char* argv[]) {
 
   array <int,2> error_type={0,0};
@@ -70,9 +95,16 @@ array<int,2> validate_parameters(int argc, const char* argv[]) {
   return error_type;
 }
 
+
+/**
+ * Reads an input file and creates a Malla object with the particle data.
+ * 
+ * @param in_file The path to the input file.
+ * @return A Malla object with the particle data.
+ */
 Malla read_input_file (const char * in_file) {
 
-  ifstream input_file(in_file, ios::binary);     /* TODO ppm check errors? */
+  ifstream input_file(in_file, ios::binary);     
 
   // Crear la malla base
   float ppm=0;
@@ -82,19 +114,15 @@ Malla read_input_file (const char * in_file) {
   //Comprobamos que np sea mayor que 1
   check_np(np);
 
-  // Calculate constants TODO crear archivo constantes
   // Check if the number of particles read matches the header
   auto ppm_double = static_cast<double>(ppm);
 
-  /* TODO pasar struct constantes a malla*/
+
   // Creamos la malla y la llenamos de bloques vacíos
-  //create_fill_grid(malla, np, ppm_double);
   Malla grid(np, ppm_double);
   grid.insert_particles(in_file);
 
-  // Read particle data in a single loop and cast from float to double
-
-  input_file.close(); /* TODO esto hay que cerrarlo? */
+  input_file.close(); 
 
   cout << "Number of particles: " << np << "\n";
   cout << "Particles per meter: " << ppm << "\n";
@@ -108,6 +136,13 @@ Malla read_input_file (const char * in_file) {
 
 
 
+/**
+ * Writes the particle data to a binary file.
+ * 
+ * @param malla The mesh containing the particles.
+ * @param out_file The output file path.
+ * @return 0 if the file was successfully written, -1 otherwise.
+ */
 int write_output_file (Malla& malla, const char * out_file){
   int np = malla.getNp();
   double ppm = malla.getPpm();
@@ -171,6 +206,11 @@ int write_output_file (Malla& malla, const char * out_file){
 
 
 
+/**
+ * Checks if the number of particles is valid.
+ * @param np The number of particles to check.
+ * @throws runtime_error if the number of particles is less than or equal to zero.
+ */
 void check_np (int np){
   if (np <= 0) {
     string errorMsg = "Error: Invalid number of particles: " + to_string(np) + ".\n";
@@ -184,7 +224,12 @@ void check_np (int np){
 
 
 
-
+/**
+ * Checks if the number of particles in the header matches the number of particles found.
+ * @param counter The number of particles found.
+ * @param malla_np The number of particles in the header.
+ * @throws runtime_error if the number of particles does not match.
+ */
 void check_missmatch_particles(int counter, int malla_np) {
   if (counter != malla_np) {
     string errorMsg =

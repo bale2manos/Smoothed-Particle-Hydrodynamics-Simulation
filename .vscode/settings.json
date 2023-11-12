@@ -1,0 +1,5 @@
+{
+    "docwriter.style": "Doxygen",
+    "docify.commentService.docstringFormat": "Doxygen",
+    "docify.commentService.autoTranslationService": "Spanish"
+}

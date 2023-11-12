@@ -11,6 +11,11 @@
 #include <iostream>
 #include <chrono>
 
+/**
+ * Constructor for Malla class.
+ * @param np Number of particles.
+ * @param ppm Particles per meter.
+ */
 Malla::Malla(int np, double ppm) :
     np(np)
     , ppm(ppm), h(smooth_length()), m(particle_mass())
@@ -24,31 +29,65 @@ Malla::Malla(int np, double ppm) :
   particles = vector<Particle>(np);
 }
 
+/**
+ * Returns a vector containing all the particles in the grid.
+ *
+ * @return A vector containing all the particles in the grid.
+ */
 std::vector<Particle> Malla::getParticles() const {
-  return particles;
+    return particles;
 }
 
+/**
+ * Returns the value of the private member variable h.
+ *
+ * @return The value of h.
+ */
 double Malla::getH() const {
-  return h;
+    return h;
 }
 
+/**
+ * Returns the number of points in the grid.
+ *
+ * @return The number of points in the grid.
+ */
 int Malla::getNp() const {
-  return np;
+    return np;
 }
 
+/**
+ * Returns the value of ppm.
+ *
+ * @return The value of ppm.
+ */
 double Malla::getPpm() const {
-  return ppm;
+    return ppm;
 }
 
+/**
+ * Returns the number of blocks in the grid.
+ * @return An std::array<int, 3> containing the number of blocks in each dimension.
+ */
 std::array<int, 3> Malla::getNBlocks() const {
-  return nBlocks;
+    return nBlocks;
 }
 
+/**
+ * Returns the size of the blocks in the grid.
+ *
+ * @return An array of doubles representing the size of the blocks in the grid.
+ */
 std::array<double, 3> Malla::getSizeBlocks() const {
-  return sizeBlocks;
+    return sizeBlocks;
 }
 
 
+/**
+ * Calculates the block indexes for a given position in the grid.
+ * @param positions An array with the x, y, and z positions.
+ * @return An array with the i, j, and k indexes of the block.
+ */
 array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
   int i_index=0;
   int j_index=0;
@@ -66,6 +105,12 @@ array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
   return array<int, 3>{i_index,j_index,k_index};
 }
 
+
+/**
+ * Inserts particles from a binary file into the grid.
+ * 
+ * @param in_file The path to the binary file containing the particle information.
+ */
 void Malla::insert_particles (const char * in_file) {
   ifstream input_file(in_file, ios::binary);
   double trash;
@@ -97,49 +142,114 @@ void Malla::insert_particles (const char * in_file) {
   check_missmatch_particles(counter, np);
 }
 
+
+/**
+ * Inserts particle information into the grid.
+ * @param info An array of arrays containing the position, velocity, and half-velocity of the particle.
+ * @param id The ID of the particle.
+ * @param block_index The index of the block where the particle is located.
+ */
 void Malla::insert_particle_info(array<array<double, 3>, 3> info, int id, int block_index){
-  Particle particle{};
-  particle.p = info[0];
-  particle.hv = info[1];
-  particle.v = info[2];
-  particle.a = {0,0,0};
-  particle.rho = 0;
-  particle.id = id;
-  particle.current_block = block_index;
-  blocks[block_index].particles.push_back(id);
-  particles[id] = particle;
+    Particle particle{};
+    particle.p = info[0];
+    particle.hv = info[1];
+    particle.v = info[2];
+    particle.a = {0,0,0};
+    particle.rho = 0;
+    particle.id = id;
+    particle.current_block = block_index;
+    blocks[block_index].particles.push_back(id);
+    particles[id] = particle;
 }
 
+/**
+ * Calculates the number of cells in the x direction based on the maximum and minimum x values and the cell size.
+ * @param x_max The maximum x value.
+ * @param x_min The minimum x value.
+ * @param h_param The cell size.
+ * @return The number of cells in the x direction.
+ */
 int Malla::nx_calc (double x_max, double x_min, double h_param){
     return floor( (x_max - x_min) / h_param);
 }
+
+/**
+ * Calculates the number of cells in the y direction based on the maximum and minimum y values and the cell size.
+ * @param y_max The maximum y value.
+ * @param y_min The minimum y value.
+ * @param h_param The cell size.
+ * @return The number of cells in the y direction.
+ */
 int Malla::ny_calc (double y_max, double y_min, double h_param){
     return floor( (y_max - y_min) / h_param);
 }
+
+/**
+ * Calculates the number of cells in the z direction based on the maximum and minimum z values and the cell size.
+ * @param z_max The maximum z value.
+ * @param z_min The minimum z value.
+ * @param h_param The cell size.
+ * @return The number of cells in the z direction.
+ */
 int Malla::nz_calc (double z_max, double z_min, double h_param){
     return floor( (z_max - z_min) / h_param);
 }
 
+/**
+ * Calculates the smoothing length of the mesh.
+ * @return The smoothing length of the mesh.
+ */
 double Malla::smooth_length (){
     return static_cast<double>(radio) / ppm;
 }
 
+/**
+ * Calculates the x-axis spacing of the mesh.
+ * @param x_max The maximum x-coordinate of the mesh.
+ * @param x_min The minimum x-coordinate of the mesh.
+ * @param n_x The number of cells in the x-axis of the mesh.
+ * @return The x-axis spacing of the mesh.
+ */
 double Malla::sx_calc (double x_max, double x_min, int n_x){
     return (x_max-x_min)/n_x;
 }
 
+/**
+ * Calculates the y-axis spacing of the mesh.
+ * @param y_max The maximum y-coordinate of the mesh.
+ * @param y_min The minimum y-coordinate of the mesh.
+ * @param n_y The number of cells in the y-axis of the mesh.
+ * @return The y-axis spacing of the mesh.
+ */
 double Malla::sy_calc (double y_max, double y_min, int n_y){
     return (y_max-y_min)/n_y;
 }
 
+/**
+ * Calculates the z-axis spacing of the mesh.
+ * @param z_max The maximum z-coordinate of the mesh.
+ * @param z_min The minimum z-coordinate of the mesh.
+ * @param n_z The number of cells in the z-axis of the mesh.
+ * @return The z-axis spacing of the mesh.
+ */
 double Malla::sz_calc (double z_max, double z_min, int n_z){
     return (z_max-z_min)/n_z;
 }
 
+/**
+ * Calculates the mass of a particle in the mesh.
+ * @return The mass of a particle in the mesh.
+ */
 double Malla::particle_mass (){
     return static_cast<double>(rho_f)/(pow (ppm,3));
 }
 
+
+/**
+ * Creates a grid of blocks and appends them to the Malla object.
+ * The blocks are created in vectors nx, ny, nz.
+ * @return A vector of Block objects representing the created grid.
+ */
 vector<Block> Malla::createFillGrid(){
     // Create the blocks and append them to Malla. Create all vectors in nx, ny, nz
     for (int k = 0; k < nBlocks[2]; ++k) {
@@ -154,6 +264,14 @@ vector<Block> Malla::createFillGrid(){
 }
 
 
+/**
+ * Increase the density of two particles if they are close enough.
+ *
+ * @param pivot_coords The coordinates of the first particle.
+ * @param particle2_coords The coordinates of the second particle.
+ * @param pivot_rho The density of the first particle.
+ * @param particle2_rho The density of the second particle.
+ */
 void Malla::increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) {
     const static auto h_squared = h * h;
     double const dx_differ = pivot_coords[0] - particle2_coords[0];
@@ -169,6 +287,11 @@ void Malla::increase_density(array<double, 3>& pivot_coords, array<double, 3>& p
 }
 
 
+/**
+ * Calculates the density transformation of a given density value.
+ * @param rho The density value to transform.
+ * @return The transformed density value.
+ */
 double Malla::density_transformation(double rho){
     const static auto h_sixth = pow(h,6);
     const static auto h_ninth = pow(h,9);
@@ -177,6 +300,12 @@ double Malla::density_transformation(double rho){
     return first_term*second_term*m;
 }
 
+
+/**
+ * Transfers acceleration between two particles if they are close enough.
+ * @param pivot The first particle.
+ * @param particle2 The second particle.
+ */
 void Malla::acceleration_transfer(Particle & pivot, Particle & particle2) {
     array<double,3>& position_pivot = pivot.p;
     array<double,3>& position_2 = particle2.p;
@@ -214,20 +343,31 @@ void Malla::acceleration_transfer(Particle & pivot, Particle & particle2) {
 }
 
 
+/**
+ * Detects and handles collisions between a particle and a block's walls.
+ * @param particle The particle to check for collisions.
+ * @param block The block to check for collisions against.
+ */
 void Malla::wall_colissions(Particle& particle, Block& block){
 
   if (block.coords[0] == 0 || block.coords[0]==nBlocks[0]-1){
-        edge_collisions(particle, block.coords[0], 0);
+      edge_collisions(particle, block.coords[0], 0);
   }
   if (block.coords[1] == 0||block.coords[1] == nBlocks[1]-1) {
-        edge_collisions(particle, block.coords[1], 1);
+      edge_collisions(particle, block.coords[1], 1);
   }
   if (block.coords[2] == 0 || block.coords[2]==nBlocks[2]-1){
-        edge_collisions(particle, block.coords[2], 2);
+      edge_collisions(particle, block.coords[2], 2);
   }
 }
 
 
+/**
+ * Calculates the collisions of a particle with an edge of the grid in a specific axis.
+ * @param particula The particle to check for collisions.
+ * @param extremo The edge of the grid to check for collisions (0 for minimum, 1 for maximum).
+ * @param eje The axis to check for collisions (0 for x, 1 for y, 2 for z).
+ */
 void Malla::edge_collisions(Particle& particula, int extremo, int eje) {
   double min_limit = 0.0;
   double max_limit = 0.0;
@@ -250,6 +390,10 @@ void Malla::edge_collisions(Particle& particula, int extremo, int eje) {
 }
 
 
+/**
+ * Moves a particle in the grid by updating its position and velocity based on its acceleration.
+ * @param particle The particle to be moved.
+ */
 void Malla::particle_movement(Particle& particle){
 
     double delta_t_squared = delta_t * delta_t;
@@ -266,14 +410,25 @@ void Malla::particle_movement(Particle& particle){
 }
 
 
-
-
+/**
+ * Calculates the interaction of a particle with the edges of a given block.
+ * 
+ * @param particle The particle to interact with the edges.
+ * @param block The block to calculate the interaction with.
+ */
 void Malla::limits_interaction(Particle& particle, Block& block) {
     if (block.coords[0] == 0 || block.coords[0] == nBlocks[0] - 1) { edge_interaction(particle, block.coords[0], 0); }
     if (block.coords[1] == 0 || block.coords[1] == nBlocks[1] - 1) { edge_interaction(particle, block.coords[1], 1); }
     if (block.coords[2] == 0 || block.coords[2] == nBlocks[2] - 1) { edge_interaction(particle, block.coords[2], 2); }
 }
 
+
+/**
+ * This function calculates the interaction of a particle with an edge of the grid.
+ * @param particle The particle to interact with the edge.
+ * @param extremo The index of the edge to interact with (0 for the minimum limit, 1 for the maximum limit).
+ * @param eje The index of the axis where the edge is located (0 for x, 1 for y, 2 for z).
+ */
 void Malla::edge_interaction(Particle& particle,int extremo,int eje){
     double min_limit = 0;
     double max_limit = 0;
@@ -300,6 +455,11 @@ void Malla::edge_interaction(Particle& particle,int extremo,int eje){
 }
 
 
+/**
+ * Calculates the density of each particle in the grid by iterating over all particles and their neighbors.
+ * For each particle, it increases the density by calling increase_density() function for each of its neighbors.
+ * Finally, it applies a density transformation to each particle's density.
+ */
 void Malla::densinc(){
 
     for (Particle & particle_pivot: particles){
@@ -318,6 +478,11 @@ void Malla::densinc(){
 }
 
 
+/**
+ * Transfer acceleration between particles in the grid.
+ * For each particle in the grid, it checks its neighbours and transfers acceleration if necessary.
+ * @return void
+ */
 void Malla::acctransf(){
 
     for (Particle & particle_pivot: particles){
@@ -334,8 +499,12 @@ void Malla::acctransf(){
 }
 
 
-
-
+/**
+ * This function iterates through all the particles in the grid and checks if they are at the edge of the grid.
+ * If a particle is at the edge of the grid, it calls the wall_colissions function to handle the collision with the wall.
+ * Then, it calls the particle_movement function to update the position of the particle.
+ * If the particle is at the edge of the grid, it calls the limits_interaction function to handle the interaction with the limits of the grid.
+ */
 void Malla::triplete(){
     array<int,3> const n_blocks = nBlocks;
     for (Particle & particle_pivot : particles) {
@@ -356,6 +525,11 @@ void Malla::triplete(){
 
 
 
+/**
+ * This function updates the position of the particles in the grid and calculates the new block indexes.
+ * It also initializes the acceleration and density of each particle.
+ * Finally, it updates the list of particles in each block and the list of particles in the neighboring blocks.
+ */
 void Malla::repos(){
     for (Block & block : blocks) {
       block.particles.clear();
@@ -392,32 +566,13 @@ void Malla::repos(){
 }
 
 
+/**
+ * This method performs the interaction between the different particles in the grid.
+ * It calls the following methods in order: repos(), densinc(), acctransf(), and triplete().
+ */
 void Malla::mallaInteraction(){
-    auto startTimeTotal = std::chrono::high_resolution_clock::now();
-
-    auto startTime = std::chrono::high_resolution_clock::now();
     Malla::repos();
-    auto endTime = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "TIEMPO repos: " << duration.count() << " microsegundos" << "\n";
-
-    startTime = std::chrono::high_resolution_clock::now();
     Malla::densinc();
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "TIEMPO densinc: " << duration.count() << " microsegundos" << "\n";
-
-
-    startTime = std::chrono::high_resolution_clock::now();
     Malla::acctransf();
-    endTime = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "TIEMPO acctransf: " << duration.count() << " microsegundos" << "\n";
-
     Malla::triplete();
-
-    auto endTimeTotal = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(endTimeTotal - startTimeTotal);
-    std::cout << "TIEMPO ITERACION: " << duration.count() << " microsegundos" << "\n";
-    cout << "***************************************" << "\n";
 }
