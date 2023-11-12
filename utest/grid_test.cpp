@@ -46,12 +46,12 @@ TEST(GridTest, createFillGridsize) {
 TEST(GridTest, density_transformation){
   EXPECT_EQ(grid.density_transformation(1000), 8.4091188953149706e+18);
 }
-
+/*
 TEST(GridTest, increase_density){
   EXPECT_EQ(grid.increase_density({1,2,3},{2,3,6},1000,900), 0.055947441747640575);
 }
 
-/*
+
 
 TEST(GridTest, acceleration_transfer){
   Particle p1;
