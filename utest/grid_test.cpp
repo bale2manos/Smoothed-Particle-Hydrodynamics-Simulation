@@ -46,32 +46,69 @@ TEST(GridTest, createFillGridsize) {
 TEST(GridTest, density_transformation){
   EXPECT_EQ(grid.density_transformation(1000), 8.4091188953149706e+18);
 }
-/*
-TEST(GridTest, increase_density){
-  EXPECT_EQ(grid.increase_density({1,2,3},{2,3,6},1000,900), 0.055947441747640575);
+
+
+TEST(GridTest, increase_density_noincrease){
+  array<double, 3> pivot_coords = {2.0, 3.0, 4.0};
+  array<double, 3> particle2_coords = {3.0, 1.0, 3.0};
+  double pivot_rho_ori = 1.0;
+  double particle2_rho_ori = 2.0;
+  double pivot_rho = 1.0;
+  double particle2_rho = 2.0;
+  grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
+  EXPECT_EQ(pivot_rho, pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
+  EXPECT_EQ(particle2_rho, particle2_rho_ori);
 }
 
+TEST(GridTest, increase_density_increase){
+  array<double, 3> pivot_coords = {0.0005, 0.00004, 0.0003};
+  array<double, 3> particle2_coords = {0.00049, 0.00004, 0.00002};
+  double pivot_rho_ori = 1.0;
+  double particle2_rho_ori = 2.0;
+  double pivot_rho = 1.0;
+  double particle2_rho = 2.0;
+  grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
+  EXPECT_GT(pivot_rho, pivot_rho_ori);  // Los valores NO son iguales porque norm_squared < h_squared y por tanto hay incremento
+  EXPECT_GT(particle2_rho, particle2_rho_ori);
+}
 
+TEST(GridTest, particle_movement){
+  Particle particle;
+  Particle particle2;
+  particle.hv = {4.1, 5.4, 6.4};
+  particle.a = {2.4, 3.5, 1.1};
+  particle.p = {2.3, 2.1, 3.1};
+  particle2.hv = {4.1, 5.4, 6.4};
+  particle2.a = {2.4, 3.5, 1.1};
+  particle2.p = {2.3, 2.1, 3.1};
+  grid.particle_movement(particle);
+  EXPECT_NE(particle.p[1], particle2.p[1]);
+  EXPECT_NE(particle.v[1], particle2.v[1]);
+  EXPECT_NE(particle.hv[1], particle2.hv[1]);
+}
 
-TEST(GridTest, acceleration_transfer){
-  Particle p1;
-  p1.p = {1.0, 2.0, 3.0};
-  p1.hv = {0.1, 0.2, 0.3};
-  p1.rho = 1000;
-  p1.id = 1;
-  p1.current_block = 2;
+/*
+Faltan las colisiones!!!!!!!
+TEST(GridTest, AccelerationTransferTest) {
+  // Crea instancias de la clase Malla y las partículas (ajusta según sea necesario
+  Particle pivot;
+  Particle pivot2;
+  Particle particle2;
 
-  Particle p2;
-  p2.p = {2, 3, 6};
-  p2.hv = {2, 3, 4};
-  p2.rho = 900;
-  p2.id = 2;
-  p2.current_block = 3;
+  // Inicializa las posiciones, densidades y velocidades de las partículas (ajusta según sea necesario)
+  pivot.p = {1, 2, 3};
+  pivot.rho = 1.0;
+  pivot.v = {1, 3, 2};
+  pivot2.p = {1, 2, 3};
+  pivot2.rho = 1.0;
+  pivot2.v = {1, 3, 2};
+  particle2.p = {1.0, 1.0, 1.0};
+  particle2.rho = 2.0;
+  particle2.v = {1.0, 1.0, 1.0};
 
-  std::array<double, 2> acc_trans = {6, 3};
-  std::array<double, 3> acc_increase = { 0.055947441747640575, 0.055947441747640575, 0.16784232524292172 };
+  grid.acceleration_transfer(pivot, particle2);
 
-  EXPECT_EQ(acceleration_transfer(p1,p2,20,acc_trans),acc_increase);
+  EXPECT_NE(pivot.a[2], pivot2.a[2]);  // Los valores son iguales porque norm_squared > h_squared
 }
 
 */
