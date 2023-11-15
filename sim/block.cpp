@@ -3,7 +3,6 @@
 //
 
 #include "block.hpp"
-#include "progargs.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -26,7 +25,7 @@ int initial_block_index(double position, double min_limit, double block_size) {
  * @param ny The size of the second dimension.
  * @return The index of the block in the array.
  */
-int calculate_block_index(array<int,3> coords,int nx, int ny) {
+int calculate_block_index(std::array<int,3> coords,int nx, int ny) {
   return coords[0] + coords[1] * nx + coords[2] * nx * ny;
 }
 
@@ -40,8 +39,8 @@ int calculate_block_index(array<int,3> coords,int nx, int ny) {
  * @param n_blocks An array with the number of blocks in each dimension of the grid.
  * @return A vector with the indices of the neighboring blocks.
  */
-vector<int> check_neighbours(array<int,3> coords, array<int,3> n_blocks){
-    vector<int> neighbours;
+std::vector<int> check_neighbours(std::array<int,3> coords, std::array<int,3> n_blocks){
+  std::vector<int> neighbours;
     // first push back the block itself
     neighbours.push_back(calculate_block_index(coords,n_blocks[0],n_blocks[1]));
 
