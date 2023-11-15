@@ -2,14 +2,11 @@
 // Created by bale2 on 26/09/2023.
 //
 #include "grid.hpp"
-
-#include <math.h>
 #include "progargs.hpp"
-# define M_PI           3.14159265358979323846  /* pi */
+#include <numbers>
 #include <cmath>
 #include <unordered_map>
 #include <iostream>
-#include <chrono>
 
 /**
  * Constructor for Malla class.
@@ -18,13 +15,13 @@
  */
 Malla::Malla(int np, double ppm) :
     np(np)
-    , ppm(ppm), h(smooth_length()), m(particle_mass())
+    , ppm(ppm), nBlocks({0,0,0}), sizeBlocks({0,0,0}), h(smooth_length()), m(particle_mass()), accConst({0,0})
 
   {
   nBlocks = {nx_calc(xmax, xmin, h), ny_calc(ymax, ymin, h), nz_calc(zmax, zmin, h)};
   sizeBlocks = {sx_calc(xmax, xmin, nBlocks[0]), sy_calc(ymax, ymin, nBlocks[1]), sz_calc(zmax, zmin, nBlocks[2])};
   // TODO hacer esto en una funcion o mas bonito
-  accConst = {15/(M_PI*pow(h,6)) * (3*m*p_s)*0.5, 15/(M_PI*pow(h,6))*3*mu*m};
+  accConst = {15/(std::numbers::pi*pow(h,6)) * (3*m*p_s)*0.5, 15/(std::numbers::pi*pow(h,6))*3*viscosity*m};
   blocks = createFillGrid();
   particles = vector<Particle>(np);
 }
@@ -89,12 +86,9 @@ std::array<double, 3> Malla::getSizeBlocks() const {
  * @return An array with the i, j, and k indexes of the block.
  */
 array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
-  int i_index=0;
-  int j_index=0;
-  int k_index=0;
-  i_index = initial_block_index(positions[0], xmin,  sizeBlocks[0]);
-  j_index = initial_block_index(positions[1], ymin,  sizeBlocks[1]);
-  k_index = initial_block_index(positions[2], zmin,  sizeBlocks[2]);
+  int i_index = initial_block_index(positions[0], xmin,  sizeBlocks[0]);
+  int j_index = initial_block_index(positions[1], ymin,  sizeBlocks[1]);
+  int k_index = initial_block_index(positions[2], zmin,  sizeBlocks[2]);
   /* TODO problema coma flotante floor error */
   if (i_index<0){i_index = 0;}
   if (j_index<0){j_index = 0;}
@@ -113,29 +107,28 @@ array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
  */
 void Malla::insert_particles (const char * in_file) {
   ifstream input_file(in_file, ios::binary);
-  double trash;
+  double trash = 0.0;
   input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
-  array<array<float, 3>, 3> info_particle;
-  array<array<double, 3>, 3> info_particle_double;
+  array<array<float, 3>, 3> info_particle = {};
+  array<array<double, 3>, 3> info_particle_double = {};
   int counter = 0;
-  while (input_file.read(reinterpret_cast<char *>(&info_particle[0][0]), sizeof(info_particle[0][0]))) {
+  while (input_file.read(reinterpret_cast<char *>(info_particle[0].data()), sizeof(info_particle[0][0]))) {
     // if i < np then read the next 8 floats, else continue
     input_file.read(reinterpret_cast<char *>(&info_particle[0][1]), sizeof(info_particle[0][1]));
     input_file.read(reinterpret_cast<char *>(&info_particle[0][2]), sizeof(info_particle[0][2]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][0]), sizeof(info_particle[1][0]));
+    input_file.read(reinterpret_cast<char *>(info_particle[1].data()), sizeof(info_particle[1][0]));
     input_file.read(reinterpret_cast<char *>(&info_particle[1][1]), sizeof(info_particle[1][1]));
     input_file.read(reinterpret_cast<char *>(&info_particle[1][2]), sizeof(info_particle[1][2]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][0]), sizeof(info_particle[2][0]));
+    input_file.read(reinterpret_cast<char *>(info_particle[2].data()), sizeof(info_particle[2][0]));
     input_file.read(reinterpret_cast<char *>(&info_particle[2][1]), sizeof(info_particle[2][1]));
     input_file.read(reinterpret_cast<char *>(&info_particle[2][2]), sizeof(info_particle[2][2]));
     for (size_t i = 0; i < info_particle.size(); ++i) {
       for (size_t j = 0; j < info_particle[i].size(); ++j) {
-        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);
-      }
+        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);}
     }
-    array<int, 3> index_array = calculate_block_indexes(info_particle_double[0]);
-    // Linear mapping para encontrar el bloque correcto
-    int index = index_array[0] + index_array[1] * nBlocks[0] + index_array[2] * nBlocks[0] * nBlocks[1];
+
+    std::array<int, 3> index_array = calculate_block_indexes(info_particle_double[0]);
+    int const index = index_array[0] + index_array[1] * nBlocks[0] + index_array[2] * nBlocks[0] * nBlocks[1];
     insert_particle_info(info_particle_double,counter, index);
     counter++;
   }
@@ -199,7 +192,7 @@ int Malla::nz_calc (double z_max, double z_min, double h_param){
  * Calculates the smoothing length of the mesh.
  * @return The smoothing length of the mesh.
  */
-double Malla::smooth_length (){
+double Malla::smooth_length () const{
     return static_cast<double>(radio) / ppm;
 }
 
@@ -240,8 +233,8 @@ double Malla::sz_calc (double z_max, double z_min, int n_z){
  * Calculates the mass of a particle in the mesh.
  * @return The mass of a particle in the mesh.
  */
-double Malla::particle_mass (){
-    return static_cast<double>(rho_f)/(pow (ppm,3));
+double Malla::particle_mass () const{
+    return static_cast<double>(density_factor)/(pow (ppm,3));
 }
 
 
@@ -272,7 +265,7 @@ vector<Block> Malla::createFillGrid(){
  * @param pivot_rho The density of the first particle.
  * @param particle2_rho The density of the second particle.
  */
-void Malla::increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) {
+void Malla::increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) const {
     const static auto h_squared = h * h;
     double const dx_differ = pivot_coords[0] - particle2_coords[0];
     double const dy_differ = pivot_coords[1] - particle2_coords[1];
@@ -292,7 +285,7 @@ void Malla::increase_density(array<double, 3>& pivot_coords, array<double, 3>& p
  * @param rho The density value to transform.
  * @return The transformed density value.
  */
-double Malla::density_transformation(double rho){
+double Malla::density_transformation(double rho) const{
     const static auto h_sixth = pow(h,6);
     const static auto h_ninth = pow(h,9);
     double const first_term = (rho + h_sixth);
@@ -309,30 +302,21 @@ double Malla::density_transformation(double rho){
 void Malla::acceleration_transfer(Particle & pivot, Particle & particle2) {
     array<double,3>& position_pivot = pivot.p;
     array<double,3>& position_2 = particle2.p;
-
-
     double const differ_x = position_pivot[0] - position_2[0];
     double const differ_y = position_pivot[1] - position_2[1];
     double const differ_z = position_pivot[2] - position_2[2];
-
-    double const norm = sqrt(
-        differ_x * differ_x + differ_y * differ_y + differ_z * differ_z
-    );
-
+    double const norm = sqrt(differ_x * differ_x + differ_y * differ_y + differ_z * differ_z);
     if (norm <= h) {
         const static auto factor    = 1e-6;
-        const static auto doble_rho = 2 * rho_f;
-        double const distij         = max(norm, factor);
+        const static auto double_density_f = 2 * density_factor;
+        double const distij              = max(norm, factor);
         double const difference_h_distij = h - distij;
-
-        double const term2 = difference_h_distij*difference_h_distij / distij;
-        // Sacamos todas las constantes fuera del bucle.
-        double const density_pivot = pivot.rho;
-        double const density_2     = particle2.rho;
-        double const term3         = (density_pivot + density_2 - (doble_rho));
-        double const denominator   = 1 / (density_2 * density_pivot);
-        double const numerator1    = accConst[0] * term2 * term3;
-
+        double const term2               = difference_h_distij*difference_h_distij / distij;
+        double const density_pivot       = pivot.rho;
+        double const density_2           = particle2.rho;
+        double const term3               = (density_pivot + density_2 - (double_density_f));
+        double const denominator         = 1 / (density_2 * density_pivot);
+        double const numerator1          = accConst[0] * term2 * term3;
         for (int i = 0; i < 3; i++) {
             double const term1  = (pivot.p[i] - particle2.p[i]);
             double const term4  = (particle2.v[i] - pivot.v[i]);
@@ -371,19 +355,20 @@ void Malla::wall_colissions(Particle& particle, Block& block){
 void Malla::edge_collisions(Particle& particula, int extremo, int eje) {
   double min_limit = 0.0;
   double max_limit = 0.0;
+  const static auto limit_colission = pow(10, -10);
   if (eje == 0){ min_limit= xmin; max_limit = xmax;}
   if (eje == 1){ min_limit= ymin; max_limit = ymax;}
   if (eje == 2){ min_limit= zmin; max_limit = zmax;}
 
   double const coord = particula.p[eje] + particula.hv[eje] * delta_t;
   if (extremo == 0) {
-        double deltax = d_p - (coord - min_limit);
-        if (deltax > pow(10, -10)) {
+        double const deltax = d_p - (coord - min_limit);
+        if (deltax > limit_colission) {
             particula.a[eje] = particula.a[eje] + (s_c * deltax - d_v * particula.v[eje]);
         }
   } else {
-        double deltax = d_p - (max_limit - coord);
-        if (deltax > pow(10, -10)) {
+        double const deltax = d_p - (max_limit - coord);
+        if (deltax > limit_colission) {
             particula.a[eje] = particula.a[eje] - (s_c * deltax + d_v * particula.v[eje]);
         }
   }
@@ -396,12 +381,12 @@ void Malla::edge_collisions(Particle& particula, int extremo, int eje) {
  */
 void Malla::particle_movement(Particle& particle){
 
-    double delta_t_squared = delta_t * delta_t;
-    double delta_t_half = delta_t*0.5;
+    const static auto delta_t_squared = delta_t * delta_t;
+    const static auto delta_t_half = delta_t*0.5;
 
     for(int i =0;i<3;i++){
-        double hv_i = particle.hv[i];
-        double acc_i = particle.a[i];
+        double const hv_i = particle.hv[i];
+        double const acc_i = particle.a[i];
 
         particle.p[i] += (hv_i*delta_t) + (acc_i*delta_t_squared);
         particle.v[i] = hv_i + (acc_i*delta_t_half);
@@ -464,8 +449,8 @@ void Malla::densinc(){
 
     for (Particle & particle_pivot: particles){
         int const particle_pivot_id = particle_pivot.id;
-        Block & current_block =  blocks[particle_pivot.current_block];
-        vector<int>& neighbours_particles = current_block.neighbours_particles;
+        Block  const& current_block =  blocks[particle_pivot.current_block];
+        vector<int> const& neighbours_particles = current_block.neighbours_particles;
         for (auto particle2_id: neighbours_particles){
             if(particle_pivot_id < particle2_id){
                 Particle & particle2 = particles[particle2_id];
@@ -537,34 +522,35 @@ void Malla::repos(){
     }
 
     for (Particle & particle : particles) {
-      array<int,3> const new_indexes =
-              calculate_block_indexes(particle.p);
+      array<int,3> const new_indexes = calculate_block_indexes(particle.p);
       int const block_index = calculate_block_index(new_indexes, nBlocks[0], nBlocks[1]);
       particle.current_block = block_index;
-
-      // antiguo initacc
       particle.rho = 0;
-      particle.a = {0, g, 0};
-      // fin antiguo initacc
+      particle.a = {0, gravity, 0};
 
       auto new_block = static_cast<size_t>(block_index);
       blocks[new_block].particles.emplace_back(particle.id);
     }
 
+    add_particles_neighbours();
+}
+
+
+/**
+ * This function adds the particles in the neighboring blocks to the list of particles in each block.
+ */
+void Malla::add_particles_neighbours() {
     int currentBlock = 0;
-    for (Block & block: blocks){
+    for (Block  const& block: blocks){
         for (auto index: block.neighbours){
-            Block& neighbour_block = blocks[index];
+            Block const& neighbour_block = blocks[index];
             for (auto particle_id: neighbour_block.particles){
-                blocks[currentBlock].neighbours_particles.emplace_back(particle_id);
+               blocks[currentBlock].neighbours_particles.emplace_back(particle_id);
             }
         }
         currentBlock++;
     }
-
-
 }
-
 
 /**
  * This method performs the interaction between the different particles in the grid.

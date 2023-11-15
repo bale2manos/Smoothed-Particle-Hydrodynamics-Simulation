@@ -13,11 +13,11 @@
 
 using namespace std;
 double const radio = 1.695;
-double const rho_f = pow(10,3);
+double const density_factor = 10*10*10;
 double const p_s = 3.0; //presión de rigidez
 double const s_c = 3*10000;
 double const d_v = 128.0;
-double const mu = 0.4;
+double const viscosity = 0.4;
 double const d_p = 2 * 0.0001;
 double const delta_t = 0.001;
 double const xmax = 0.065;
@@ -26,7 +26,7 @@ double const ymax = 0.1;
 double const ymin = -0.08;
 double const zmax = 0.065;
 double const zmin = -0.065;
-double const g = -9.8;
+double const gravity = -9.8;
 
 class Malla {
   public:
@@ -41,32 +41,32 @@ class Malla {
     void acctransf();
     void triplete();
     void mallaInteraction();
-    int getNp() const;
-    double getPpm() const;
-    double getH() const;
-    array<int, 3>  getNBlocks() const;
-    array<double, 3>  getSizeBlocks() const;
-    std::vector<Particle> getParticles() const; // New method to retrieve particles
-    int nx_calc (double xmax, double xmin, double h);
-    int ny_calc (double ymax, double ymin, double h);
-    int nz_calc (double zmax, double zmin, double h);
-    double sx_calc (double xmax, double xmin, int nx);
-    double sy_calc (double ymax, double ymin, int ny);
-    double sz_calc (double zmax, double zmin, int nz);
-    double smooth_length ();
-    double particle_mass ();
+    [[nodiscard]] int getNp() const;
+    [[nodiscard]] double getPpm() const;
+    [[nodiscard]] double getH() const;
+    [[nodiscard]] array<int, 3>  getNBlocks() const;
+    [[nodiscard]] array<double, 3>  getSizeBlocks() const;
+    [[nodiscard]] std::vector<Particle> getParticles() const; // New method to retrieve particles
+    static int nx_calc (double xmax, double xmin, double h);
+    static int ny_calc (double ymax, double ymin, double h);
+    static int nz_calc (double zmax, double zmin, double h);
+    static double sx_calc (double xmax, double xmin, int nx);
+    static double sy_calc (double ymax, double ymin, int ny);
+    static double sz_calc (double zmax, double zmin, int nz);
+    [[nodiscard]] double smooth_length () const;
+    [[nodiscard]] double particle_mass () const;
 
 
     void wall_colissions(Particle& particle, Block& block);
-    void edge_collisions(Particle& particula, int extremo, int eje);
-    void particle_movement(Particle& particle);
+    static void edge_collisions(Particle& particula, int extremo, int eje);
+    static void particle_movement(Particle& particle);
     void limits_interaction(Particle& particle, Block& block);
-    void edge_interaction(Particle& particle,int extremo,int eje);
+    static void edge_interaction(Particle& particle,int extremo,int eje);
 
 
     void acceleration_transfer(Particle & pivot, Particle & particle2) ;
-    void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho);
-    double density_transformation(double rho);
+    void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) const;
+    [[nodiscard]] double density_transformation(double rho) const;
   private:
     int np;
     double ppm;
@@ -76,10 +76,7 @@ class Malla {
     double h, m;
     std::array<double, 2> accConst;
     std::vector<Particle> particles;
+    void add_particles_neighbours();
 };
-
-
-
-
 
 #endif //ARQUITECTURA_DE_COMPUTADORES_GRID_HPP
