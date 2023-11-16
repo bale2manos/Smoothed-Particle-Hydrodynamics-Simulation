@@ -75,15 +75,15 @@ std::array<int, 2> validate_parameters(int argc, vector<string> argv){
     return error_type;
   }
 
-  error_type[1] = stoi(argv[1]);
+  error_type[1] = stoi(argv[0]);
   error_type[0] = validate_time_steps(error_type[1]);
   if (error_type[0] != 0) {return error_type;}
-  if (validate_input_file(argv[2].c_str()) != 0)
+  if (validate_input_file(argv[1].c_str()) != 0)
   {
     error_type[0] = -3;
     return error_type;
   }
-  if (validate_output_file(argv[3].c_str()) != 0){
+  if (validate_output_file(argv[2].c_str()) != 0){
     error_type[0] = -4;
     return error_type;
   }
