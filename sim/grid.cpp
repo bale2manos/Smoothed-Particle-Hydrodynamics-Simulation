@@ -383,15 +383,15 @@ void Malla::edge_collisions(Particle & particula, int extremo, int eje) {
  * @param particle The particle to be moved.
  */
 void Malla::particle_movement(Particle & particle) {
-  static auto const delta_t_squared = timestep * timestep;
-  static auto const delta_t_half    = timestep * 0.5;
+  static auto const timestep_squared = timestep * timestep;
+  static auto const timestep_half    = timestep * 0.5;
 
   for (int i = 0; i < 3; i++) {
-    double const hv_i  = particle.h_vel.at(i);
+    double const hvel_i  = particle.h_vel.at(i);
     double const acc_i = particle.acc.at(i);
 
-    particle.pos.at(i)   += (hv_i * timestep) + (acc_i * delta_t_squared);
-    particle.vel.at(i)    = hv_i + (acc_i * delta_t_half);
+    particle.pos.at(i)   += (hvel_i * timestep) + (acc_i * timestep_squared);
+    particle.vel.at(i)    = hvel_i + (acc_i * timestep_half);
     particle.h_vel.at(i) += (acc_i * timestep);
   }
 }
