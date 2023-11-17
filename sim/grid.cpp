@@ -21,7 +21,8 @@ Malla::Malla(int np, double ppm) :
   nBlocks = {nx_calc(xmax, xmin, h), ny_calc(ymax, ymin, h), nz_calc(zmax, zmin, h)};
   sizeBlocks = {sx_calc(xmax, xmin, nBlocks[0]), sy_calc(ymax, ymin, nBlocks[1]), sz_calc(zmax, zmin, nBlocks[2])};
   // TODO hacer esto en una funcion o mas bonito
-  accConst = {15/(std::numbers::pi*pow(h,6)) * (3*m*p_s)*0.5, 15/(std::numbers::pi*pow(h,6))*3*viscosity*m};
+  accConst = {fifteen/(std::numbers::pi*pow(h,six)) * (3*m*p_s)*half,
+               fifteen/(std::numbers::pi*pow(h,six))*three*viscosity*m};
   blocks = createFillGrid();
   particles = vector<Particle>(np);
 }
@@ -85,11 +86,10 @@ std::array<double, 3> Malla::getSizeBlocks() const {
  * @param positions An array with the x, y, and z positions.
  * @return An array with the i, j, and k indexes of the block.
  */
-array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
+array<int, 3> Malla::calculate_block_indexes(std::array <double,3> positions){
   int i_index = initial_block_index(positions[0], xmin,  sizeBlocks[0]);
   int j_index = initial_block_index(positions[1], ymin,  sizeBlocks[1]);
   int k_index = initial_block_index(positions[2], zmin,  sizeBlocks[2]);
-  /* TODO problema coma flotante floor error */
   if (i_index<0){i_index = 0;}
   if (j_index<0){j_index = 0;}
   if (k_index<0){k_index = 0;}
@@ -107,44 +107,36 @@ array<int, 3> Malla::calculate_block_indexes(array <double,3> positions){
  */
 void Malla::insert_particles (const char * in_file) {
   ifstream input_file(in_file, ios::binary);
-  double trash = 0.0;
-  input_file.read(reinterpret_cast<char *>(&trash), sizeof(double));
-  array<array<float, 3>, 3> info_particle = {};
-  array<array<double, 3>, 3> info_particle_double = {};
-  int counter = 0;
-  // TODO tratar de reducir reinterpet_cast
-  bool finished = false;
-  while (!finished){
+  double header_already_read = 0.0;
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+  input_file.read(reinterpret_cast<char *>(&header_already_read), sizeof(double));
+  array<array<float, 3>, 3> info_particle = {}; array<array<double, 3>, 3> info_particle_double = {};
+
+  int particle_counter = 0;
+  bool whole_file_read = false;
+  while (!whole_file_read){
     for (int i=0;i<3;i++){
       for (int j=0; j<3;j++){
-        read_
+        std::array<int,2> const indexes = {i,j};
+        read_particle_field(whole_file_read,indexes,input_file,info_particle);
+        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);
+        if (whole_file_read){break;}
       }
+      if (whole_file_read){break;}
     }
+    if (whole_file_read){break;}
+    int const index = get_block_index_from_position(info_particle_double[0]);
+    insert_particle_info(info_particle_double,particle_counter, index);
+    particle_counter++;
   }
+  check_missmatch_particles(particle_counter, np);
+}
 
 
-  while (input_file.read(reinterpret_cast<char *>(info_particle[0].data()), sizeof(info_particle[0][0]))) {
-    // if i < np then read the next 8 floats, else continue
-    //NOLINTNEXTLINE
-    input_file.read(reinterpret_cast<char *>(&info_particle[0][1]), sizeof(info_particle[0][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[0][2]), sizeof(info_particle[0][2]));
-    input_file.read(reinterpret_cast<char *>(info_particle[1].data()), sizeof(info_particle[1][0]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][1]), sizeof(info_particle[1][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[1][2]), sizeof(info_particle[1][2]));
-    input_file.read(reinterpret_cast<char *>(info_particle[2].data()), sizeof(info_particle[2][0]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][1]), sizeof(info_particle[2][1]));
-    input_file.read(reinterpret_cast<char *>(&info_particle[2][2]), sizeof(info_particle[2][2]));
-    for (size_t i = 0; i < info_particle.size(); ++i) {
-      for (size_t j = 0; j < info_particle[i].size(); ++j) {
-        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);}
-    }
+int Malla::get_block_index_from_position (std::array<double, 3> position){
+  std::array<int, 3> index_array = calculate_block_indexes(position);
+  return index_array[0] + index_array[1] * nBlocks[0] + index_array[2] * nBlocks[0] * nBlocks[1];
 
-    std::array<int, 3> index_array = calculate_block_indexes(info_particle_double[0]);
-    int const index = index_array[0] + index_array[1] * nBlocks[0] + index_array[2] * nBlocks[0] * nBlocks[1];
-    insert_particle_info(info_particle_double,counter, index);
-    counter++;
-  }
-  check_missmatch_particles(counter, np);
 }
 
 
@@ -534,8 +526,7 @@ void Malla::repos(){
     }
 
     for (Particle & particle : particles) {
-      array<int,3> const new_indexes = calculate_block_indexes(particle.p);
-      int const block_index = calculate_block_index(new_indexes, nBlocks[0], nBlocks[1]);
+      int const block_index = get_block_index_from_position(particle.p);
       particle.current_block = block_index;
       particle.rho = 0;
       particle.a = {0, gravity, 0};

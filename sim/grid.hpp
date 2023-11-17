@@ -12,21 +12,28 @@
 
 
 using namespace std;
-double const radio = 1.695;
-double const density_factor = 10*10*10;
-double const p_s = 3.0; //presión de rigidez
-double const s_c = 3*10000;
-double const d_v = 128.0;
-double const viscosity = 0.4;
-double const d_p = 2 * 0.0001;
-double const delta_t = 0.001;
-double const xmax = 0.065;
-double const xmin = -0.065;
-double const ymax = 0.1;
-double const ymin = -0.08;
-double const zmax = 0.065;
-double const zmin = -0.065;
-double const gravity = -9.8;
+
+constexpr double radio = 1.695;
+constexpr double density_factor = 10*10*10;
+constexpr double p_s = 3.0; //presión de rigidez
+constexpr double s_c = 3*10000;
+constexpr double d_v = 128.0;
+constexpr double viscosity = 0.4;
+constexpr double d_p = 2 * 0.0001;
+constexpr double delta_t = 0.001;
+constexpr double xmax = 0.065;
+constexpr double xmin = -0.065;
+constexpr double ymax = 0.1;
+constexpr double ymin = -0.08;
+constexpr double zmax = 0.065;
+constexpr double zmin = -0.065;
+constexpr double gravity = -9.8;
+
+constexpr double fifteen = 15.0;
+constexpr double three = 3.0;
+constexpr double half = 0.5;
+constexpr double six = 6.0;
+
 
 class Malla {
   public:
@@ -34,8 +41,8 @@ class Malla {
 
     vector<Block> createFillGrid();
     void insert_particles (const char * in_file);
-    void insert_particle_info(array<array<double, 3>, 3> info, int id, int block_index);
-    array<int, 3> calculate_block_indexes(array <double,3> positions);
+    void insert_particle_info(std::array<std::array<double, 3>, 3> info, int id, int block_index);
+    array<int, 3> calculate_block_indexes(std::array <double,3> positions);
     void repos();
     void densinc();
     void acctransf();
@@ -44,8 +51,8 @@ class Malla {
     [[nodiscard]] int getNp() const;
     [[nodiscard]] double getPpm() const;
     [[nodiscard]] double getH() const;
-    [[nodiscard]] array<int, 3>  getNBlocks() const;
-    [[nodiscard]] array<double, 3>  getSizeBlocks() const;
+    [[nodiscard]] std::array<int, 3>  getNBlocks() const;
+    [[nodiscard]] std::array<double, 3>  getSizeBlocks() const;
     [[nodiscard]] std::vector<Particle> getParticles() const; // New method to retrieve particles
     static int nx_calc (double xmax, double xmin, double h);
     static int ny_calc (double ymax, double ymin, double h);
@@ -55,6 +62,7 @@ class Malla {
     static double sz_calc (double zmax, double zmin, int nz);
     [[nodiscard]] double smooth_length () const;
     [[nodiscard]] double particle_mass () const;
+    int get_block_index_from_position (std::array<double, 3> position);
 
 
     void wall_colissions(Particle& particle, Block& block);
@@ -65,7 +73,7 @@ class Malla {
 
 
     void acceleration_transfer(Particle & pivot, Particle & particle2) ;
-    void increase_density(array<double, 3>& pivot_coords, array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) const;
+    void increase_density(std::array<double, 3>& pivot_coords, std::array<double, 3>& particle2_coords, double& pivot_rho, double& particle2_rho) const;
     [[nodiscard]] double density_transformation(double rho) const;
   private:
     int np;
