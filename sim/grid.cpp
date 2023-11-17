@@ -112,17 +112,29 @@ void Malla::insert_particles (const char * in_file) {
   array<array<float, 3>, 3> info_particle = {};
   array<array<double, 3>, 3> info_particle_double = {};
   int counter = 0;
+
   // TODO tratar de reducir reinterpet_cast
   bool finished = false;
   while (!finished){
     for (int i=0;i<3;i++){
       for (int j=0; j<3;j++){
-        read_
+        const vector <int> indexes = {i,j};
+        read_particle_field(finished,indexes,input_file,info_particle);
+        info_particle_double[i][j] = static_cast<double>(info_particle[i][j]);
       }
     }
+    std::array<int, 3> index_array = calculate_block_indexes(info_particle_double[0]);
+    int const index = index_array[0] + index_array[1] * nBlocks[0] + index_array[2] * nBlocks[0] * nBlocks[1];
+    insert_particle_info(info_particle_double,counter, index);
+    counter++;
+
+    if (counter == getNp()){
+      finished = true;
+    }
+
   }
 
-
+  /*
   while (input_file.read(reinterpret_cast<char *>(info_particle[0].data()), sizeof(info_particle[0][0]))) {
     // if i < np then read the next 8 floats, else continue
     //NOLINTNEXTLINE
@@ -144,6 +156,7 @@ void Malla::insert_particles (const char * in_file) {
     insert_particle_info(info_particle_double,counter, index);
     counter++;
   }
+  */
   check_missmatch_particles(counter, np);
 }
 

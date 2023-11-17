@@ -188,7 +188,7 @@ int write_output_file (Malla& malla, const char * out_file){
     output_file.write(reinterpret_cast<char*>(&vy_float), sizeof(vy_float));
     output_file.write(reinterpret_cast<char*>(&vz_float), sizeof(vz_float));
 
-    if (particle.id == 0){
+    if (particle.id >= 0){
     cout << "Particle " << particle.id << " Data:" << "\n";
     cout << "px: " << particle.p[0] << "\n";
     cout << "py: " << particle.p[1] << "\n";
@@ -247,10 +247,12 @@ void check_missmatch_particles(int counter, int malla_np) {
 
 
 
-void read_particle_field(bool & finished, int first_index, int last_index, ifstream & input_file, std::array<std::array<float, 3>, 3> info_particle = {};) {
-  if (!input_file.read(reinterpret_cast<char *>(&info_particle[first_index][last_index]),
-                       sizeof(info_particle[first_index][last_index]))) {
-    finished = false;
+void read_particle_field(bool &finished, vector<int> indexes, ifstream &input_file, std::array<std::array<float, 3>, 3> &info_particle) {
+  if (!input_file.read(reinterpret_cast<char *>(&info_particle[indexes[0]][indexes[1]]),
+                       sizeof(info_particle[indexes[0]][indexes[1]]))) {
+    cout<<"he terminado";
+    finished = true;
+
   }
 }
 
