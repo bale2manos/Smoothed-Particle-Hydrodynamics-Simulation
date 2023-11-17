@@ -75,7 +75,7 @@ class Malla {
     void increase_density(std::array<double, 3> & pivot_coords,
                           std::array<double, 3> & particle2_coords, double & pivot_rho,
                           double & particle2_rho) const;
-    [[nodiscard]] double density_transformation(double rho) const;
+    [[nodiscard]] double density_transformation(double density) const;
 
   private:
     int number_particles{};

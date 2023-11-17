@@ -296,10 +296,10 @@ void Malla::increase_density(std::array<double, 3> & pivot_coords,
  * @param rho The density value to transform.
  * @return The transformed density value.
  */
-double Malla::density_transformation(double rho) const {
+double Malla::density_transformation(double density) const {
   static auto const h_sixth     = pow(smoothing_length, 6);
   static auto const h_ninth     = pow(smoothing_length, 9);
-  double const first_term       = (rho + h_sixth);
+  double const first_term       = (density + h_sixth);
   static auto const second_term = (315 / (64 * M_PI * h_ninth));
   return first_term * second_term * particle_mass;
 }
