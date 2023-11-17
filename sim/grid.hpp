@@ -36,7 +36,7 @@ constexpr int wrong_particle_number = -5;
 
 class Malla {
   public:
-    Malla(int np, double ppm);
+    Malla(int number_particles, double particles_per_meter);
     Malla() = default;
 
     std::vector<Block> createFillGrid();

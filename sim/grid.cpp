@@ -15,9 +15,9 @@
  * @param np Number of particles.
  * @param ppm Particles per meter.
  */
-Malla::Malla(int np, double ppm)
-  : number_particles(np), particles_per_meter(ppm), number_blocks({0, 0, 0}),
-    size_blocks({0, 0, 0}), smoothing_length(smooth_length_calc()),
+Malla::Malla(int number_particles, double particles_per_meter)
+  : number_particles(number_particles), particles_per_meter(particles_per_meter),
+    number_blocks({0, 0, 0}), size_blocks({0, 0, 0}), smoothing_length(smooth_length_calc()),
     particle_mass(particle_mass_calc()), accel_constants({0, 0})
 
 {
@@ -31,7 +31,7 @@ Malla::Malla(int np, double ppm)
                      fifteen / (std::numbers::pi * pow(smoothing_length, six)) * three * viscosity *
                          particle_mass};
   blocks          = createFillGrid();
-  particles       = std::vector<Particle>(np);
+  particles       = std::vector<Particle>(number_particles);
 }
 
 /**
