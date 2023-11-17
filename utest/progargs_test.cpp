@@ -59,7 +59,7 @@ TEST(TestReadInputFile, Test5){
   Malla const malla = read_input_file(file.c_str());
   Malla const mallaux(4800, 204);
   EXPECT_EQ(malla.getNp() , 4800);
-  int nblocks = malla.getNBlocks()[0] *  malla.getNBlocks()[1] *  malla.getNBlocks()[2];
+  int nblocks = malla.getNBlocks()[0] *  malla.getNBlocks()[1] *  malla.getNumberBlocks()[2];
   EXPECT_EQ(nblocks , 4725);
 }
 
@@ -70,15 +70,15 @@ TEST(TestWriteOutputFile, Test6){
   write_output_file(malla, outfile.c_str());
   Malla mallaaux = read_input_file(outfile.c_str());
 
-  EXPECT_EQ(malla.getNp(), mallaaux.getNp());
-  EXPECT_EQ(malla.getPpm(), mallaaux.getPpm());
+  EXPECT_EQ(malla.getNp(), mallaaux.getNumberParticles());
+  EXPECT_EQ(malla.getPpm(), mallaaux.getParticlesPerMeter());
 
 }
 
 TEST(TestCheckNP, Test7){
   EXPECT_NO_THROW(check_np(1));
   EXPECT_THROW(check_np(0), runtime_error);
-  EXPECT_THROW(check_np(-1), runtime_error);
+  EXPECT_THROW(check_number_particles(-1), runtime_error);
 }
 
 

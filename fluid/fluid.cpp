@@ -1,37 +1,26 @@
-#include "sim/progargs.hpp"
 #include "sim/block.hpp"
-#include <vector>
+#include "sim/progargs.hpp"
+
 #include <iostream>
+#include <vector>
 
-constexpr int wrong_particle_number = -5;
-
-
-
-
-
-int main(int argc, const char* argv[]) {
-
+int main(int argc, char const * argv[]) {
   std::vector<std::string> argvparams(argv + 1, argv + argc);
-  std::array<int,2> params = validate_parameters(argc, argvparams); /* TODO esto se puede mejorar */
-  if (params[0] < 0) {return params[0];}
+  std::array<int, 2> params =
+      validate_parameters(argc, argvparams); /* TODO esto se puede mejorar */
+  if (params[0] < 0) { return params[0]; }
+  Malla malla = {};
 
   // try catch of read_input_file and any exception
   try {
-    Malla malla = read_input_file(argvparams[1].c_str());
-    for (int iter = 0; iter < stoi(argvparams[0]); iter++) {
-      malla.mallaInteraction();
-    }
-    write_output_file(malla, argvparams[2].c_str());
-
-  }
-  catch (const runtime_error& e) {
-    cerr << e.what() << "\n";
+    malla = read_input_file(argvparams[1].c_str());
+  } catch (std::runtime_error const & e) {
+    std::cerr << e.what() << "\n";
     return wrong_particle_number;
   }
 
+  for (int iter = 0; iter < stoi(argvparams[0]); iter++) { malla.mallaInteraction(); }
+  write_output_file(malla, argvparams[2].c_str());
+
   return 0;
 }
-
-
-
-

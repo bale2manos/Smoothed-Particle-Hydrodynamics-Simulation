@@ -4,7 +4,7 @@
 Malla grid(15138, 292);
 
 TEST(GridTest, smoothlenght){
-  double result = grid.smooth_length();
+  double result = grid.smooth_length_calc();
   EXPECT_EQ(result,0.0058047945205479453);
 }
 
@@ -33,7 +33,7 @@ TEST(GridTest, sz_calc){
 }
 
 TEST(GridTest, particle_mass){
-  EXPECT_EQ(grid.particle_mass(),4.0165339818054222e-05);
+  EXPECT_EQ(grid.particle_mass_calc(),4.0165339818054222e-05);
 }
 
 
@@ -75,16 +75,16 @@ TEST(GridTest, increase_density_increase){
 TEST(GridTest, particle_movement){
   Particle particle;
   Particle particle2;
-  particle.hv = {4.1, 5.4, 6.4};
-  particle.a = {2.4, 3.5, 1.1};
-  particle.p = {2.3, 2.1, 3.1};
-  particle2.hv = {4.1, 5.4, 6.4};
-  particle2.a = {2.4, 3.5, 1.1};
-  particle2.p = {2.3, 2.1, 3.1};
+  particle.h_vel  = {4.1, 5.4, 6.4};
+  particle.acc  = {2.4, 3.5, 1.1};
+  particle.pos  = {2.3, 2.1, 3.1};
+  particle2.h_vel = {4.1, 5.4, 6.4};
+  particle2.acc = {2.4, 3.5, 1.1};
+  particle2.pos = {2.3, 2.1, 3.1};
   grid.particle_movement(particle);
-  EXPECT_NE(particle.p[1], particle2.p[1]);
-  EXPECT_NE(particle.v[1], particle2.v[1]);
-  EXPECT_NE(particle.hv[1], particle2.hv[1]);
+  EXPECT_NE(particle.pos[1], particle2.pos[1]);
+  EXPECT_NE(particle.vel[1], particle2.vel[1]);
+  EXPECT_NE(particle.h_vel[1], particle2.h_vel[1]);
 }
 
 /*
@@ -97,16 +97,16 @@ TEST(GridTest, AccelerationTransferTest) {
 
   // Inicializa las posiciones, densidades y velocidades de las partículas (ajusta según sea necesario)
   pivot.p = {1, 2, 3};
-  pivot.rho = 1.0;
+  pivot.density = 1.0;
   pivot.v = {1, 3, 2};
   pivot2.p = {1, 2, 3};
-  pivot2.rho = 1.0;
+  pivot2.density = 1.0;
   pivot2.v = {1, 3, 2};
   particle2.p = {1.0, 1.0, 1.0};
-  particle2.rho = 2.0;
+  particle2.density = 2.0;
   particle2.v = {1.0, 1.0, 1.0};
 
-  grid.acceleration_transfer(pivot, particle2);
+  grid.acceleration_transfer_calculations(pivot, particle2);
 
   EXPECT_NE(pivot.a[2], pivot2.a[2]);  // Los valores son iguales porque norm_squared > h_squared
 }
