@@ -14,10 +14,6 @@ using namespace std;
  * @return 0 if the number of time steps is valid, -1 if it's not numeric, -2 if it's negative.
  */
 int validate_time_steps(int nts) {
-  if (nts == 0) {
-    cerr << "Error: time steps must be numeric." << "\n";
-    return -1;
-  }
   if (nts < 0) {
     cerr << "Error: Invalid number of time steps." << "\n";
     return -2;
@@ -75,7 +71,14 @@ std::array<int, 2> validate_parameters(int argc, vector<string> argv){
     return error_type;
   }
 
-  error_type[1] = stoi(argv[0]);
+  try {
+    error_type[1] = stoi(argv[0]);
+  } catch (const std::invalid_argument& e) {
+    cerr << "Error time steps must be numeric." << "\n";
+    error_type[0] = -1; // Or any other suitable error code
+    return error_type;
+  }
+
   error_type[0] = validate_time_steps(error_type[1]);
   if (error_type[0] != 0) {return error_type;}
   if (validate_input_file(argv[1].c_str()) != 0)
@@ -239,6 +242,15 @@ void check_missmatch_particles(int counter, int malla_np) {
         "Error: Number of particles mismatch. Header: " + to_string(malla_np) + ", Found: " + to_string(counter) +
         ".\n";
     throw runtime_error(errorMsg);
+  }
+}
+
+
+
+void read_particle_field(bool & finished, int first_index, int last_index, ifstream & input_file, std::array<std::array<float, 3>, 3> info_particle = {};) {
+  if (!input_file.read(reinterpret_cast<char *>(&info_particle[first_index][last_index]),
+                       sizeof(info_particle[first_index][last_index]))) {
+    finished = false;
   }
 }
 

@@ -113,8 +113,19 @@ void Malla::insert_particles (const char * in_file) {
   array<array<double, 3>, 3> info_particle_double = {};
   int counter = 0;
   // TODO tratar de reducir reinterpet_cast
+  bool finished = false;
+  while (!finished){
+    for (int i=0;i<3;i++){
+      for (int j=0; j<3;j++){
+        read_
+      }
+    }
+  }
+
+
   while (input_file.read(reinterpret_cast<char *>(info_particle[0].data()), sizeof(info_particle[0][0]))) {
     // if i < np then read the next 8 floats, else continue
+    //NOLINTNEXTLINE
     input_file.read(reinterpret_cast<char *>(&info_particle[0][1]), sizeof(info_particle[0][1]));
     input_file.read(reinterpret_cast<char *>(&info_particle[0][2]), sizeof(info_particle[0][2]));
     input_file.read(reinterpret_cast<char *>(info_particle[1].data()), sizeof(info_particle[1][0]));
