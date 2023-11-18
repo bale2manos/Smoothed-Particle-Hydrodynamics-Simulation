@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 #include "sim/grid.hpp"
-
-Malla grid(15138, 292);
+#include "grid_test.hpp"
+Malla grid(nnp, ppm);
 
 TEST(GridTest, smoothlenght){
-  double result = grid.smooth_length_calc();
+  const double result = grid.smooth_length_calc();
   EXPECT_EQ(result,0.0058047945205479453);
 }
 
@@ -38,7 +38,7 @@ TEST(GridTest, particle_mass){
 
 
 TEST(GridTest, createFillGridsize) {
-  vector<Block> blocks = grid.createFillGrid();
+  const std::vector<Block> blocks = grid.createFillGrid();
   EXPECT_EQ(blocks.size(), 30008);
 }
 
@@ -47,69 +47,215 @@ TEST(GridTest, density_transformation){
   EXPECT_EQ(grid.density_transformation(1000), 8.4091188953149706e+18);
 }
 
+TEST(GridTest, get_block_index_from_position){
+  const std::array<double, 3> position = {2, 3, 4};
+  EXPECT_EQ(grid.get_block_index_from_position(position), 15003);
+}
 
 TEST(GridTest, increase_density_noincrease){
-  array<double, 3> pivot_coords = {2.0, 3.0, 4.0};
-  array<double, 3> particle2_coords = {3.0, 1.0, 3.0};
-  double pivot_rho_ori = 1.0;
-  double particle2_rho_ori = 2.0;
+  const double pivot_x = 2.0;
+  const double pivot_y = 3.0;
+  const double pivot_z = 4.0;
+  const double particle_x = 3.0;
+  const double particle_y = 1.0;
+  const double particle_z = 3.0;
+  std::array<double, 3> pivot_coords = {pivot_x, pivot_y, pivot_z};
+  std::array<double, 3> particle2_coords = {particle_x, particle_y, particle_z};
+  double const pivot_rho_ori = 1.0;
+  double const particle2_rho_ori = 2.0;
   double pivot_rho = 1.0;
-  double particle2_rho = 2.0;
+  double particle2_rho = 2;
   grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
   EXPECT_EQ(pivot_rho, pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
   EXPECT_EQ(particle2_rho, particle2_rho_ori);
 }
 
 TEST(GridTest, increase_density_increase){
-  array<double, 3> pivot_coords = {0.0005, 0.00004, 0.0003};
-  array<double, 3> particle2_coords = {0.00049, 0.00004, 0.00002};
-  double pivot_rho_ori = 1.0;
-  double particle2_rho_ori = 2.0;
+  std::array<double, 3> pivot_coords = {1,2,3};
+  std::array<double, 3> particle2_coords = {1,2,3};
+  const double pivot_rho_ori = 1.0;
+  const double particle2_rho_ori = 2.0;
   double pivot_rho = 1.0;
-  double particle2_rho = 2.0;
+  double particle2_rho = 2;
   grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
   EXPECT_GT(pivot_rho, pivot_rho_ori);  // Los valores NO son iguales porque norm_squared < h_squared y por tanto hay incremento
   EXPECT_GT(particle2_rho, particle2_rho_ori);
 }
 
+
+
+TEST(GridTest, calculate_block_index){
+        const std::array<double, 3> positions = {1, 2, 3};
+        const std::array<int, 3> result = {21, 30, 21};
+  EXPECT_EQ(grid.calculate_block_indexes(positions), result);
+}
+
+TEST(GridTest, limit_of_edge){
+  EXPECT_EQ(grid.limit_of_edge(0,0), -0.065);
+  EXPECT_EQ(grid.limit_of_edge(0,1), 0.065);
+  EXPECT_EQ(grid.limit_of_edge(1,0), -0.08);
+  EXPECT_EQ(grid.limit_of_edge(1,1), 0.1);
+  EXPECT_EQ(grid.limit_of_edge(2,0), -0.065);
+  EXPECT_EQ(grid.limit_of_edge(2,1), 0.065);
+}
+
+TEST(GridTest, edge_collisions){
+  Particle particle;
+  Particle particle2;
+  particle.pos = {1, 2, 3};
+  particle.h_vel = {1, 2, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1, 2, 3};
+  particle2.h_vel = {1, 2, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.edge_collisions(particle, 1, 2);
+  EXPECT_LT(particle.acc.at(2), particle2.acc.at(2));
+}
+
+TEST(GridTest, edge_collisions2){
+  Particle particle;
+  Particle particle2;
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.edge_collisions(particle, 0, 1);
+  EXPECT_GT(particle.acc.at(1), particle2.acc.at(1));
+}
+
 TEST(GridTest, particle_movement){
   Particle particle;
   Particle particle2;
-  particle.h_vel  = {4.1, 5.4, 6.4};
-  particle.acc  = {2.4, 3.5, 1.1};
-  particle.pos  = {2.3, 2.1, 3.1};
-  particle2.h_vel = {4.1, 5.4, 6.4};
-  particle2.acc = {2.4, 3.5, 1.1};
-  particle2.pos = {2.3, 2.1, 3.1};
+  particle.pos = {1, 2, 3};
+  particle.h_vel = {1, 2, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1, 2, 3};
+  particle2.h_vel = {1, 2, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
   grid.particle_movement(particle);
-  EXPECT_NE(particle.pos[1], particle2.pos[1]);
-  EXPECT_NE(particle.vel[1], particle2.vel[1]);
-  EXPECT_NE(particle.h_vel[1], particle2.h_vel[1]);
+  EXPECT_NE(particle.pos.at(2), particle2.pos.at(2));
+  EXPECT_NE(particle.h_vel.at(2), particle2.h_vel.at(2));
+  EXPECT_NE(particle.vel.at(2), particle2.vel.at(2));
 }
 
-/*
-Faltan las colisiones!!!!!!!
-TEST(GridTest, AccelerationTransferTest) {
-  // Crea instancias de la clase Malla y las partículas (ajusta según sea necesario
-  Particle pivot;
-  Particle pivot2;
+
+TEST(GridTest, limits_interactions1){
+  Particle particle;
   Particle particle2;
-
-  // Inicializa las posiciones, densidades y velocidades de las partículas (ajusta según sea necesario)
-  pivot.p = {1, 2, 3};
-  pivot.density = 1.0;
-  pivot.v = {1, 3, 2};
-  pivot2.p = {1, 2, 3};
-  pivot2.density = 1.0;
-  pivot2.v = {1, 3, 2};
-  particle2.p = {1.0, 1.0, 1.0};
-  particle2.density = 2.0;
-  particle2.v = {1.0, 1.0, 1.0};
-
-  grid.acceleration_transfer_calculations(pivot, particle2);
-
-  EXPECT_NE(pivot.a[2], pivot2.a[2]);  // Los valores son iguales porque norm_squared > h_squared
+        const std::array<int, 3> block_coords = {0, 1, 2};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.limits_interaction(particle, block);
+  EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
 }
 
-*/
+TEST(GridTest, limits_interactions2){
+  Particle particle;
+  Particle particle2;
+        const std::array<int, 3> block_coords = {1, 0, 2};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.limits_interaction(particle, block);
+  EXPECT_EQ(particle.acc.at(1), particle2.acc.at(1));
+}
+
+TEST(GridTest, limits_interactions3){
+  Particle particle;
+  Particle particle2;
+        const std::array<int, 3> block_coords = {1, 1, 0};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.limits_interaction(particle, block);
+  EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
+}
+
+TEST(GridTest, wall_interactions1){
+  Particle particle;
+  Particle particle2;
+        const std::array<int, 3> block_coords = {0, 1, 2};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.wall_colissions(particle, block);
+  EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
+}
+
+TEST(GridTest, wall_interactions2){
+  Particle particle;
+  Particle particle2;
+        const std::array<int, 3> block_coords = {1, 0, 2};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.wall_colissions(particle, block);
+  EXPECT_GT(particle.acc.at(1), particle2.acc.at(1));
+}
+
+TEST(GridTest, wall_interactions3){
+  Particle particle;
+  Particle particle2;
+        const std::array<int, 3> block_coords = {1, 1, 0};
+        const std::array<int, 3> n_blocks = {1, 2, 3};
+  Block block(block_coords, n_blocks);
+  particle.pos = {1e-12, 1e-12, 1e-12};
+  particle.h_vel = {1, -1000, 3};
+  particle.acc = {1, 2, 3};
+  particle2.pos = {1e-12, 1e-12, 1e-12};
+  particle2.h_vel = {1, -1000, 3};
+  particle2.vel = {1, 2, 3};
+  particle.vel = {1, 2, 3};
+  particle2.acc = {1, 2, 3};
+  grid.wall_colissions(particle, block);
+  EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
+}
+
+
+
+
 
