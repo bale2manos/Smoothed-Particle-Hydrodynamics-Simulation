@@ -50,3 +50,11 @@ add_subdirectory(ftest)
 # Copy "small.fld" to the build directory
 configure_file(small.fld small.fld COPYONLY)
 configure_file(large.fld large.fld COPYONLY)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/ftest/out
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/ftest)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/ftest/trz
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/ftest)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/ftest/testfiles
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/ftest)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/utest/testfiles
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/utest)
