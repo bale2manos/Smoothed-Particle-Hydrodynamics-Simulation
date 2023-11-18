@@ -47,7 +47,7 @@ class Malla {
     void density_increase_and_transformation();
     void acceleration_transfer();
     void particle_collide_move_and_bound_interact();
-    void mallaInteraction();
+    void mallaInteraction(int nts);
     [[nodiscard]] int getNumberParticles() const;
     [[nodiscard]] double getParticlesPerMeter() const;
     [[nodiscard]] double getSmoothingLength() const;

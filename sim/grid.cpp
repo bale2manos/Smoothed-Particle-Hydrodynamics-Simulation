@@ -549,11 +549,17 @@ void Malla::add_particles_neighbours() {
  * density_increase_and_transformation(), acceleration_transfer(), and
  * particle_collide_move_and_bound_interact().
  */
-void Malla::mallaInteraction() {
-  Malla::particle_repositioning();
-  Malla::density_increase_and_transformation();
-  Malla::acceleration_transfer();
-  Malla::particle_collide_move_and_bound_interact();
+void Malla::mallaInteraction(int nts) {
+  for(int iter = 0; iter < nts; iter++) {
+    Malla::particle_repositioning();
+    Malla::density_increase_and_transformation();
+    Malla::acceleration_transfer();
+    Malla::particle_collide_move_and_bound_interact();
+  }
+  for(Particle & particle:particles){
+    int const block_index = get_block_index_from_position(particle.pos);
+    particle.current_block = block_index;
+  }
 }
 
 double Malla::limit_of_edge(int eje, int extremo) {

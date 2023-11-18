@@ -19,7 +19,7 @@ int main(int argc, char const * argv[]) {
     return wrong_particle_number;
   }
 
-  for (int iter = 0; iter < stoi(argvparams[0]); iter++) { malla.mallaInteraction(); }
+  malla.mallaInteraction(stoi(argvparams[0])
   write_output_file(malla, argvparams[2].c_str());
 
   return 0;
