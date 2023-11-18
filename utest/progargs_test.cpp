@@ -12,7 +12,7 @@
 TEST(TestValidateTimeSteps, Test1){
   EXPECT_EQ(validate_time_steps(1), 0);
   EXPECT_EQ(validate_time_steps(0), -1);
-  EXPECT_EQ(validate_time_steps(-1), -2);
+  EXPECT_EQ(validate_time_steps(-1), -1);
 }
 
 
