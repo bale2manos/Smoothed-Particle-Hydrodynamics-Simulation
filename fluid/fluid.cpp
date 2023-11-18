@@ -18,8 +18,7 @@ int main(int argc, char const * argv[]) {
     std::cerr << e.what() << "\n";
     return wrong_particle_number;
   }
-
-  malla.mallaInteraction(stoi(argvparams[0])
+  malla.mallaInteraction(stoi(argvparams[0]));
   write_output_file(malla, argvparams[2].c_str());
 
   return 0;
