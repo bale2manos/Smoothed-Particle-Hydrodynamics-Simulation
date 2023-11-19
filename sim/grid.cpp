@@ -8,7 +8,6 @@
 #include <cmath>
 #include <iostream>
 #include <numbers>
-#include <unordered_map>
 
 /**
  * Constructor for Malla class.
@@ -300,7 +299,7 @@ double Malla::density_transformation(double density) const {
   static auto const h_sixth     = pow(smoothing_length, 6);
   static auto const h_ninth     = pow(smoothing_length, 9);
   double const first_term       = (density + h_sixth);
-  static auto const second_term = (315 / (64 * M_PI * h_ninth));
+  static auto const second_term = (315 / (64 * std::numbers::pi * h_ninth));
   return first_term * second_term * particle_mass;
 }
 
