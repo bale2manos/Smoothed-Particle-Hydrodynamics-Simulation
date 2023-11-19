@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "sim/grid.hpp"
 #include "grid_test.hpp"
+
 Malla grid(nnp, ppm);
 
 TEST(GridTest, smoothlenght){
@@ -100,47 +101,71 @@ TEST(GridTest, limit_of_edge){
 }
 
 TEST(GridTest, edge_collisions){
-  Particle particle;
-  Particle particle2;
-  particle.pos = {1, 2, 3};
-  particle.h_vel = {1, 2, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1, 2, 3};
-  particle2.h_vel = {1, 2, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.edge_collisions(particle, 1, 2);
+  Particle particle{
+    {1, 2, 3},   // pos
+    {1, 2, 3},   // h_vel
+    {1, 2, 3},   // vel
+    {1, 2, 3},   // acc
+    0.0,         // density
+    0,           // id
+    0            // current_block
+  };
+  Particle particle2{
+    {1, 2, 3},   // pos
+    {1, 2, 3},   // h_vel
+    {1, 2, 3},   // vel
+    {1, 2, 3},   // acc
+    0.0,         // density
+    0,           // id
+    0            // current_block
+  };
+  Malla::edge_collisions(particle, 1, 2);
   EXPECT_LT(particle.acc.at(2), particle2.acc.at(2));
 }
 
 TEST(GridTest, edge_collisions2){
-  Particle particle;
-  Particle particle2;
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.edge_collisions(particle, 0, 1);
+  Particle particle{
+    {e12m, e12m, e12m},   // pos
+    {1, minust, 3},        // h_vel
+    {1, 2, 3},             // vel
+    {1, 2, 3},             // acc
+    0.0,                   // density
+    0,                     // id
+    0                      // current_block
+  };
+  Particle particle2{
+    {e12m, e12m, e12m},    // pos
+    {1, minust, 3},         // h_vel
+    {1, 2, 3},              // vel
+    {1, 2, 3},              // acc
+    0.0,                    // density
+    0,                      // id
+    0                       // current_block
+  };
+  Malla::edge_collisions(particle, 0, 1);
   EXPECT_GT(particle.acc.at(1), particle2.acc.at(1));
 }
 
 TEST(GridTest, particle_movement){
-  Particle particle;
-  Particle particle2;
-  particle.pos = {1, 2, 3};
-  particle.h_vel = {1, 2, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1, 2, 3};
-  particle2.h_vel = {1, 2, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.particle_movement(particle);
+  Particle particle{
+    {1, 2, 3},   // pos
+    {1, 2, 3},   // h_vel
+    {1, 2, 3},   // vel
+    {1, 2, 3},   // acc
+    0.0,         // density
+    0,           // id
+    0            // current_block
+  };
+  Particle particle2{
+    {1, 2, 3},   // pos
+    {1, 2, 3},   // h_vel
+    {1, 2, 3},   // vel
+    {1, 2, 3},   // acc
+    0.0,         // density
+    0,           // id
+    0            // current_block
+  };
+  Malla::particle_movement(particle);
   EXPECT_NE(particle.pos.at(2), particle2.pos.at(2));
   EXPECT_NE(particle.h_vel.at(2), particle2.h_vel.at(2));
   EXPECT_NE(particle.vel.at(2), particle2.vel.at(2));
@@ -148,111 +173,159 @@ TEST(GridTest, particle_movement){
 
 
 TEST(GridTest, limits_interactions1){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {0, 1, 2};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
+  const std::array<int, 3> block_coords = {0, 1, 2};
+  const std::array<int, 3> n_blocks = {1, 2, 3};
   Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
+  Particle particle{
+    {1, minust, 3},        // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},             // vel
+    {1, 2, 3},             // acc
+    0.0,                   // density
+    0,                     // id
+    0                      // current_block
+  };
+  Particle particle2{
+    {1, minust, 3},        // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},             // vel
+    {1, 2, 3},             // acc
+    0.0,                   // density
+    0,                     // id
+    0                      // current_block
+  };
   grid.limits_interaction(particle, block);
   EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
 }
 
 TEST(GridTest, limits_interactions2){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {1, 0, 2};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
+  const std::array<int, 3> block_coords = {1, 0, 2};
+  const std::array<int, 3> n_blocks = {1, 2, 3};
   Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
+  Particle particle{
+    {1, minust, 3},        // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},             // vel
+    {1, 2, 3},             // acc
+    0.0,                   // density
+    0,                     // id
+    0                      // current_block
+  };
+  Particle particle2{
+    {1, minust, 3},         // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},              // vel
+    {1, 2, 3},              // acc
+    0.0,                    // density
+    0,                      // id
+    0                       // current_block
+  };
   grid.limits_interaction(particle, block);
   EXPECT_EQ(particle.acc.at(1), particle2.acc.at(1));
 }
 
 TEST(GridTest, limits_interactions3){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {1, 1, 0};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
+  const std::array<int, 3> block_coords = {1, 1, 0};
+  const std::array<int, 3> n_blocks = {1, 2, 3};
   Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
+  Particle particle{
+    {1, minust, 3},        // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},             // vel
+    {1, 2, 3},             // acc
+    0.0,                   // density
+    0,                     // id
+    0                      // current_block
+  };
+  Particle particle2{
+    {1, minust, 3},         // h_vel
+    {e12m, e12m, e12m},    // pos
+    {1, 2, 3},              // vel
+    {1, 2, 3},              // acc
+    0.0,                    // density
+    0,                      // id
+    0                       // current_block
+  };
   grid.limits_interaction(particle, block);
   EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
 }
 
 TEST(GridTest, wall_interactions1){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {0, 1, 2};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
-  Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.wall_colissions(particle, block);
-  EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
+const std::array<int, 3> block_coords = {0, 1, 2};
+const std::array<int, 3> n_blocks = {1, 2, 3};
+Block block(block_coords, n_blocks);
+Particle particle{
+  {1, minust, 3},        // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},             // vel
+  {1, 2, 3},             // acc
+  0.0,                   // density
+  0,                     // id
+  0                      // current_block
+};
+Particle particle2{
+  {1, minust, 3},         // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},              // vel
+  {1, 2, 3},              // acc
+  0.0,                    // density
+  0,                      // id
+  0                       // current_block
+};
+grid.wall_colissions(particle, block);
+EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
 }
 
 TEST(GridTest, wall_interactions2){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {1, 0, 2};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
-  Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.wall_colissions(particle, block);
-  EXPECT_GT(particle.acc.at(1), particle2.acc.at(1));
+  const std::array<int, 3> block_coords = {1, 0, 2};
+  const std::array<int, 3> n_blocks = {1, 2, 3};
+Block block(block_coords, n_blocks);
+Particle particle{
+  {1, minust, 3},        // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},             // vel
+  {1, 2, 3},             // acc
+  0.0,                   // density
+  0,                     // id
+  0                      // current_block
+};
+Particle particle2{
+  {1, minust, 3},         // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},              // vel
+  {1, 2, 3},              // acc
+  0.0,                    // density
+  0,                      // id
+  0                       // current_block
+};
+grid.wall_colissions(particle, block);
+EXPECT_GT(particle.acc.at(1), particle2.acc.at(1));
 }
 
 TEST(GridTest, wall_interactions3){
-  Particle particle;
-  Particle particle2;
-        const std::array<int, 3> block_coords = {1, 1, 0};
-        const std::array<int, 3> n_blocks = {1, 2, 3};
-  Block block(block_coords, n_blocks);
-  particle.pos = {1e-12, 1e-12, 1e-12};
-  particle.h_vel = {1, -1000, 3};
-  particle.acc = {1, 2, 3};
-  particle2.pos = {1e-12, 1e-12, 1e-12};
-  particle2.h_vel = {1, -1000, 3};
-  particle2.vel = {1, 2, 3};
-  particle.vel = {1, 2, 3};
-  particle2.acc = {1, 2, 3};
-  grid.wall_colissions(particle, block);
-  EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
+  const std::array<int, 3> block_coords = {1, 1, 0};
+  const std::array<int, 3> n_blocks = {1, 2, 3};
+Block block(block_coords, n_blocks);
+Particle particle{
+  {1, minust, 3},        // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},             // vel
+  {1, 2, 3},             // acc
+  0.0,                   // density
+  0,                     // id
+  0                      // current_block
+};
+Particle particle2{
+  {1, minust, 3},         // h_vel
+  {e12m, e12m, e12m},    // pos
+  {1, 2, 3},              // vel
+  {1, 2, 3},              // acc
+  0.0,                    // density
+  0,                      // id
+  0                       // current_block
+};
+grid.wall_colissions(particle, block);
+EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
 }
 
 
