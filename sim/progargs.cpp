@@ -13,7 +13,7 @@
  * @return 0 if the number of time steps is valid, -1 if it's not numeric, -2 if it's negative.
  */
 int validate_time_steps(int nts) {
-  if (nts < 0) {
+  if (nts <= 0) {
     std::cerr << "Error: Invalid number of time steps."
               << "\n";
     return -2;
