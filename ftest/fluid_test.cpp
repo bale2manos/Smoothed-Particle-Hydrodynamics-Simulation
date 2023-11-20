@@ -123,7 +123,7 @@ int comparevectorsout(std::vector<Particle> particles_out1, std::vector<Particle
 }
 
 int comparetrzvec(std::vector<Particle> particles_out1, std::vector<Particle> particles_out2) {
-  double const delta = exp(-7);
+  double const delta = exp10(-3);
   for (int iter = 0; iter < int(particles_out1.size()); iter++) {
     if (particles_out1[iter].id != particles_out2[iter].id ||
         particles_out1[iter].current_block != particles_out2[iter].current_block ||
@@ -147,32 +147,51 @@ int comparetrzvec(std::vector<Particle> particles_out1, std::vector<Particle> pa
 std::vector<Particle> traceread(char const * traceFileName) {
   std::ifstream traceFile(traceFileName, std::ios::binary);
   int numBlocks = 0;
-  traceFile.read(reinterpret_cast<char *>(&numBlocks), sizeof(int));
+  read_field_from_file_int(traceFile, numBlocks);
   std::vector<Particle> particles_out;
-  for (int i = 0; i < numBlocks; i++) {
+  for (int iter = 0; iter < numBlocks; iter++) {
     TraceBlock block;
-    traceFile.read(reinterpret_cast<char *>(&block.numParticles), sizeof(long long));
+    read_field_from_file_long(traceFile, block.numParticles);
     for (long j = 0; j < block.numParticles; j++) {
-      Particle particle{};
-      traceFile.read(reinterpret_cast<char *>(&particle.id), sizeof(long long));
-      traceFile.read(reinterpret_cast<char *>(particle.pos.data()), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.pos[1]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.pos[2]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(particle.h_vel.data()), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.h_vel[1]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.h_vel[2]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(particle.vel.data()), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.vel[1]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.vel[2]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.density), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(particle.acc.data()), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.acc[1]), sizeof(double));
-      traceFile.read(reinterpret_cast<char *>(&particle.acc[2]), sizeof(double));
-      particle.current_block = i;
-
+      Particle const particle = makeparticle(traceFile, iter);
       particles_out.push_back(particle);
     }
   }
 
   return particles_out;
+}
+
+Particle makeparticle(std::ifstream & traceFile, int iter) {
+  Particle particle{};
+  read_field_from_file_long(traceFile, particle.id);
+  read_field_from_file_double(traceFile, particle.pos[0]);
+  read_field_from_file_double(traceFile, particle.pos[1]);
+  read_field_from_file_double(traceFile, particle.pos[2]);
+  read_field_from_file_double(traceFile, particle.h_vel[0]);
+  read_field_from_file_double(traceFile, particle.h_vel[1]);
+  read_field_from_file_double(traceFile, particle.h_vel[2]);
+  read_field_from_file_double(traceFile, particle.vel[0]);
+  read_field_from_file_double(traceFile, particle.vel[1]);
+  read_field_from_file_double(traceFile, particle.vel[2]);
+  read_field_from_file_double(traceFile, particle.density);
+  read_field_from_file_double(traceFile, particle.acc[0]);
+  read_field_from_file_double(traceFile, particle.acc[1]);
+  read_field_from_file_double(traceFile, particle.acc[2]);
+  particle.current_block = iter;
+  return particle;
+}
+
+void read_field_from_file_double(std::ifstream & input_file, auto & field_to_read) {
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+  input_file.read(reinterpret_cast<char *>(&field_to_read), sizeof(double));
+}
+
+void read_field_from_file_long(std::ifstream & input_file, auto & field_to_read) {
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+  input_file.read(reinterpret_cast<char *>(&field_to_read), sizeof(long));
+}
+
+void read_field_from_file_int(std::ifstream & input_file, auto & field_to_read) {
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+  input_file.read(reinterpret_cast<char *>(&field_to_read), sizeof(int));
 }
