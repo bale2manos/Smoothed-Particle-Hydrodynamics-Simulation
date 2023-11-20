@@ -386,8 +386,8 @@ void Malla::particle_movement(Particle & particle) {
   static auto const timestep_half    = timestep * 0.5;
 
   for (int i = 0; i < 3; i++) {
-    double const hvel_i  = particle.h_vel.at(i);
-    double const acc_i = particle.acc.at(i);
+    double const hvel_i = particle.h_vel.at(i);
+    double const acc_i  = particle.acc.at(i);
 
     particle.pos.at(i)   += (hvel_i * timestep) + (acc_i * timestep_squared);
     particle.vel.at(i)    = hvel_i + (acc_i * timestep_half);
@@ -549,14 +549,14 @@ void Malla::add_particles_neighbours() {
  * particle_collide_move_and_bound_interact().
  */
 void Malla::mallaInteraction(int nts) {
-  for(int iter = 0; iter < nts; iter++) {
+  for (int iter = 0; iter < nts; iter++) {
     Malla::particle_repositioning();
     Malla::density_increase_and_transformation();
     Malla::acceleration_transfer();
     Malla::particle_collide_move_and_bound_interact();
   }
-  for(Particle & particle:particles){
-    int const block_index = get_block_index_from_position(particle.pos);
+  for (Particle & particle : particles) {
+    int const block_index  = get_block_index_from_position(particle.pos);
     particle.current_block = block_index;
   }
 }

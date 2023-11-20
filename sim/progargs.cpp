@@ -154,23 +154,8 @@ int write_output_file(Malla & malla, char const * out_file) {
     for (std::array<float, 3>::size_type i = 0; i < 3; i++) {
       particle_info.at(i + 3 + 3) = static_cast<float>(particle.vel.at(i));
     }
-
     for (float & field : particle_info) { write_output_field(output_file, field); }
-
-    if (particle.id == 0) {
-      std::cout << "Particle " << particle.id << " Data:\n";
-      std::cout << "px: " << particle.pos[0] << "\n";
-      std::cout << "py: " << particle.pos[1] << "\n";
-      std::cout << "pz: " << particle.pos[2] << "\n";
-      std::cout << "hvx: " << particle.h_vel[0] << "\n";
-      std::cout << "hvy: " << particle.h_vel[1] << "\n";
-      std::cout << "hvz: " << particle.h_vel[2] << "\n";
-      std::cout << "vx: " << particle.vel[0] << "\n";
-      std::cout << "vy: " << particle.vel[1] << "\n";
-      std::cout << "vz: " << particle.vel[2] << "\n";
-    }
   }
-
   return 0;
 }
 
