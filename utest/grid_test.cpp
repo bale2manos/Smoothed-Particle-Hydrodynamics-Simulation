@@ -12,42 +12,42 @@ Malla const & getGrid() {
 TEST(GridTest, smoothlenght) {
   Malla const & grid  = getGrid();
   double const result = grid.smooth_length_calc();
-  EXPECT_EQ(result, 0.0058047945205479453);
+  EXPECT_DOUBLE_EQ(result, 0.0058047945205479453);
 }
 
 TEST(GridTest, nxcalc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.nx_calc(84, 25, 20), 2);
+  EXPECT_DOUBLE_EQ(grid.nx_calc(84, 25, 20), 2);
 }
 
 TEST(GridTest, nycalc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.ny_calc(50, 25, 20), 1);
+  EXPECT_DOUBLE_EQ(grid.ny_calc(50, 25, 20), 1);
 }
 
 TEST(GridTest, nzcalc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.nx_calc(401, 100, 20), 15);
+  EXPECT_DOUBLE_EQ(grid.nx_calc(401, 100, 20), 15);
 }
 
 TEST(GridTest, sx_calc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.sx_calc(100, 50, 20), 2.5);
+  EXPECT_DOUBLE_EQ(grid.sx_calc(100, 50, 20), 2.5);
 }
 
 TEST(GridTest, sy_calc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.sy_calc(200, 50, 20), 7.5);
+  EXPECT_DOUBLE_EQ(grid.sy_calc(200, 50, 20), 7.5);
 }
 
 TEST(GridTest, sz_calc) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.sz_calc(1000, 350, 10), 65);
+  EXPECT_DOUBLE_EQ(grid.sz_calc(1000, 350, 10), 65);
 }
 
 TEST(GridTest, particle_mass) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.particle_mass_calc(), 4.0165339818054222e-05);
+  EXPECT_DOUBLE_EQ(grid.particle_mass_calc(), 4.0165339818054222e-05);
 }
 
 TEST(GridTest, createFillGridsize) {
@@ -58,13 +58,13 @@ TEST(GridTest, createFillGridsize) {
 
 TEST(GridTest, density_transformation) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.density_transformation(1000), 8.4091188953149706e+18);
+  EXPECT_DOUBLE_EQ(grid.density_transformation(1000), 8.4091188953149706e+18);
 }
 
 TEST(GridTest, get_block_index_from_position) {
   Malla grid                           = getGrid();
   std::array<double, 3> const position = {2, 3, 4};
-  EXPECT_EQ(grid.get_block_index_from_position(position), 15003);
+  EXPECT_DOUBLE_EQ(grid.get_block_index_from_position(position), 15003);
 }
 
 TEST(GridTest, increase_density_noincrease) {
@@ -82,8 +82,8 @@ TEST(GridTest, increase_density_noincrease) {
   double pivot_rho                       = 1.0;
   double particle2_rho                   = 2;
   grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
-  EXPECT_EQ(pivot_rho, pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
-  EXPECT_EQ(particle2_rho, particle2_rho_ori);
+  EXPECT_DOUBLE_EQ(pivot_rho, pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
+  EXPECT_DOUBLE_EQ(particle2_rho, particle2_rho_ori);
 }
 
 TEST(GridTest, increase_density_increase) {
@@ -109,12 +109,12 @@ TEST(GridTest, calculate_block_index) {
 
 TEST(GridTest, limit_of_edge) {
   Malla const & grid = getGrid();
-  EXPECT_EQ(grid.limit_of_edge(0, 0), -0.065);
-  EXPECT_EQ(grid.limit_of_edge(0, 1), 0.065);
-  EXPECT_EQ(grid.limit_of_edge(1, 0), -0.08);
-  EXPECT_EQ(grid.limit_of_edge(1, 1), 0.1);
-  EXPECT_EQ(grid.limit_of_edge(2, 0), -0.065);
-  EXPECT_EQ(grid.limit_of_edge(2, 1), 0.065);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(0, 0), -0.065);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(0, 1), 0.065);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(1, 0), -0.08);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(1, 1), 0.1);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(2, 0), -0.065);
+  EXPECT_DOUBLE_EQ(grid.limit_of_edge(2, 1), 0.065);
 }
 
 TEST(GridTest, edge_collisions) {
@@ -212,7 +212,7 @@ TEST(GridTest, limits_interactions1) {
     0  // current_block
   };
   grid.limits_interaction(particle, block);
-  EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
+  EXPECT_DOUBLE_EQ(particle.acc.at(0), particle2.acc.at(0));
 }
 
 TEST(GridTest, limits_interactions2) {
@@ -239,7 +239,7 @@ TEST(GridTest, limits_interactions2) {
     0  // current_block
   };
   grid.limits_interaction(particle, block);
-  EXPECT_EQ(particle.acc.at(1), particle2.acc.at(1));
+  EXPECT_DOUBLE_EQ(particle.acc.at(1), particle2.acc.at(1));
 }
 
 TEST(GridTest, limits_interactions3) {
@@ -266,7 +266,7 @@ TEST(GridTest, limits_interactions3) {
     0  // current_block
   };
   grid.limits_interaction(particle, block);
-  EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
+  EXPECT_DOUBLE_EQ(particle.acc.at(2), particle2.acc.at(2));
 }
 
 TEST(GridTest, wall_interactions1) {
@@ -293,7 +293,7 @@ TEST(GridTest, wall_interactions1) {
     0  // current_block
   };
   grid.wall_colissions(particle, block);
-  EXPECT_EQ(particle.acc.at(0), particle2.acc.at(0));
+  EXPECT_DOUBLE_EQ(particle.acc.at(0), particle2.acc.at(0));
 }
 
 TEST(GridTest, wall_interactions2) {
@@ -347,5 +347,5 @@ TEST(GridTest, wall_interactions3) {
     0  // current_block
   };
   grid.wall_colissions(particle, block);
-  EXPECT_EQ(particle.acc.at(2), particle2.acc.at(2));
+  EXPECT_DOUBLE_EQ(particle.acc.at(2), particle2.acc.at(2));
 }
