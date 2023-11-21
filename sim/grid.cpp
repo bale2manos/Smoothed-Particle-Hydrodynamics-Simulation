@@ -325,11 +325,11 @@ void Malla::acceleration_transfer_calculations(Particle & pivot, Particle & part
     double const term3         = (density_pivot + density_2 - (double_density_f));
     double const denominator   = 1 / (density_2 * density_pivot);
     double const numerator1    = accel_constants[0] * term2 * term3;
-    for (int i = 0; i < 3; i++) {
-      double const term1   = (pivot.pos.at(i) - particle2.pos.at(i));
-      double const term4   = (particle2.vel.at(i) - pivot.vel.at(i));
-      pivot.acc.at(i)     += ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
-      particle2.acc.at(i) -= ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
+    for (int eje = 0; eje < 3; eje++) {
+      double const term1   = (pivot.pos.at(eje) - particle2.pos.at(eje));
+      double const term4   = (particle2.vel.at(eje) - pivot.vel.at(eje));
+      pivot.acc.at(eje)     += ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
+      particle2.acc.at(eje) -= ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
     }
   }
 }
@@ -384,13 +384,13 @@ void Malla::particle_movement(Particle & particle) {
   static auto const timestep_squared = timestep * timestep;
   static auto const timestep_half    = timestep * 0.5;
 
-  for (int i = 0; i < 3; i++) {
-    double const hvel_i = particle.h_vel.at(i);
-    double const acc_i  = particle.acc.at(i);
+  for (int eje = 0; eje < 3; eje++) {
+    double const hvel_i = particle.h_vel.at(eje);
+    double const acc_i  = particle.acc.at(eje);
 
-    particle.pos.at(i)   += (hvel_i * timestep) + (acc_i * timestep_squared);
-    particle.vel.at(i)    = hvel_i + (acc_i * timestep_half);
-    particle.h_vel.at(i) += (acc_i * timestep);
+    particle.pos.at(eje)   += (hvel_i * timestep) + (acc_i * timestep_squared);
+    particle.vel.at(eje)    = hvel_i + (acc_i * timestep_half);
+    particle.h_vel.at(eje) += (acc_i * timestep);
   }
 }
 
