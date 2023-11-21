@@ -9,11 +9,28 @@
 #include <iostream>
 #include <vector>
 
+/**
+ * @brief Test case for validating time steps.
+ *
+ * This test checks the validation of time steps using the `validate_time_steps` function.
+ *
+ * @param TestValidateTimeSteps Fixture for time steps validation tests.
+ */
+
 TEST(TestValidateTimeSteps, Test1) {
   EXPECT_EQ(validate_time_steps(1), 0);
   EXPECT_EQ(validate_time_steps(0), -2);
   EXPECT_EQ(validate_time_steps(-1), -2);
 }
+
+/**
+ * @brief Test case for validating input file paths.
+ *
+ * This test checks the validation of input file paths using the `validate_input_file` function.
+ * It includes tests with correct and incorrect paths.
+ *
+ * @param TestValidateInputFile Fixture for input file path validation tests.
+ */
 
 TEST(TestValidateInputFile, Test2) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
@@ -26,6 +43,15 @@ TEST(TestValidateInputFile, Test2) {
   EXPECT_EQ(validate_input_file(corrpath.c_str()), -1);
 }
 
+/**
+ * @brief Test case for validating output file paths.
+ *
+ * This test checks the validation of output file paths using the `validate_output_file` function.
+ * It includes tests with correct and empty paths.
+ *
+ * @param TestValidateOutputFile Fixture for output file path validation tests.
+ */
+
 TEST(TestValidateOutputFile, Test3) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const pathfile              = currentPath.string() + "/";
@@ -34,6 +60,15 @@ TEST(TestValidateOutputFile, Test3) {
   EXPECT_EQ(validate_output_file(testpath.c_str()), 0);
   EXPECT_EQ(validate_output_file(nopath.c_str()), -1);
 }
+
+/**
+ * @brief Test case for validating program parameters.
+ *
+ * This test checks the validation of program parameters using the `validate_parameters` function.
+ * It includes various scenarios with different parameter inputs.
+ *
+ * @param TestValidateParameters Fixture for program parameters validation tests.
+ */
 
 TEST(TestValidateParameters, Test4) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
@@ -66,6 +101,15 @@ TEST(TestValidateParameters, Test4) {
   EXPECT_EQ(validate_parameters(4, {"5", pathfile, file3}), errortype7);
 }
 
+/**
+ * @brief Test case for reading an input file and creating a grid.
+ *
+ * This test checks the functionality of reading an input file and creating a grid using the
+ * `read_input_file` function. It then compares the obtained grid with the expected grid.
+ *
+ * @param TestReadInputFile Fixture for reading input file tests.
+ */
+
 TEST(TestReadInputFile, Test5) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const testpath              = currentPath.string() + "/";
@@ -78,6 +122,14 @@ TEST(TestReadInputFile, Test5) {
   EXPECT_EQ(nblocks, 4725);
 }
 
+/**
+ * @brief Test case for writing an output file.
+ *
+ * This test checks the functionality of writing an output file using the `write_output_file` function.
+ *
+ * @param TestWriteOutputFile Fixture for writing output file tests.
+ */
+
 TEST(TestWriteOutputFile, Test6) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const testpath              = currentPath.string() + "/";
@@ -87,11 +139,28 @@ TEST(TestWriteOutputFile, Test6) {
   EXPECT_EQ(write_output_file(malla, outfile.c_str()), 0);
 }
 
+/**
+ * @brief Test case for checking the number of particles.
+ *
+ * This test checks the functionality of the `check_number_particles` function.
+ *
+ * @param TestCheckNP Fixture for checking the number of particles tests.
+ */
+
 TEST(TestCheckNP, Test7) {
   EXPECT_NO_THROW(check_number_particles(1));
   EXPECT_THROW(check_number_particles(0), std::runtime_error);
   EXPECT_THROW(check_number_particles(-1), std::runtime_error);
 }
+
+/**
+ * @brief Test case for checking particle count mismatch.
+ *
+ * This test checks the functionality of the `check_missmatch_particles` function.
+ * It includes cases with various combinations of particle counts.
+ *
+ * @param TestCheckMissmatch Fixture for checking particle count mismatch tests.
+ */
 
 TEST(TestCheckMissmatch, Test8) {
   EXPECT_THROW(check_missmatch_particles(0, 1), std::runtime_error);

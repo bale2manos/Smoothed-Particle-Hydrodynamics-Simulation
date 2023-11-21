@@ -7,15 +7,37 @@
 
 // Caso correcto
 
+/**
+ * @brief Test for the initial block index calculation.
+ *
+ * @param BlockTest Fixture for block-related tests.
+ */
+
 TEST(BlockTest, InitialBlockIndex) {
   EXPECT_EQ(initial_block_index(12, 3, 4), 2);
 }
 
-// Caso correcto
+/**
+ * @brief Test for calculating the block index with a valid case.
+ *
+ * This test case uses a 3D vector and checks if the block index is calculated correctly.
+ *
+ * @param BlockTest Fixture for block-related tests.
+ */
+
 TEST(BlockTest, CalculateBlockIndex) {
   std::array<int, 3> const miVector = {1, 1, 1};
   EXPECT_EQ(calculate_block_index(miVector, 5, 12), 66);
 }
+
+/**
+ * @brief Test for checking neighbors in corner cases.
+ *
+ * This test case creates a block with coordinates at the corner of the grid and checks
+ * if the neighbors are correctly identified.
+ *
+ * @param BlockTest Fixture for block-related tests.
+ */
 
 TEST(BlockTest, CheckNeighboursEsquinas) {
   std::array<int, 3> const coords      = {0, 0, 0};
@@ -24,6 +46,15 @@ TEST(BlockTest, CheckNeighboursEsquinas) {
   Block const bloque(coords, dimensiones);
   EXPECT_EQ(bloque.neighbours, indexvecinos);
 }
+
+/**
+ * @brief Test for checking neighbors in the central case.
+ *
+ * This test case creates a block with coordinates at the center of the grid and checks
+ * if the neighbors are correctly identified.
+ *
+ * @param BlockTest Fixture for block-related tests.
+ */
 
 TEST(BlockTest, CheckNeighbourscentral) {
   std::array<int, 3> const coords      = {3, 3, 3};
@@ -35,6 +66,15 @@ TEST(BlockTest, CheckNeighbourscentral) {
   EXPECT_EQ(bloque.neighbours, indexvecinos);
 }
 
+/**
+ * @brief Test for checking neighbors in a specific case.
+ *
+ * This test case creates a block with coordinates at a specific location and checks
+ * if the neighbors are correctly identified.
+ *
+ * @param BlockTest Fixture for block-related tests.
+ */
+
 TEST(BlockTest, CheckNeighbourspared) {
   std::array<int, 3> const coords      = {3, 3, 0};
   std::array<int, 3> const dimensiones = {5, 5, 5};
@@ -43,6 +83,16 @@ TEST(BlockTest, CheckNeighbourspared) {
   Block const bloque(coords, dimensiones);
   EXPECT_EQ(bloque.neighbours, indexvecinos);
 }
+
+/**
+ * @brief Entry point for running all the tests.
+ *
+ * This function initializes Google Test and runs all the test cases.
+ *
+ * @param argc Number of command line arguments.
+ * @param argv Array of command line arguments.
+ * @return The result of running all tests.
+ */
 
 int main(int argc, char ** argv) {
   testing::InitGoogleTest(&argc, argv);
