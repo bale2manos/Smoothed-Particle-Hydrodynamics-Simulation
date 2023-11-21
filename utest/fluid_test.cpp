@@ -21,13 +21,12 @@ TEST(CheckOutSmall, Test1) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const pathsmall             = currentPath.string() + "/testfiles/small.fld";
   std::string const pathfile              = currentPath.string() + "/";
-  std::cout << pathfile;
-  Malla malla     = read_input_file(pathsmall.c_str());
-  int const tests = 5;
+  Malla malla                             = read_input_file(pathsmall.c_str());
+  int const tests                         = 5;
   for (int iter = 1; iter <= tests; iter++) {
     malla.mallaInteraction(1);
-    Malla const small =
-        read_input_file((pathfile + "out/small-" + std::to_string(iter) + ".fld").c_str());
+    std::string const pathsmall2 = pathfile + "out/small-" + std::to_string(iter) + ".fld";
+    Malla const small            = read_input_file(pathsmall2.c_str());
     EXPECT_EQ(comparevectorsout(malla.getParticles(), small.getParticles()), 0);
   }
 }
@@ -89,7 +88,6 @@ TEST(CheckOutSmallTrz, Test3) {
  * @param CheckOutLargeTrz Fixture for checking output of large.fld with trz files tests.
  */
 
-
 TEST(CheckOutLargeTrz, Test4) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const pathlarge             = currentPath.string() + "/testfiles/large.fld";
@@ -105,11 +103,13 @@ TEST(CheckOutLargeTrz, Test4) {
 }
 
 /**
- * @brief Compare the particle vectors obtained from simulation with the expected output from a trace file.
+ * @brief Compare the particle vectors obtained from simulation with the expected output from a
+ * trace file.
  *
  * @param malla The simulation grid.
  * @param inputFileName The name of the trace file to compare against.
- * @return 0 if the particle vectors match, -1 if the sizes are different, -2 if there is a mismatch in particle attributes.
+ * @return 0 if the particle vectors match, -1 if the sizes are different, -2 if there is a mismatch
+ * in particle attributes.
  */
 
 int compare_iteration(Malla & malla, char const * inputFileName) {
@@ -126,7 +126,8 @@ int compare_iteration(Malla & malla, char const * inputFileName) {
  *
  * @param particles_out1 First vector of particles.
  * @param particles_out2 Second vector of particles.
- * @return 0 if the vectors match, -1 if the sizes are different, -2 if there is a mismatch in particle attributes.
+ * @return 0 if the vectors match, -1 if the sizes are different, -2 if there is a mismatch in
+ * particle attributes.
  */
 
 int comparevectorstrz(std::vector<Particle> particles_out1, std::vector<Particle> particles_out2) {
@@ -174,11 +175,13 @@ int compare(std::vector<Particle> particles_out1, std::vector<Particle> particle
 }
 
 /**
- * @brief Compare two vectors of particles for consistency, assuming they are sorted by particle ID, with tolerance for floating-point comparisons.
+ * @brief Compare two vectors of particles for consistency, assuming they are sorted by particle ID,
+ * with tolerance for floating-point comparisons.
  *
  * @param particles_out1 First vector of particles.
  * @param particles_out2 Second vector of particles.
- * @return 0 if the vectors match, -1 if the sizes are different, -2 if there is a mismatch in particle attributes.
+ * @return 0 if the vectors match, -1 if the sizes are different, -2 if there is a mismatch in
+ * particle attributes.
  */
 
 int comparevectorsout(std::vector<Particle> particles_out1, std::vector<Particle> particles_out2) {
@@ -194,7 +197,8 @@ int comparevectorsout(std::vector<Particle> particles_out1, std::vector<Particle
 }
 
 /**
- * @brief Compare two vectors of particles for consistency with a tolerance for floating-point comparisons.
+ * @brief Compare two vectors of particles for consistency with a tolerance for floating-point
+ * comparisons.
  *
  * @param particles_out1 First vector of particles.
  * @param particles_out2 Second vector of particles.

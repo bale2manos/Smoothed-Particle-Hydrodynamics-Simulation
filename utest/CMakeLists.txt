@@ -10,6 +10,11 @@ add_executable(utest
         grid_test
         grid_test.cpp
         grid_test.hpp
+        fluid_test
+        fluid_test.cpp
+        fluid_test.hpp
+        main.cpp
+
 )
 
 target_link_libraries(
