@@ -30,6 +30,4 @@ class Block {
 
 int initial_block_index(double position, double min_limit, double block_size);
 int calculate_block_index(std::array<int, 3> coords, int nx, int ny);
-
-std::vector<int> check_neighbours(std::array<int, 3> coords, std::array<int, 3> n_blocks);
 #endif  // ARQUITECTURA_DE_COMPUTADORES_BLOCK_HPP

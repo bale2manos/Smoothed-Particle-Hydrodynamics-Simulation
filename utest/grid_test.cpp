@@ -82,7 +82,8 @@ TEST(GridTest, increase_density_noincrease) {
   double pivot_rho                       = 1.0;
   double particle2_rho                   = 2;
   grid.increase_density(pivot_coords, particle2_coords, pivot_rho, particle2_rho);
-  EXPECT_DOUBLE_EQ(pivot_rho, pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
+  EXPECT_DOUBLE_EQ(pivot_rho,
+                   pivot_rho_ori);  // Los valores son iguales porque norm_squared > h_squared
   EXPECT_DOUBLE_EQ(particle2_rho, particle2_rho_ori);
 }
 

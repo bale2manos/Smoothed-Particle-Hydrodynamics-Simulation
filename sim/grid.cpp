@@ -20,11 +20,10 @@ Malla::Malla(int number_particles, double particles_per_meter)
     particle_mass(particle_mass_calc()), accel_constants({0, 0})
 
 {
-  number_blocks = {nx_calc(xmax, xmin, smoothing_length), ny_calc(ymax, ymin, smoothing_length),
-                   nz_calc(zmax, zmin, smoothing_length)};
-  size_blocks   = {sx_calc(xmax, xmin, number_blocks[0]), sy_calc(ymax, ymin, number_blocks[1]),
-                   sz_calc(zmax, zmin, number_blocks[2])};
-  // TODO hacer esto en una funcion o mas bonito
+  number_blocks   = {nx_calc(xmax, xmin, smoothing_length), ny_calc(ymax, ymin, smoothing_length),
+                     nz_calc(zmax, zmin, smoothing_length)};
+  size_blocks     = {sx_calc(xmax, xmin, number_blocks[0]), sy_calc(ymax, ymin, number_blocks[1]),
+                     sz_calc(zmax, zmin, number_blocks[2])};
   accel_constants = {fifteen / (std::numbers::pi * pow(smoothing_length, six)) *
                          (3 * particle_mass * stiffness_presure) * half,
                      fifteen / (std::numbers::pi * pow(smoothing_length, six)) * three * viscosity *
@@ -296,10 +295,10 @@ void Malla::increase_density(std::array<double, 3> & pivot_coords,
  * @return The transformed density value.
  */
 double Malla::density_transformation(double density) const {
-  static auto const h_sixth     = pow(smoothing_length, 6);
-  static auto const h_ninth     = pow(smoothing_length, 9);
+  static auto const h_sixth     = pow(smoothing_length, six_int);
+  static auto const h_ninth     = pow(smoothing_length, nine);
   double const first_term       = (density + h_sixth);
-  static auto const second_term = (315 / (64 * std::numbers::pi * h_ninth));
+  static auto const second_term = (trescientos_quince / (sixty_four * std::numbers::pi * h_ninth));
   return first_term * second_term * particle_mass;
 }
 

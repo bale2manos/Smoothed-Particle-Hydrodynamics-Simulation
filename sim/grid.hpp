@@ -31,8 +31,11 @@ constexpr double fifteen            = 15.0;
 constexpr double three              = 3.0;
 constexpr double half               = 0.5;
 constexpr double six                = 6.0;
+constexpr double six_int            = 6;
 constexpr int nine                  = 9;
 constexpr int wrong_particle_number = -5;
+constexpr int trescientos_quince    = 315;
+constexpr int sixty_four            = 64;
 
 class Malla {
   public:

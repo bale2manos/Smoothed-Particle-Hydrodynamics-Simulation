@@ -7,8 +7,8 @@
 #include <vector>
 
 struct TraceBlock {
-    long numParticles;
-    std::vector<Particle> particles;
+    long numParticles               = 0;
+    std::vector<Particle> particles = {};
 };
 
 int compare_iteration(Malla & malla, char const * inputFileName);
