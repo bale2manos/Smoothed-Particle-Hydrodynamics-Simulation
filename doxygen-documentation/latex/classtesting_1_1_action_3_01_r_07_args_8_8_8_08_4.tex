@@ -1,0 +1,209 @@
+\doxysection{Referencia de la plantilla de la clase testing\+::Action\texorpdfstring{$<$}{<} R(Args...)\texorpdfstring{$>$}{>}}
+\hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4}{}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4}\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+
+
+{\ttfamily \#include $<$gmock-\/actions.\+h$>$}
+
+\doxysubsubsection*{Tipos públicos}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$ F $>$\+::\+Result \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}}
+\item 
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$ F $>$\+::\+Argument\+Tuple \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}}
+\item 
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$ F $>$\+::\+Result \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}}
+\item 
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$ F $>$\+::\+Argument\+Tuple \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a3e5c6a58ef6b17e3dee1a03c1e624daf}{Action}} ()=default
+\item 
+{\footnotesize template$<$typename G , typename  = typename std\+::enable\+\_\+if$<$internal\+::disjunction$<$          Is\+Compatible\+Functor$<$\+G$>$, std\+::is\+\_\+constructible$<$std\+::function$<$\+Result()$>$,                                                        G$>$$>$\+::value$>$\+::type$>$ }\\\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694}{Action}} (G \&\&fun)
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc}{Action}} (\mbox{\hyperlink{classtesting_1_1_action_interface}{Action\+Interface}}$<$ F $>$ \texorpdfstring{$\ast$}{*}impl)
+\item 
+{\footnotesize template$<$typename Func $>$ }\\\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83}{Action}} (const \mbox{\hyperlink{classtesting_1_1_action}{Action}}$<$ Func $>$ \&action)
+\item 
+bool \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd}{Is\+Do\+Default}} () const
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}} \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30}{Perform}} (\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}} args) const
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9}{operator Once\+Action$<$ F $>$}} () const
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5a50e24dad09b17bb731fa0241b86dd0}{Action}} ()=default
+\item 
+{\footnotesize template$<$typename G , typename  = typename std\+::enable\+\_\+if$<$internal\+::disjunction$<$          Is\+Compatible\+Functor$<$\+G$>$, std\+::is\+\_\+constructible$<$std\+::function$<$\+Result()$>$,                                                        G$>$$>$\+::value$>$\+::type$>$ }\\\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694}{Action}} (G \&\&fun)
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc}{Action}} (\mbox{\hyperlink{classtesting_1_1_action_interface}{Action\+Interface}}$<$ F $>$ \texorpdfstring{$\ast$}{*}impl)
+\item 
+{\footnotesize template$<$typename Func $>$ }\\\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83}{Action}} (const \mbox{\hyperlink{classtesting_1_1_action}{Action}}$<$ Func $>$ \&action)
+\item 
+bool \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd}{Is\+Do\+Default}} () const
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}} \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30}{Perform}} (\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}} args) const
+\item 
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9}{operator Once\+Action$<$ F $>$}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Amigas}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename G $>$ }\\class \mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a62bc48ff11968b6e45d21c4b49f349fb}{Action}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de los «\+Typedef» miembros de la clase}
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!ArgumentTuple@{ArgumentTuple}}
+\index{ArgumentTuple@{ArgumentTuple}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{ArgumentTuple}{ArgumentTuple}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$F$>$\+::\+Argument\+Tuple \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Argument\+Tuple}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!ArgumentTuple@{ArgumentTuple}}
+\index{ArgumentTuple@{ArgumentTuple}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{ArgumentTuple}{ArgumentTuple}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$F$>$\+::\+Argument\+Tuple \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Argument\+Tuple}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Result@{Result}}
+\index{Result@{Result}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Result}{Result}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$F$>$\+::\+Result \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Result}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Result@{Result}}
+\index{Result@{Result}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Result}{Result}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+typedef \mbox{\hyperlink{structtesting_1_1internal_1_1_function}{internal\+::\+Function}}$<$F$>$\+::\+Result \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Result}
+
+
+
+\doxysubsection{Documentación de constructores y destructores}
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a3e5c6a58ef6b17e3dee1a03c1e624daf}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a3e5c6a58ef6b17e3dee1a03c1e624daf} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily template$<$typename G $>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{Action}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+template$<$typename G , typename  = typename std\+::enable\+\_\+if$<$internal\+::disjunction$<$          Is\+Compatible\+Functor$<$\+G$>$, std\+::is\+\_\+constructible$<$std\+::function$<$\+Result()$>$,                                                        G$>$$>$\+::value$>$\+::type$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{G \&\&}]{fun }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtesting_1_1_action_interface}{Action\+Interface}}$<$ F $>$ \texorpdfstring{$\ast$}{*}}]{impl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+template$<$typename Func $>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classtesting_1_1_action}{Action}}$<$ Func $>$ \&}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5a50e24dad09b17bb731fa0241b86dd0}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5a50e24dad09b17bb731fa0241b86dd0} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_af914512c3ac196b70a1e838936d67694} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+template$<$typename G , typename  = typename std\+::enable\+\_\+if$<$internal\+::disjunction$<$          Is\+Compatible\+Functor$<$\+G$>$, std\+::is\+\_\+constructible$<$std\+::function$<$\+Result()$>$,                                                        G$>$$>$\+::value$>$\+::type$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{G \&\&}]{fun }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_ae93a407342a218c8453bd8c83c63cafc} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtesting_1_1_action_interface}{Action\+Interface}}$<$ F $>$ \texorpdfstring{$\ast$}{*}}]{impl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a78a303bc55021bdb106bf1c647c84f83} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+template$<$typename Func $>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Action (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classtesting_1_1_action}{Action}}$<$ Func $>$ \&}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!IsDoDefault@{IsDoDefault}}
+\index{IsDoDefault@{IsDoDefault}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{IsDoDefault()}{IsDoDefault()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+bool \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Is\+Do\+Default (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a5ef3b75cf7a5baf83885f10aef2950bd} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!IsDoDefault@{IsDoDefault}}
+\index{IsDoDefault@{IsDoDefault}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{IsDoDefault()}{IsDoDefault()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+bool \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Is\+Do\+Default (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!operator OnceAction$<$ F $>$@{operator OnceAction$<$ F $>$}}
+\index{operator OnceAction$<$ F $>$@{operator OnceAction$<$ F $>$}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{operator OnceAction$<$ F $>$()}{operator OnceAction< F >()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::operator \mbox{\hyperlink{classtesting_1_1_once_action}{Once\+Action}}$<$ F $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a26420b4b57d321235fb50bbf498e95a9} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!operator OnceAction$<$ F $>$@{operator OnceAction$<$ F $>$}}
+\index{operator OnceAction$<$ F $>$@{operator OnceAction$<$ F $>$}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{operator OnceAction$<$ F $>$()}{operator OnceAction< F >()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::operator \mbox{\hyperlink{classtesting_1_1_once_action}{Once\+Action}}$<$ F $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Perform@{Perform}}
+\index{Perform@{Perform}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Perform()}{Perform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}} \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Perform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}}}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a84c4919e5d1691584bbd37c5aaf48f30} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Perform@{Perform}}
+\index{Perform@{Perform}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Perform()}{Perform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_aa6848fedb346ec3e57cc6055ca8a0a99}{Result}} \mbox{\hyperlink{classtesting_1_1_action}{testing\+::\+Action}}$<$ R(Args...)$>$\+::\+Perform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a977a25b13d80a869ae7aa738e3bba83e}{Argument\+Tuple}}}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Documentación de símbolos amigos y relacionados}
+\Hypertarget{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a62bc48ff11968b6e45d21c4b49f349fb}\label{classtesting_1_1_action_3_01_r_07_args_8_8_8_08_4_a62bc48ff11968b6e45d21c4b49f349fb} 
+\index{testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}!Action@{Action}}
+\index{Action@{Action}!testing::Action$<$ R(Args...)$>$@{testing::Action$<$ R(Args...)$>$}}
+\doxysubsubsection{\texorpdfstring{Action}{Action}}
+{\footnotesize\ttfamily template$<$typename R , typename... Args$>$ \\
+template$<$typename G $>$ \\
+friend class \mbox{\hyperlink{classtesting_1_1_action}{Action}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+La documentación de esta clase está generada de los siguientes archivos\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/cmake-\/build-\/debug-\/coverage/\+\_\+deps/googletest-\/src/googlemock/include/gmock/\mbox{\hyperlink{cmake-build-debug-coverage_2__deps_2googletest-src_2googlemock_2include_2gmock_2gmock-actions_8h}{gmock-\/actions.\+h}}\item 
+C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/cmake-\/build-\/debug/\+\_\+deps/googletest-\/src/googlemock/include/gmock/\mbox{\hyperlink{cmake-build-debug_2__deps_2googletest-src_2googlemock_2include_2gmock_2gmock-actions_8h}{gmock-\/actions.\+h}}\end{DoxyCompactItemize}

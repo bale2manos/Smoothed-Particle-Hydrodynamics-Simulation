@@ -1,0 +1,32 @@
+\chapter{Contributing to the Guidelines Support Library}
+\hypertarget{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g}{}\label{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g}\index{Contributing to the Guidelines Support Library@{Contributing to the Guidelines Support Library}}
+\label{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md415}%
+\Hypertarget{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md415}%
+ The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the \href{https://github.com/isocpp/CppCoreGuidelines}{\texttt{ C++ Core Guidelines}}. GSL design changes are made only as a result of modifications to the Guidelines.
+
+GSL is accepting contributions that improve or refine any of the types in this library as well as ports to other platforms. Changes should have an issue tracking the suggestion that has been approved by the maintainers. Your pull request should include a link to the bug that you are fixing. If you\textquotesingle{}ve submitted a PR, please post a comment in the associated issue to avoid duplication of effort.\hypertarget{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md416}{}\doxysection{\texorpdfstring{Legal}{Legal}}\label{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md416}
+You will need to complete a Contributor License Agreement (CLA). Briefly, this agreement testifies that you are granting us and the community permission to use the submitted change according to the terms of the project\textquotesingle{}s license, and that the work being submitted is under appropriate copyright.
+
+Please submit a Contributor License Agreement (CLA) before submitting a pull request. You may visit \href{https://cla.microsoft.com}{\texttt{ https\+://cla.\+microsoft.\+com}} to sign digitally.\hypertarget{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md417}{}\doxysection{\texorpdfstring{Housekeeping}{Housekeeping}}\label{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md417}
+Your pull request should\+:
+
+
+\begin{DoxyItemize}
+\item Include a description of what your change intends to do
+\item Be a child commit of a reasonably recent commit in the {\bfseries{main}} branch
+\begin{DoxyItemize}
+\item Requests need not be a single commit, but should be a linear sequence of commits (i.\+e. no merge commits in your PR)
+\end{DoxyItemize}
+\item It is desirable, but not necessary, for the tests to pass at each commit. Please see \doxysectlink{md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_r_e_a_d_m_e}{README.md}{0} for instructions to build the test suite.
+\item Have clear commit messages
+\begin{DoxyItemize}
+\item e.\+g. "{}\+Fix issue"{}, "{}\+Add tests for type"{}, etc.
+\end{DoxyItemize}
+\item Include appropriate tests
+\begin{DoxyItemize}
+\item Tests should include reasonable permutations of the target fix/change
+\item Include baseline changes with your change
+\item All changed code must have 100\% code coverage
+\end{DoxyItemize}
+\item To avoid line ending issues, set {\ttfamily autocrlf = input} and {\ttfamily whitespace = cr-\/at-\/eol} in your git configuration 
+\end{DoxyItemize}

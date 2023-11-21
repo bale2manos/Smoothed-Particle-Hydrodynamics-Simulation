@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['platforms_0',['platforms',['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2googletest-src_2docs_2platforms.html',1,'Supported Platforms'],['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug_2__deps_2googletest-src_2docs_2platforms.html',1,'Supported Platforms']]],
+  ['points_1',['points',['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2googlet49f08c7646a3e072d173d5a995a44e5c.html',1,'Customization Points'],['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2googlet1883c7134c915e5fdfc7df8f93f73d56.html',1,'Customization Points'],['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug_2__deps_2googletest-src_2d90b0eeac37c34dd8716df2fbd834336.html',1,'Customization Points'],['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug_2__deps_2googletest-src_268250a629ba95ca4fbe8d9703e58eed5.html',1,'Customization Points']]],
+  ['primer_2',['primer',['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2googletest-src_2docs_2primer.html',1,'GoogleTest Primer'],['../md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug_2__deps_2googletest-src_2docs_2primer.html',1,'GoogleTest Primer']]]
+];

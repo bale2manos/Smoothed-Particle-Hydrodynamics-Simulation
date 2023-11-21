@@ -1,0 +1,192 @@
+\doxysection{Referencia del archivo C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/sim/progargs.hpp}
+\hypertarget{progargs_8hpp}{}\label{progargs_8hpp}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/progargs.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/progargs.hpp}}
+{\ttfamily \#include "{}grid.\+hpp"{}}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ int, 2 $>$ \mbox{\hyperlink{progargs_8hpp_ad3e711d2d2e3ff8bc8fec9382b56495b}{validate\+\_\+parameters}} (int argc, std\+::vector$<$ std\+::string $>$ argv)
+\item 
+int \mbox{\hyperlink{progargs_8hpp_af027f83701f5b0e5a75dd0c425e06742}{validate\+\_\+time\+\_\+steps}} (int nts)
+\item 
+int \mbox{\hyperlink{progargs_8hpp_a373693adf1342db0b59da2003aeb8b25}{validate\+\_\+input\+\_\+file}} (char const \texorpdfstring{$\ast$}{*}input\+File\+Name)
+\item 
+int \mbox{\hyperlink{progargs_8hpp_aa0ce3332f179c93f5de1d24d9bd827f7}{validate\+\_\+output\+\_\+file}} (char const \texorpdfstring{$\ast$}{*}output\+File\+Name)
+\item 
+\mbox{\hyperlink{class_malla}{Malla}} \mbox{\hyperlink{progargs_8hpp_ad59a586d2f9aec574b4c999a4886855c}{read\+\_\+input\+\_\+file}} (char const \texorpdfstring{$\ast$}{*}in\+\_\+file)
+\item 
+void \mbox{\hyperlink{progargs_8hpp_a4b5b589edf5770af6f55a816d30b600d}{check\+\_\+number\+\_\+particles}} (int number\+\_\+particles)
+\item 
+int \mbox{\hyperlink{progargs_8hpp_a09a65288250f6f8ce70b46cb1d65fff8}{write\+\_\+output\+\_\+file}} (\mbox{\hyperlink{class_malla}{Malla}} \&malla, char const \texorpdfstring{$\ast$}{*}out\+\_\+file)
+\item 
+void \mbox{\hyperlink{progargs_8hpp_a0b0b256427a80a806f162cb422852de0}{check\+\_\+missmatch\+\_\+particles}} (int counter, int malla\+\_\+np)
+\item 
+void \mbox{\hyperlink{progargs_8hpp_a4df989145165a9c64c4d65fcc6ab15d6}{read\+\_\+particle\+\_\+field}} (bool \&finished, std\+::array$<$ int, 2 $>$ indexes, std\+::ifstream \&input\+\_\+file, std\+::array$<$ std\+::array$<$ float, 3 $>$, 3 $>$ \&info\+\_\+particle)
+\item 
+void \mbox{\hyperlink{progargs_8hpp_a4516389f57278071e0b2bb1d779cb778}{write\+\_\+output\+\_\+field}} (std\+::ofstream \&output\+\_\+file, auto \&field\+\_\+to\+\_\+write)
+\item 
+void \mbox{\hyperlink{progargs_8hpp_adc4026d7d617e25c23a1f2865f01f1b1}{read\+\_\+field\+\_\+from\+\_\+file}} (std\+::ifstream \&input\+\_\+file, auto \&field\+\_\+to\+\_\+read)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{progargs_8hpp_a0b0b256427a80a806f162cb422852de0}\label{progargs_8hpp_a0b0b256427a80a806f162cb422852de0} 
+\index{progargs.hpp@{progargs.hpp}!check\_missmatch\_particles@{check\_missmatch\_particles}}
+\index{check\_missmatch\_particles@{check\_missmatch\_particles}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{check\_missmatch\_particles()}{check\_missmatch\_particles()}}
+{\footnotesize\ttfamily void check\+\_\+missmatch\+\_\+particles (\begin{DoxyParamCaption}\item[{int}]{counter,  }\item[{int}]{malla\+\_\+np }\end{DoxyParamCaption})}
+
+Checks if the number of particles in the header matches the number of particles found. 
+\begin{DoxyParams}{Parámetros}
+{\em counter} & The number of particles found. \\
+\hline
+{\em malla\+\_\+np} & The number of particles in the header. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em runtime\+\_\+error} & if the number of particles does not match. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{progargs_8hpp_a4b5b589edf5770af6f55a816d30b600d}\label{progargs_8hpp_a4b5b589edf5770af6f55a816d30b600d} 
+\index{progargs.hpp@{progargs.hpp}!check\_number\_particles@{check\_number\_particles}}
+\index{check\_number\_particles@{check\_number\_particles}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{check\_number\_particles()}{check\_number\_particles()}}
+{\footnotesize\ttfamily void check\+\_\+number\+\_\+particles (\begin{DoxyParamCaption}\item[{int}]{number\+\_\+particles }\end{DoxyParamCaption})}
+
+Checks if the number of particles is valid. 
+\begin{DoxyParams}{Parámetros}
+{\em np} & The number of particles to check. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em runtime\+\_\+error} & if the number of particles is less than or equal to zero. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{progargs_8hpp_adc4026d7d617e25c23a1f2865f01f1b1}\label{progargs_8hpp_adc4026d7d617e25c23a1f2865f01f1b1} 
+\index{progargs.hpp@{progargs.hpp}!read\_field\_from\_file@{read\_field\_from\_file}}
+\index{read\_field\_from\_file@{read\_field\_from\_file}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_field\_from\_file()}{read\_field\_from\_file()}}
+{\footnotesize\ttfamily void read\+\_\+field\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+read }\end{DoxyParamCaption})}
+
+\Hypertarget{progargs_8hpp_ad59a586d2f9aec574b4c999a4886855c}\label{progargs_8hpp_ad59a586d2f9aec574b4c999a4886855c} 
+\index{progargs.hpp@{progargs.hpp}!read\_input\_file@{read\_input\_file}}
+\index{read\_input\_file@{read\_input\_file}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_input\_file()}{read\_input\_file()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_malla}{Malla}} read\+\_\+input\+\_\+file (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{in\+\_\+file }\end{DoxyParamCaption})}
+
+Reads an input file and creates a \doxylink{class_malla}{Malla} object with the particle data.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em in\+\_\+file} & The path to the input file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+A \doxylink{class_malla}{Malla} object with the particle data. 
+\end{DoxyReturn}
+\Hypertarget{progargs_8hpp_a4df989145165a9c64c4d65fcc6ab15d6}\label{progargs_8hpp_a4df989145165a9c64c4d65fcc6ab15d6} 
+\index{progargs.hpp@{progargs.hpp}!read\_particle\_field@{read\_particle\_field}}
+\index{read\_particle\_field@{read\_particle\_field}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_particle\_field()}{read\_particle\_field()}}
+{\footnotesize\ttfamily void read\+\_\+particle\+\_\+field (\begin{DoxyParamCaption}\item[{bool \&}]{finished,  }\item[{std\+::array$<$ int, 2 $>$}]{indexes,  }\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{std\+::array$<$ std\+::array$<$ float, 3 $>$, 3 $>$ \&}]{info\+\_\+particle }\end{DoxyParamCaption})}
+
+Reads the particle data from the input file and inserts it into the grid. 
+\begin{DoxyParams}{Parámetros}
+{\em in\+\_\+file} & The path to the input file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{progargs_8hpp_a373693adf1342db0b59da2003aeb8b25}\label{progargs_8hpp_a373693adf1342db0b59da2003aeb8b25} 
+\index{progargs.hpp@{progargs.hpp}!validate\_input\_file@{validate\_input\_file}}
+\index{validate\_input\_file@{validate\_input\_file}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{validate\_input\_file()}{validate\_input\_file()}}
+{\footnotesize\ttfamily int validate\+\_\+input\+\_\+file (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{input\+File\+Name }\end{DoxyParamCaption})}
+
+Validates if the input file can be opened for reading.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em input\+File\+Name} & The name of the input file to be validated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Returns 0 if the input file can be opened for reading, -\/1 otherwise. 
+\end{DoxyReturn}
+\Hypertarget{progargs_8hpp_aa0ce3332f179c93f5de1d24d9bd827f7}\label{progargs_8hpp_aa0ce3332f179c93f5de1d24d9bd827f7} 
+\index{progargs.hpp@{progargs.hpp}!validate\_output\_file@{validate\_output\_file}}
+\index{validate\_output\_file@{validate\_output\_file}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{validate\_output\_file()}{validate\_output\_file()}}
+{\footnotesize\ttfamily int validate\+\_\+output\+\_\+file (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{output\+File\+Name }\end{DoxyParamCaption})}
+
+Validates if the output file can be opened for writing. 
+\begin{DoxyParams}{Parámetros}
+{\em output\+File\+Name} & The name of the output file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the file can be opened for writing, -\/1 otherwise. 
+\end{DoxyReturn}
+\Hypertarget{progargs_8hpp_ad3e711d2d2e3ff8bc8fec9382b56495b}\label{progargs_8hpp_ad3e711d2d2e3ff8bc8fec9382b56495b} 
+\index{progargs.hpp@{progargs.hpp}!validate\_parameters@{validate\_parameters}}
+\index{validate\_parameters@{validate\_parameters}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{validate\_parameters()}{validate\_parameters()}}
+{\footnotesize\ttfamily std\+::array$<$ int, 2 $>$ validate\+\_\+parameters (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{std\+::vector$<$ std\+::string $>$}]{argv }\end{DoxyParamCaption})}
+
+Validates the parameters passed to the program. 
+\begin{DoxyParams}{Parámetros}
+{\em argc} & The number of arguments passed to the program. \\
+\hline
+{\em argv} & An array of C-\/style strings containing the arguments passed to the program. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+An array of integers representing the error type. If the first element is 0, there is no error. If it is negative, there is an error. The second element contains the number of time steps. 
+\end{DoxyReturn}
+\Hypertarget{progargs_8hpp_af027f83701f5b0e5a75dd0c425e06742}\label{progargs_8hpp_af027f83701f5b0e5a75dd0c425e06742} 
+\index{progargs.hpp@{progargs.hpp}!validate\_time\_steps@{validate\_time\_steps}}
+\index{validate\_time\_steps@{validate\_time\_steps}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{validate\_time\_steps()}{validate\_time\_steps()}}
+{\footnotesize\ttfamily int validate\+\_\+time\+\_\+steps (\begin{DoxyParamCaption}\item[{int}]{nts }\end{DoxyParamCaption})}
+
+Validates the number of time steps. 
+\begin{DoxyParams}{Parámetros}
+{\em nts} & The number of time steps to validate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the number of time steps is valid, -\/1 if it\textquotesingle{}s not numeric, -\/2 if it\textquotesingle{}s negative. 
+\end{DoxyReturn}
+\Hypertarget{progargs_8hpp_a4516389f57278071e0b2bb1d779cb778}\label{progargs_8hpp_a4516389f57278071e0b2bb1d779cb778} 
+\index{progargs.hpp@{progargs.hpp}!write\_output\_field@{write\_output\_field}}
+\index{write\_output\_field@{write\_output\_field}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{write\_output\_field()}{write\_output\_field()}}
+{\footnotesize\ttfamily void write\+\_\+output\+\_\+field (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{output\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+write }\end{DoxyParamCaption})}
+
+Writes a field from the particle to the output file. 
+\begin{DoxyParams}{Parámetros}
+{\em output\+\_\+file} & The output file stream. \\
+\hline
+{\em field\+\_\+to\+\_\+write} & The field from the particle to write. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{progargs_8hpp_a09a65288250f6f8ce70b46cb1d65fff8}\label{progargs_8hpp_a09a65288250f6f8ce70b46cb1d65fff8} 
+\index{progargs.hpp@{progargs.hpp}!write\_output\_file@{write\_output\_file}}
+\index{write\_output\_file@{write\_output\_file}!progargs.hpp@{progargs.hpp}}
+\doxysubsubsection{\texorpdfstring{write\_output\_file()}{write\_output\_file()}}
+{\footnotesize\ttfamily int write\+\_\+output\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_malla}{Malla}} \&}]{malla,  }\item[{char const \texorpdfstring{$\ast$}{*}}]{out\+\_\+file }\end{DoxyParamCaption})}
+
+Writes the particle data to a binary file.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em malla} & The mesh containing the particles. \\
+\hline
+{\em out\+\_\+file} & The output file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the file was successfully written, -\/1 otherwise. 
+\end{DoxyReturn}

@@ -1,0 +1,514 @@
+\doxysection{Referencia de la clase Malla}
+\hypertarget{class_malla}{}\label{class_malla}\index{Malla@{Malla}}
+
+
+{\ttfamily \#include $<$grid.\+hpp$>$}
+
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_malla_a507573c2a88d3a1874eb08e25ed72b85}{Malla}} (int number\+\_\+particles, double particles\+\_\+per\+\_\+meter)
+\item 
+\mbox{\hyperlink{class_malla_a504ff3c83e24357e00e0cbb2548f4e55}{Malla}} ()=default
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $>$ \mbox{\hyperlink{class_malla_a30dd6b34c62468bea53ef74a8ebdc419}{create\+Fill\+Grid}} ()
+\item 
+void \mbox{\hyperlink{class_malla_ad04f11d26c526f2b78f2818988ecb712}{insert\+\_\+particles}} (char const \texorpdfstring{$\ast$}{*}in\+\_\+file)
+\item 
+void \mbox{\hyperlink{class_malla_a4a4c6f43f535f35a641a401997c2238a}{insert\+\_\+particle\+\_\+info}} (std\+::array$<$ std\+::array$<$ double, 3 $>$, 3 $>$ info, int id, int block\+\_\+index)
+\item 
+std\+::array$<$ int, 3 $>$ \mbox{\hyperlink{class_malla_ab1b556cfd0188a35b18d53070db74506}{calculate\+\_\+block\+\_\+indexes}} (std\+::array$<$ double, 3 $>$ positions)
+\item 
+void \mbox{\hyperlink{class_malla_a87c84d8b1cdc4a10ca65baf9149b3a6d}{particle\+\_\+repositioning}} ()
+\item 
+void \mbox{\hyperlink{class_malla_a6e5f6d0321d6d9556524e1d0926bab6c}{density\+\_\+increase\+\_\+and\+\_\+transformation}} ()
+\item 
+void \mbox{\hyperlink{class_malla_a957bd183a2c6112ccbf9f9312b1449f3}{acceleration\+\_\+transfer}} ()
+\item 
+void \mbox{\hyperlink{class_malla_ad26b47c1615cff40f898a436f877cfe2}{particle\+\_\+collide\+\_\+move\+\_\+and\+\_\+bound\+\_\+interact}} ()
+\item 
+void \mbox{\hyperlink{class_malla_adb6da674fe10d8a07adfdc385d1acc40}{malla\+Interaction}} (int nts)
+\item 
+int \mbox{\hyperlink{class_malla_ae24703d52f9a976b8d7b4b78a89348df}{get\+Number\+Particles}} () const
+\item 
+double \mbox{\hyperlink{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288}{get\+Particles\+Per\+Meter}} () const
+\item 
+double \mbox{\hyperlink{class_malla_aae609d3b76d55c0b527c2284d1a51c96}{get\+Smoothing\+Length}} () const
+\item 
+std\+::array$<$ int, 3 $>$ \mbox{\hyperlink{class_malla_a7ec4a0eb05ec2f31873c2dbb49cc956a}{get\+Number\+Blocks}} () const
+\item 
+std\+::array$<$ double, 3 $>$ \mbox{\hyperlink{class_malla_ac25af227093547fbbdafe4447ed55cd1}{get\+Size\+Blocks}} () const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ \mbox{\hyperlink{class_malla_a777234f1e040133e4752cc6a00a6ec91}{get\+Particles}} () const
+\item 
+double \mbox{\hyperlink{class_malla_a9a5b12116c8588e53d6211f83523c9b9}{smooth\+\_\+length\+\_\+calc}} () const
+\item 
+double \mbox{\hyperlink{class_malla_a4a12f2a61ea534b6f87f333174f5f2a8}{particle\+\_\+mass\+\_\+calc}} () const
+\item 
+int \mbox{\hyperlink{class_malla_ad7ebc8cb4c814f6b57b42453e2f123f9}{get\+\_\+block\+\_\+index\+\_\+from\+\_\+position}} (std\+::array$<$ double, 3 $>$ position)
+\item 
+void \mbox{\hyperlink{class_malla_aae25db02efdaec200e94bcc160f5ff39}{wall\+\_\+colissions}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particle, \mbox{\hyperlink{class_block}{Block}} \&block)
+\item 
+void \mbox{\hyperlink{class_malla_a8437ece058b0f7c0da0284d7b0161ca2}{limits\+\_\+interaction}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particle, \mbox{\hyperlink{class_block}{Block}} \&block)
+\item 
+void \mbox{\hyperlink{class_malla_a758f4452f93b1844ba9218a37ba67a77}{acceleration\+\_\+transfer\+\_\+calculations}} (\mbox{\hyperlink{struct_particle}{Particle}} \&pivot, \mbox{\hyperlink{struct_particle}{Particle}} \&particle2)
+\item 
+void \mbox{\hyperlink{class_malla_acbda10cff432cdb24b9b374afbaab300}{increase\+\_\+density}} (std\+::array$<$ double, 3 $>$ \&pivot\+\_\+coords, std\+::array$<$ double, 3 $>$ \&particle2\+\_\+coords, double \&pivot\+\_\+rho, double \&particle2\+\_\+rho) const
+\item 
+double \mbox{\hyperlink{class_malla_a129db3712f2142547dabd018739d8d0e}{density\+\_\+transformation}} (double density) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_malla_a82a91e6d067084c3b0a31c59a9cf927c}{nx\+\_\+calc}} (double x\+\_\+max, double x\+\_\+min, double h\+\_\+param)
+\item 
+static int \mbox{\hyperlink{class_malla_ad96792d831c28daf26000b15719f567b}{ny\+\_\+calc}} (double y\+\_\+max, double y\+\_\+min, double h\+\_\+param)
+\item 
+static int \mbox{\hyperlink{class_malla_a6d54f59336dc7d25df4088d531ae9b3b}{nz\+\_\+calc}} (double z\+\_\+max, double z\+\_\+min, double h\+\_\+param)
+\item 
+static double \mbox{\hyperlink{class_malla_af0720e750a05dce99ce3929e466f149c}{sx\+\_\+calc}} (double x\+\_\+max, double x\+\_\+min, int n\+\_\+x)
+\item 
+static double \mbox{\hyperlink{class_malla_a0bc5c28effcd9c6931d4bb4615d654be}{sy\+\_\+calc}} (double y\+\_\+max, double y\+\_\+min, int n\+\_\+y)
+\item 
+static double \mbox{\hyperlink{class_malla_aa6702dde37a390859544a21af6081d89}{sz\+\_\+calc}} (double z\+\_\+max, double z\+\_\+min, int n\+\_\+z)
+\item 
+static double \mbox{\hyperlink{class_malla_aba8f7d9026a2da0b9b40a6f4e13c6fd5}{limit\+\_\+of\+\_\+edge}} (int eje, int extremo)
+\item 
+static void \mbox{\hyperlink{class_malla_a48d96c1c1ec39df0e796982b1cbc6034}{edge\+\_\+collisions}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particula, int extremo, int eje)
+\item 
+static void \mbox{\hyperlink{class_malla_a942cfc4f43ed570741ea6b2c8e29a0a8}{particle\+\_\+movement}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particle)
+\item 
+static void \mbox{\hyperlink{class_malla_ae17bcb2597d21ca400e2e9b9f815f6ad}{edge\+\_\+interaction}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particle, int extremo, int eje)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de constructores y destructores}
+\Hypertarget{class_malla_a507573c2a88d3a1874eb08e25ed72b85}\label{class_malla_a507573c2a88d3a1874eb08e25ed72b85} 
+\index{Malla@{Malla}!Malla@{Malla}}
+\index{Malla@{Malla}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{Malla()}{Malla()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Malla\+::\+Malla (\begin{DoxyParamCaption}\item[{int}]{number\+\_\+particles,  }\item[{double}]{particles\+\_\+per\+\_\+meter }\end{DoxyParamCaption})}
+
+Constructor for \doxylink{class_malla}{Malla} class. 
+\begin{DoxyParams}{Parámetros}
+{\em np} & Number of particles. \\
+\hline
+{\em ppm} & Particles per meter. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_a504ff3c83e24357e00e0cbb2548f4e55}\label{class_malla_a504ff3c83e24357e00e0cbb2548f4e55} 
+\index{Malla@{Malla}!Malla@{Malla}}
+\index{Malla@{Malla}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{Malla()}{Malla()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Malla\+::\+Malla (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{class_malla_a957bd183a2c6112ccbf9f9312b1449f3}\label{class_malla_a957bd183a2c6112ccbf9f9312b1449f3} 
+\index{Malla@{Malla}!acceleration\_transfer@{acceleration\_transfer}}
+\index{acceleration\_transfer@{acceleration\_transfer}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{acceleration\_transfer()}{acceleration\_transfer()}}
+{\footnotesize\ttfamily void Malla\+::acceleration\+\_\+transfer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Transfer acceleration between particles in the grid. For each particle in the grid, it checks its neighbours and transfers acceleration if necessary. \begin{DoxyReturn}{Devuelve}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a758f4452f93b1844ba9218a37ba67a77}\label{class_malla_a758f4452f93b1844ba9218a37ba67a77} 
+\index{Malla@{Malla}!acceleration\_transfer\_calculations@{acceleration\_transfer\_calculations}}
+\index{acceleration\_transfer\_calculations@{acceleration\_transfer\_calculations}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{acceleration\_transfer\_calculations()}{acceleration\_transfer\_calculations()}}
+{\footnotesize\ttfamily void Malla\+::acceleration\+\_\+transfer\+\_\+calculations (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{pivot,  }\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particle2 }\end{DoxyParamCaption})}
+
+Transfers acceleration between two particles if they are close enough. 
+\begin{DoxyParams}{Parámetros}
+{\em pivot} & The first particle. \\
+\hline
+{\em particle2} & The second particle. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_ab1b556cfd0188a35b18d53070db74506}\label{class_malla_ab1b556cfd0188a35b18d53070db74506} 
+\index{Malla@{Malla}!calculate\_block\_indexes@{calculate\_block\_indexes}}
+\index{calculate\_block\_indexes@{calculate\_block\_indexes}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{calculate\_block\_indexes()}{calculate\_block\_indexes()}}
+{\footnotesize\ttfamily std\+::array$<$ int, 3 $>$ Malla\+::calculate\+\_\+block\+\_\+indexes (\begin{DoxyParamCaption}\item[{std\+::array$<$ double, 3 $>$}]{positions }\end{DoxyParamCaption})}
+
+Calculates the block indexes for a given position in the grid. 
+\begin{DoxyParams}{Parámetros}
+{\em positions} & An array with the x, y, and z positions. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+An array with the i, j, and k indexes of the block. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a30dd6b34c62468bea53ef74a8ebdc419}\label{class_malla_a30dd6b34c62468bea53ef74a8ebdc419} 
+\index{Malla@{Malla}!createFillGrid@{createFillGrid}}
+\index{createFillGrid@{createFillGrid}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{createFillGrid()}{createFillGrid()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $>$ Malla\+::create\+Fill\+Grid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Creates a grid of blocks and appends them to the \doxylink{class_malla}{Malla} object. The blocks are created in vectors nx, ny, nz. \begin{DoxyReturn}{Devuelve}
+A vector of \doxylink{class_block}{Block} objects representing the created grid. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a6e5f6d0321d6d9556524e1d0926bab6c}\label{class_malla_a6e5f6d0321d6d9556524e1d0926bab6c} 
+\index{Malla@{Malla}!density\_increase\_and\_transformation@{density\_increase\_and\_transformation}}
+\index{density\_increase\_and\_transformation@{density\_increase\_and\_transformation}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{density\_increase\_and\_transformation()}{density\_increase\_and\_transformation()}}
+{\footnotesize\ttfamily void Malla\+::density\+\_\+increase\+\_\+and\+\_\+transformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Calculates the density of each particle in the grid by iterating over all particles and their neighbors. For each particle, it increases the density by calling \doxylink{class_malla_acbda10cff432cdb24b9b374afbaab300}{increase\+\_\+density()} function for each of its neighbors. Finally, it applies a density transformation to each particle\textquotesingle{}s density. \Hypertarget{class_malla_a129db3712f2142547dabd018739d8d0e}\label{class_malla_a129db3712f2142547dabd018739d8d0e} 
+\index{Malla@{Malla}!density\_transformation@{density\_transformation}}
+\index{density\_transformation@{density\_transformation}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{density\_transformation()}{density\_transformation()}}
+{\footnotesize\ttfamily double Malla\+::density\+\_\+transformation (\begin{DoxyParamCaption}\item[{double}]{density }\end{DoxyParamCaption}) const}
+
+Calculates the density transformation of a given density value. 
+\begin{DoxyParams}{Parámetros}
+{\em rho} & The density value to transform. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The transformed density value. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a48d96c1c1ec39df0e796982b1cbc6034}\label{class_malla_a48d96c1c1ec39df0e796982b1cbc6034} 
+\index{Malla@{Malla}!edge\_collisions@{edge\_collisions}}
+\index{edge\_collisions@{edge\_collisions}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{edge\_collisions()}{edge\_collisions()}}
+{\footnotesize\ttfamily void Malla\+::edge\+\_\+collisions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particula,  }\item[{int}]{extremo,  }\item[{int}]{eje }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the collisions of a particle with an edge of the grid in a specific axis. 
+\begin{DoxyParams}{Parámetros}
+{\em particula} & The particle to check for collisions. \\
+\hline
+{\em extremo} & The edge of the grid to check for collisions (0 for minimum, 1 for maximum). \\
+\hline
+{\em eje} & The axis to check for collisions (0 for x, 1 for y, 2 for z). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_ae17bcb2597d21ca400e2e9b9f815f6ad}\label{class_malla_ae17bcb2597d21ca400e2e9b9f815f6ad} 
+\index{Malla@{Malla}!edge\_interaction@{edge\_interaction}}
+\index{edge\_interaction@{edge\_interaction}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{edge\_interaction()}{edge\_interaction()}}
+{\footnotesize\ttfamily void Malla\+::edge\+\_\+interaction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particle,  }\item[{int}]{extremo,  }\item[{int}]{eje }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+This function calculates the interaction of a particle with an edge of the grid. 
+\begin{DoxyParams}{Parámetros}
+{\em particle} & The particle to interact with the edge. \\
+\hline
+{\em extremo} & The index of the edge to interact with (0 for the minimum limit, 1 for the maximum limit). \\
+\hline
+{\em eje} & The index of the axis where the edge is located (0 for x, 1 for y, 2 for z). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_ad7ebc8cb4c814f6b57b42453e2f123f9}\label{class_malla_ad7ebc8cb4c814f6b57b42453e2f123f9} 
+\index{Malla@{Malla}!get\_block\_index\_from\_position@{get\_block\_index\_from\_position}}
+\index{get\_block\_index\_from\_position@{get\_block\_index\_from\_position}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{get\_block\_index\_from\_position()}{get\_block\_index\_from\_position()}}
+{\footnotesize\ttfamily int Malla\+::get\+\_\+block\+\_\+index\+\_\+from\+\_\+position (\begin{DoxyParamCaption}\item[{std\+::array$<$ double, 3 $>$}]{position }\end{DoxyParamCaption})}
+
+\Hypertarget{class_malla_a7ec4a0eb05ec2f31873c2dbb49cc956a}\label{class_malla_a7ec4a0eb05ec2f31873c2dbb49cc956a} 
+\index{Malla@{Malla}!getNumberBlocks@{getNumberBlocks}}
+\index{getNumberBlocks@{getNumberBlocks}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getNumberBlocks()}{getNumberBlocks()}}
+{\footnotesize\ttfamily std\+::array$<$ int, 3 $>$ Malla\+::get\+Number\+Blocks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the number of blocks in the grid. \begin{DoxyReturn}{Devuelve}
+An std\+::array$<$int, 3$>$ containing the number of blocks in each dimension. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_ae24703d52f9a976b8d7b4b78a89348df}\label{class_malla_ae24703d52f9a976b8d7b4b78a89348df} 
+\index{Malla@{Malla}!getNumberParticles@{getNumberParticles}}
+\index{getNumberParticles@{getNumberParticles}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getNumberParticles()}{getNumberParticles()}}
+{\footnotesize\ttfamily int Malla\+::get\+Number\+Particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the number of points in the grid.
+
+\begin{DoxyReturn}{Devuelve}
+The number of points in the grid. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a777234f1e040133e4752cc6a00a6ec91}\label{class_malla_a777234f1e040133e4752cc6a00a6ec91} 
+\index{Malla@{Malla}!getParticles@{getParticles}}
+\index{getParticles@{getParticles}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getParticles()}{getParticles()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ Malla\+::get\+Particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns a vector containing all the particles in the grid.
+
+\begin{DoxyReturn}{Devuelve}
+A vector containing all the particles in the grid. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288}\label{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288} 
+\index{Malla@{Malla}!getParticlesPerMeter@{getParticlesPerMeter}}
+\index{getParticlesPerMeter@{getParticlesPerMeter}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getParticlesPerMeter()}{getParticlesPerMeter()}}
+{\footnotesize\ttfamily double Malla\+::get\+Particles\+Per\+Meter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the value of particles\+\_\+per\+\_\+meter.
+
+\begin{DoxyReturn}{Devuelve}
+The value of particles\+\_\+per\+\_\+meter. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_ac25af227093547fbbdafe4447ed55cd1}\label{class_malla_ac25af227093547fbbdafe4447ed55cd1} 
+\index{Malla@{Malla}!getSizeBlocks@{getSizeBlocks}}
+\index{getSizeBlocks@{getSizeBlocks}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getSizeBlocks()}{getSizeBlocks()}}
+{\footnotesize\ttfamily std\+::array$<$ double, 3 $>$ Malla\+::get\+Size\+Blocks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the size of the blocks in the grid.
+
+\begin{DoxyReturn}{Devuelve}
+An array of doubles representing the size of the blocks in the grid. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_aae609d3b76d55c0b527c2284d1a51c96}\label{class_malla_aae609d3b76d55c0b527c2284d1a51c96} 
+\index{Malla@{Malla}!getSmoothingLength@{getSmoothingLength}}
+\index{getSmoothingLength@{getSmoothingLength}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{getSmoothingLength()}{getSmoothingLength()}}
+{\footnotesize\ttfamily double Malla\+::get\+Smoothing\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the value of the private member variable h.
+
+\begin{DoxyReturn}{Devuelve}
+The value of h. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_acbda10cff432cdb24b9b374afbaab300}\label{class_malla_acbda10cff432cdb24b9b374afbaab300} 
+\index{Malla@{Malla}!increase\_density@{increase\_density}}
+\index{increase\_density@{increase\_density}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{increase\_density()}{increase\_density()}}
+{\footnotesize\ttfamily void Malla\+::increase\+\_\+density (\begin{DoxyParamCaption}\item[{std\+::array$<$ double, 3 $>$ \&}]{pivot\+\_\+coords,  }\item[{std\+::array$<$ double, 3 $>$ \&}]{particle2\+\_\+coords,  }\item[{double \&}]{pivot\+\_\+rho,  }\item[{double \&}]{particle2\+\_\+rho }\end{DoxyParamCaption}) const}
+
+Increase the density of two particles if they are close enough.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em pivot\+\_\+coords} & The coordinates of the first particle. \\
+\hline
+{\em particle2\+\_\+coords} & The coordinates of the second particle. \\
+\hline
+{\em pivot\+\_\+rho} & The density of the first particle. \\
+\hline
+{\em particle2\+\_\+rho} & The density of the second particle. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_a4a4c6f43f535f35a641a401997c2238a}\label{class_malla_a4a4c6f43f535f35a641a401997c2238a} 
+\index{Malla@{Malla}!insert\_particle\_info@{insert\_particle\_info}}
+\index{insert\_particle\_info@{insert\_particle\_info}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{insert\_particle\_info()}{insert\_particle\_info()}}
+{\footnotesize\ttfamily void Malla\+::insert\+\_\+particle\+\_\+info (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ double, 3 $>$, 3 $>$}]{info,  }\item[{int}]{id,  }\item[{int}]{block\+\_\+index }\end{DoxyParamCaption})}
+
+Inserts particle information into the grid. 
+\begin{DoxyParams}{Parámetros}
+{\em info} & An array of arrays containing the position, velocity, and half-\/velocity of the particle. \\
+\hline
+{\em id} & The ID of the particle. \\
+\hline
+{\em block\+\_\+index} & The index of the block where the particle is located. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_ad04f11d26c526f2b78f2818988ecb712}\label{class_malla_ad04f11d26c526f2b78f2818988ecb712} 
+\index{Malla@{Malla}!insert\_particles@{insert\_particles}}
+\index{insert\_particles@{insert\_particles}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{insert\_particles()}{insert\_particles()}}
+{\footnotesize\ttfamily void Malla\+::insert\+\_\+particles (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{in\+\_\+file }\end{DoxyParamCaption})}
+
+Inserts particles from a binary file into the grid.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em in\+\_\+file} & The path to the binary file containing the particle information. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_aba8f7d9026a2da0b9b40a6f4e13c6fd5}\label{class_malla_aba8f7d9026a2da0b9b40a6f4e13c6fd5} 
+\index{Malla@{Malla}!limit\_of\_edge@{limit\_of\_edge}}
+\index{limit\_of\_edge@{limit\_of\_edge}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{limit\_of\_edge()}{limit\_of\_edge()}}
+{\footnotesize\ttfamily double Malla\+::limit\+\_\+of\+\_\+edge (\begin{DoxyParamCaption}\item[{int}]{eje,  }\item[{int}]{extremo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_malla_a8437ece058b0f7c0da0284d7b0161ca2}\label{class_malla_a8437ece058b0f7c0da0284d7b0161ca2} 
+\index{Malla@{Malla}!limits\_interaction@{limits\_interaction}}
+\index{limits\_interaction@{limits\_interaction}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{limits\_interaction()}{limits\_interaction()}}
+{\footnotesize\ttfamily void Malla\+::limits\+\_\+interaction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particle,  }\item[{\mbox{\hyperlink{class_block}{Block}} \&}]{block }\end{DoxyParamCaption})}
+
+Calculates the interaction of a particle with the edges of a given block.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em particle} & The particle to interact with the edges. \\
+\hline
+{\em block} & The block to calculate the interaction with. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_adb6da674fe10d8a07adfdc385d1acc40}\label{class_malla_adb6da674fe10d8a07adfdc385d1acc40} 
+\index{Malla@{Malla}!mallaInteraction@{mallaInteraction}}
+\index{mallaInteraction@{mallaInteraction}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{mallaInteraction()}{mallaInteraction()}}
+{\footnotesize\ttfamily void Malla\+::malla\+Interaction (\begin{DoxyParamCaption}\item[{int}]{nts }\end{DoxyParamCaption})}
+
+This method performs the interaction between the different particles in the grid. It calls the following methods in order\+: \doxylink{class_malla_a87c84d8b1cdc4a10ca65baf9149b3a6d}{particle\+\_\+repositioning()}, \doxylink{class_malla_a6e5f6d0321d6d9556524e1d0926bab6c}{density\+\_\+increase\+\_\+and\+\_\+transformation()}, \doxylink{class_malla_a957bd183a2c6112ccbf9f9312b1449f3}{acceleration\+\_\+transfer()}, and \doxylink{class_malla_ad26b47c1615cff40f898a436f877cfe2}{particle\+\_\+collide\+\_\+move\+\_\+and\+\_\+bound\+\_\+interact()}. \Hypertarget{class_malla_a82a91e6d067084c3b0a31c59a9cf927c}\label{class_malla_a82a91e6d067084c3b0a31c59a9cf927c} 
+\index{Malla@{Malla}!nx\_calc@{nx\_calc}}
+\index{nx\_calc@{nx\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{nx\_calc()}{nx\_calc()}}
+{\footnotesize\ttfamily int Malla\+::nx\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{x\+\_\+max,  }\item[{double}]{x\+\_\+min,  }\item[{double}]{h\+\_\+param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the number of cells in the x direction based on the maximum and minimum x values and the cell size. 
+\begin{DoxyParams}{Parámetros}
+{\em x\+\_\+max} & The maximum x value. \\
+\hline
+{\em x\+\_\+min} & The minimum x value. \\
+\hline
+{\em h\+\_\+param} & The cell size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The number of cells in the x direction. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_ad96792d831c28daf26000b15719f567b}\label{class_malla_ad96792d831c28daf26000b15719f567b} 
+\index{Malla@{Malla}!ny\_calc@{ny\_calc}}
+\index{ny\_calc@{ny\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{ny\_calc()}{ny\_calc()}}
+{\footnotesize\ttfamily int Malla\+::ny\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{y\+\_\+max,  }\item[{double}]{y\+\_\+min,  }\item[{double}]{h\+\_\+param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the number of cells in the y direction based on the maximum and minimum y values and the cell size. 
+\begin{DoxyParams}{Parámetros}
+{\em y\+\_\+max} & The maximum y value. \\
+\hline
+{\em y\+\_\+min} & The minimum y value. \\
+\hline
+{\em h\+\_\+param} & The cell size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The number of cells in the y direction. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a6d54f59336dc7d25df4088d531ae9b3b}\label{class_malla_a6d54f59336dc7d25df4088d531ae9b3b} 
+\index{Malla@{Malla}!nz\_calc@{nz\_calc}}
+\index{nz\_calc@{nz\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{nz\_calc()}{nz\_calc()}}
+{\footnotesize\ttfamily int Malla\+::nz\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{z\+\_\+max,  }\item[{double}]{z\+\_\+min,  }\item[{double}]{h\+\_\+param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the number of cells in the z direction based on the maximum and minimum z values and the cell size. 
+\begin{DoxyParams}{Parámetros}
+{\em z\+\_\+max} & The maximum z value. \\
+\hline
+{\em z\+\_\+min} & The minimum z value. \\
+\hline
+{\em h\+\_\+param} & The cell size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The number of cells in the z direction. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_ad26b47c1615cff40f898a436f877cfe2}\label{class_malla_ad26b47c1615cff40f898a436f877cfe2} 
+\index{Malla@{Malla}!particle\_collide\_move\_and\_bound\_interact@{particle\_collide\_move\_and\_bound\_interact}}
+\index{particle\_collide\_move\_and\_bound\_interact@{particle\_collide\_move\_and\_bound\_interact}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particle\_collide\_move\_and\_bound\_interact()}{particle\_collide\_move\_and\_bound\_interact()}}
+{\footnotesize\ttfamily void Malla\+::particle\+\_\+collide\+\_\+move\+\_\+and\+\_\+bound\+\_\+interact (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function iterates through all the particles in the grid and checks if they are at the edge of the grid. If a particle is at the edge of the grid, it calls the wall\+\_\+colissions function to handle the collision with the wall. Then, it calls the particle\+\_\+movement function to update the position of the particle. If the particle is at the edge of the grid, it calls the limits\+\_\+interaction function to handle the interaction with the limits of the grid. \Hypertarget{class_malla_a4a12f2a61ea534b6f87f333174f5f2a8}\label{class_malla_a4a12f2a61ea534b6f87f333174f5f2a8} 
+\index{Malla@{Malla}!particle\_mass\_calc@{particle\_mass\_calc}}
+\index{particle\_mass\_calc@{particle\_mass\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particle\_mass\_calc()}{particle\_mass\_calc()}}
+{\footnotesize\ttfamily double Malla\+::particle\+\_\+mass\+\_\+calc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Calculates the mass of a particle in the mesh. \begin{DoxyReturn}{Devuelve}
+The mass of a particle in the mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a942cfc4f43ed570741ea6b2c8e29a0a8}\label{class_malla_a942cfc4f43ed570741ea6b2c8e29a0a8} 
+\index{Malla@{Malla}!particle\_movement@{particle\_movement}}
+\index{particle\_movement@{particle\_movement}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particle\_movement()}{particle\_movement()}}
+{\footnotesize\ttfamily void Malla\+::particle\+\_\+movement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Moves a particle in the grid by updating its position and velocity based on its acceleration. 
+\begin{DoxyParams}{Parámetros}
+{\em particle} & The particle to be moved. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_malla_a87c84d8b1cdc4a10ca65baf9149b3a6d}\label{class_malla_a87c84d8b1cdc4a10ca65baf9149b3a6d} 
+\index{Malla@{Malla}!particle\_repositioning@{particle\_repositioning}}
+\index{particle\_repositioning@{particle\_repositioning}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particle\_repositioning()}{particle\_repositioning()}}
+{\footnotesize\ttfamily void Malla\+::particle\+\_\+repositioning (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function updates the position of the particles in the grid and calculates the new block indexes. It also initializes the acceleration and density of each particle. Finally, it updates the list of particles in each block and the list of particles in the neighboring blocks. \Hypertarget{class_malla_a9a5b12116c8588e53d6211f83523c9b9}\label{class_malla_a9a5b12116c8588e53d6211f83523c9b9} 
+\index{Malla@{Malla}!smooth\_length\_calc@{smooth\_length\_calc}}
+\index{smooth\_length\_calc@{smooth\_length\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{smooth\_length\_calc()}{smooth\_length\_calc()}}
+{\footnotesize\ttfamily double Malla\+::smooth\+\_\+length\+\_\+calc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Calculates the smoothing length of the mesh. \begin{DoxyReturn}{Devuelve}
+The smoothing length of the mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_af0720e750a05dce99ce3929e466f149c}\label{class_malla_af0720e750a05dce99ce3929e466f149c} 
+\index{Malla@{Malla}!sx\_calc@{sx\_calc}}
+\index{sx\_calc@{sx\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{sx\_calc()}{sx\_calc()}}
+{\footnotesize\ttfamily double Malla\+::sx\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{x\+\_\+max,  }\item[{double}]{x\+\_\+min,  }\item[{int}]{n\+\_\+x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the x-\/axis spacing of the mesh. 
+\begin{DoxyParams}{Parámetros}
+{\em x\+\_\+max} & The maximum x-\/coordinate of the mesh. \\
+\hline
+{\em x\+\_\+min} & The minimum x-\/coordinate of the mesh. \\
+\hline
+{\em n\+\_\+x} & The number of cells in the x-\/axis of the mesh. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The x-\/axis spacing of the mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_a0bc5c28effcd9c6931d4bb4615d654be}\label{class_malla_a0bc5c28effcd9c6931d4bb4615d654be} 
+\index{Malla@{Malla}!sy\_calc@{sy\_calc}}
+\index{sy\_calc@{sy\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{sy\_calc()}{sy\_calc()}}
+{\footnotesize\ttfamily double Malla\+::sy\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{y\+\_\+max,  }\item[{double}]{y\+\_\+min,  }\item[{int}]{n\+\_\+y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the y-\/axis spacing of the mesh. 
+\begin{DoxyParams}{Parámetros}
+{\em y\+\_\+max} & The maximum y-\/coordinate of the mesh. \\
+\hline
+{\em y\+\_\+min} & The minimum y-\/coordinate of the mesh. \\
+\hline
+{\em n\+\_\+y} & The number of cells in the y-\/axis of the mesh. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The y-\/axis spacing of the mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_aa6702dde37a390859544a21af6081d89}\label{class_malla_aa6702dde37a390859544a21af6081d89} 
+\index{Malla@{Malla}!sz\_calc@{sz\_calc}}
+\index{sz\_calc@{sz\_calc}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{sz\_calc()}{sz\_calc()}}
+{\footnotesize\ttfamily double Malla\+::sz\+\_\+calc (\begin{DoxyParamCaption}\item[{double}]{z\+\_\+max,  }\item[{double}]{z\+\_\+min,  }\item[{int}]{n\+\_\+z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Calculates the z-\/axis spacing of the mesh. 
+\begin{DoxyParams}{Parámetros}
+{\em z\+\_\+max} & The maximum z-\/coordinate of the mesh. \\
+\hline
+{\em z\+\_\+min} & The minimum z-\/coordinate of the mesh. \\
+\hline
+{\em n\+\_\+z} & The number of cells in the z-\/axis of the mesh. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The z-\/axis spacing of the mesh. 
+\end{DoxyReturn}
+\Hypertarget{class_malla_aae25db02efdaec200e94bcc160f5ff39}\label{class_malla_aae25db02efdaec200e94bcc160f5ff39} 
+\index{Malla@{Malla}!wall\_colissions@{wall\_colissions}}
+\index{wall\_colissions@{wall\_colissions}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{wall\_colissions()}{wall\_colissions()}}
+{\footnotesize\ttfamily void Malla\+::wall\+\_\+colissions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_particle}{Particle}} \&}]{particle,  }\item[{\mbox{\hyperlink{class_block}{Block}} \&}]{block }\end{DoxyParamCaption})}
+
+Detects and handles collisions between a particle and a block\textquotesingle{}s walls. 
+\begin{DoxyParams}{Parámetros}
+{\em particle} & The particle to check for collisions. \\
+\hline
+{\em block} & The block to check for collisions against. \\
+\hline
+\end{DoxyParams}
+
+
+La documentación de esta clase está generada de los siguientes archivos\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/sim/\mbox{\hyperlink{grid_8hpp}{grid.\+hpp}}\item 
+C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/sim/\mbox{\hyperlink{grid_8cpp}{grid.\+cpp}}\end{DoxyCompactItemize}

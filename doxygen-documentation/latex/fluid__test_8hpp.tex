@@ -1,0 +1,234 @@
+\doxysection{Referencia del archivo C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/ftest/fluid\+\_\+test.hpp}
+\hypertarget{fluid__test_8hpp}{}\label{fluid__test_8hpp}\index{C:/Users/Usuario/CLionProjects/ac\_p1/ftest/fluid\_test.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/ftest/fluid\_test.hpp}}
+{\ttfamily \#include "{}sim/block.\+hpp"{}}\newline
+{\ttfamily \#include "{}sim/progargs.\+hpp"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_trace_block}{Trace\+Block}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{fluid__test_8hpp_a45dadc848e0e6f5258b6955488749b5e}{compare\+\_\+iteration}} (\mbox{\hyperlink{class_malla}{Malla}} \&malla, char const \texorpdfstring{$\ast$}{*}input\+File\+Name)
+\begin{DoxyCompactList}\small\item\em Compare the particle vectors obtained from simulation with the expected output from a trace file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{fluid__test_8hpp_a47214eebcb4e73e2b777e6ee16e71751}{comparevectorstrz}} (std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out1, std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out2)
+\begin{DoxyCompactList}\small\item\em Compare two vectors of particles for consistency, assuming they are sorted by particle ID. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{fluid__test_8hpp_a7bc13fe2f1eeb504813877d94d374d7e}{comparevectorsout}} (std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out1, std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out2)
+\begin{DoxyCompactList}\small\item\em Compare two vectors of particles for consistency, assuming they are sorted by particle ID, with tolerance for floating-\/point comparisons. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ \mbox{\hyperlink{fluid__test_8hpp_ad4b9199ab2d0dda9a1f0753c89c1f35d}{traceread}} (char const \texorpdfstring{$\ast$}{*}trace\+File\+Name)
+\begin{DoxyCompactList}\small\item\em Read particle data from a trace file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{fluid__test_8hpp_a3e06180aeb4378ddc722a49ca20b2073}{compare}} (std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out1, std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out2)
+\begin{DoxyCompactList}\small\item\em Compare two vectors of particles for consistency, assuming they are sorted by particle ID. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{fluid__test_8hpp_adff40bed5d1e1190d90df114c91ff6ef}{comparetrzvec}} (std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out1, std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ particles\+\_\+out2)
+\begin{DoxyCompactList}\small\item\em Compare two vectors of particles for consistency with a tolerance for floating-\/point comparisons. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fluid__test_8hpp_abd73b6df4b8d3f9750cbf32dc1f050fd}{read\+\_\+field\+\_\+from\+\_\+file\+\_\+double}} (std\+::ifstream \&input\+\_\+file, auto \&field\+\_\+to\+\_\+read)
+\begin{DoxyCompactList}\small\item\em Read a double field from a binary file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fluid__test_8hpp_acf28de6fbb95995dd51e93c7edb90747}{read\+\_\+field\+\_\+from\+\_\+file\+\_\+long}} (std\+::ifstream \&input\+\_\+file, auto \&field\+\_\+to\+\_\+read)
+\begin{DoxyCompactList}\small\item\em Read a long field from a binary file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fluid__test_8hpp_a502693c09701b5a091dfce4d2712169e}{read\+\_\+field\+\_\+from\+\_\+file\+\_\+int}} (std\+::ifstream \&input\+\_\+file, auto \&field\+\_\+to\+\_\+read)
+\begin{DoxyCompactList}\small\item\em Read an int field from a binary file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_particle}{Particle}} \mbox{\hyperlink{fluid__test_8hpp_a2de4373a0cbd69fd1339d66d93a4c143}{makeparticle}} (std\+::ifstream \&trace\+File, int iter)
+\begin{DoxyCompactList}\small\item\em Create a particle from data in a trace file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fluid__test_8hpp_a7e56f7b88481a2727adc704ed3e2bde9}{read\+\_\+field\+\_\+from\+\_\+file2}} (std\+::ifstream \&input\+\_\+file, auto \&field\+\_\+to\+\_\+read)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{fluid__test_8hpp_a3e06180aeb4378ddc722a49ca20b2073}\label{fluid__test_8hpp_a3e06180aeb4378ddc722a49ca20b2073} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!compare@{compare}}
+\index{compare@{compare}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{compare()}{compare()}}
+{\footnotesize\ttfamily int compare (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out1,  }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out2 }\end{DoxyParamCaption})}
+
+
+
+Compare two vectors of particles for consistency, assuming they are sorted by particle ID. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em particles\+\_\+out1} & First vector of particles. \\
+\hline
+{\em particles\+\_\+out2} & Second vector of particles. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the vectors match, -\/2 if there is a mismatch in particle attributes. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_a45dadc848e0e6f5258b6955488749b5e}\label{fluid__test_8hpp_a45dadc848e0e6f5258b6955488749b5e} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!compare\_iteration@{compare\_iteration}}
+\index{compare\_iteration@{compare\_iteration}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{compare\_iteration()}{compare\_iteration()}}
+{\footnotesize\ttfamily int compare\+\_\+iteration (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_malla}{Malla}} \&}]{malla,  }\item[{char const \texorpdfstring{$\ast$}{*}}]{input\+File\+Name }\end{DoxyParamCaption})}
+
+
+
+Compare the particle vectors obtained from simulation with the expected output from a trace file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em malla} & The simulation grid. \\
+\hline
+{\em input\+File\+Name} & The name of the trace file to compare against. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the particle vectors match, -\/1 if the sizes are different, -\/2 if there is a mismatch in particle attributes. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_adff40bed5d1e1190d90df114c91ff6ef}\label{fluid__test_8hpp_adff40bed5d1e1190d90df114c91ff6ef} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!comparetrzvec@{comparetrzvec}}
+\index{comparetrzvec@{comparetrzvec}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{comparetrzvec()}{comparetrzvec()}}
+{\footnotesize\ttfamily int comparetrzvec (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out1,  }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out2 }\end{DoxyParamCaption})}
+
+
+
+Compare two vectors of particles for consistency with a tolerance for floating-\/point comparisons. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em particles\+\_\+out1} & First vector of particles. \\
+\hline
+{\em particles\+\_\+out2} & Second vector of particles. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the vectors match, -\/2 if there is a mismatch in particle attributes. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_a7bc13fe2f1eeb504813877d94d374d7e}\label{fluid__test_8hpp_a7bc13fe2f1eeb504813877d94d374d7e} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!comparevectorsout@{comparevectorsout}}
+\index{comparevectorsout@{comparevectorsout}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{comparevectorsout()}{comparevectorsout()}}
+{\footnotesize\ttfamily int comparevectorsout (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out1,  }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out2 }\end{DoxyParamCaption})}
+
+
+
+Compare two vectors of particles for consistency, assuming they are sorted by particle ID, with tolerance for floating-\/point comparisons. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em particles\+\_\+out1} & First vector of particles. \\
+\hline
+{\em particles\+\_\+out2} & Second vector of particles. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the vectors match, -\/1 if the sizes are different, -\/2 if there is a mismatch in particle attributes. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_a47214eebcb4e73e2b777e6ee16e71751}\label{fluid__test_8hpp_a47214eebcb4e73e2b777e6ee16e71751} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!comparevectorstrz@{comparevectorstrz}}
+\index{comparevectorstrz@{comparevectorstrz}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{comparevectorstrz()}{comparevectorstrz()}}
+{\footnotesize\ttfamily int comparevectorstrz (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out1,  }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$}]{particles\+\_\+out2 }\end{DoxyParamCaption})}
+
+
+
+Compare two vectors of particles for consistency, assuming they are sorted by particle ID. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em particles\+\_\+out1} & First vector of particles. \\
+\hline
+{\em particles\+\_\+out2} & Second vector of particles. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+0 if the vectors match, -\/1 if the sizes are different, -\/2 if there is a mismatch in particle attributes. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_a2de4373a0cbd69fd1339d66d93a4c143}\label{fluid__test_8hpp_a2de4373a0cbd69fd1339d66d93a4c143} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!makeparticle@{makeparticle}}
+\index{makeparticle@{makeparticle}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{makeparticle()}{makeparticle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_particle}{Particle}} makeparticle (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{trace\+File,  }\item[{int}]{iter }\end{DoxyParamCaption})}
+
+
+
+Create a particle from data in a trace file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em trace\+File} & The trace file to read from. \\
+\hline
+{\em iter} & The iteration number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\doxylink{struct_particle}{Particle} created from the trace file data. 
+\end{DoxyReturn}
+\Hypertarget{fluid__test_8hpp_a7e56f7b88481a2727adc704ed3e2bde9}\label{fluid__test_8hpp_a7e56f7b88481a2727adc704ed3e2bde9} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!read\_field\_from\_file2@{read\_field\_from\_file2}}
+\index{read\_field\_from\_file2@{read\_field\_from\_file2}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_field\_from\_file2()}{read\_field\_from\_file2()}}
+{\footnotesize\ttfamily void read\+\_\+field\+\_\+from\+\_\+file2 (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+read }\end{DoxyParamCaption})}
+
+\Hypertarget{fluid__test_8hpp_abd73b6df4b8d3f9750cbf32dc1f050fd}\label{fluid__test_8hpp_abd73b6df4b8d3f9750cbf32dc1f050fd} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!read\_field\_from\_file\_double@{read\_field\_from\_file\_double}}
+\index{read\_field\_from\_file\_double@{read\_field\_from\_file\_double}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_field\_from\_file\_double()}{read\_field\_from\_file\_double()}}
+{\footnotesize\ttfamily void read\+\_\+field\+\_\+from\+\_\+file\+\_\+double (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+read }\end{DoxyParamCaption})}
+
+
+
+Read a double field from a binary file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em input\+\_\+file} & The input file stream. \\
+\hline
+{\em field\+\_\+to\+\_\+read} & The double field to read. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fluid__test_8hpp_a502693c09701b5a091dfce4d2712169e}\label{fluid__test_8hpp_a502693c09701b5a091dfce4d2712169e} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!read\_field\_from\_file\_int@{read\_field\_from\_file\_int}}
+\index{read\_field\_from\_file\_int@{read\_field\_from\_file\_int}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_field\_from\_file\_int()}{read\_field\_from\_file\_int()}}
+{\footnotesize\ttfamily void read\+\_\+field\+\_\+from\+\_\+file\+\_\+int (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+read }\end{DoxyParamCaption})}
+
+
+
+Read an int field from a binary file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em input\+\_\+file} & The input file stream. \\
+\hline
+{\em field\+\_\+to\+\_\+read} & The int field to read. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fluid__test_8hpp_acf28de6fbb95995dd51e93c7edb90747}\label{fluid__test_8hpp_acf28de6fbb95995dd51e93c7edb90747} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!read\_field\_from\_file\_long@{read\_field\_from\_file\_long}}
+\index{read\_field\_from\_file\_long@{read\_field\_from\_file\_long}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{read\_field\_from\_file\_long()}{read\_field\_from\_file\_long()}}
+{\footnotesize\ttfamily void read\+\_\+field\+\_\+from\+\_\+file\+\_\+long (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{input\+\_\+file,  }\item[{auto \&}]{field\+\_\+to\+\_\+read }\end{DoxyParamCaption})}
+
+
+
+Read a long field from a binary file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em input\+\_\+file} & The input file stream. \\
+\hline
+{\em field\+\_\+to\+\_\+read} & The long field to read. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fluid__test_8hpp_ad4b9199ab2d0dda9a1f0753c89c1f35d}\label{fluid__test_8hpp_ad4b9199ab2d0dda9a1f0753c89c1f35d} 
+\index{fluid\_test.hpp@{fluid\_test.hpp}!traceread@{traceread}}
+\index{traceread@{traceread}!fluid\_test.hpp@{fluid\_test.hpp}}
+\doxysubsubsection{\texorpdfstring{traceread()}{traceread()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ traceread (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{trace\+File\+Name }\end{DoxyParamCaption})}
+
+
+
+Read particle data from a trace file. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em trace\+File\+Name} & The name of the trace file to read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Vector of particles read from the trace file. 
+\end{DoxyReturn}

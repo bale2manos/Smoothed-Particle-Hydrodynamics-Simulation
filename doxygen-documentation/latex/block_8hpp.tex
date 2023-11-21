@@ -1,0 +1,57 @@
+\doxysection{Referencia del archivo C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/sim/block.hpp}
+\hypertarget{block_8hpp}{}\label{block_8hpp}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/block.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/block.hpp}}
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_particle}{Particle}}
+\item 
+class \mbox{\hyperlink{class_block}{Block}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{block_8hpp_aa8896ca539fed35e8203de6217325ac2}{initial\+\_\+block\+\_\+index}} (double position, double min\+\_\+limit, double block\+\_\+size)
+\item 
+int \mbox{\hyperlink{block_8hpp_a74f0e0de710a88a4c60b0af46afacaf7}{calculate\+\_\+block\+\_\+index}} (std\+::array$<$ int, 3 $>$ coords, int nx, int ny)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{block_8hpp_a74f0e0de710a88a4c60b0af46afacaf7}\label{block_8hpp_a74f0e0de710a88a4c60b0af46afacaf7} 
+\index{block.hpp@{block.hpp}!calculate\_block\_index@{calculate\_block\_index}}
+\index{calculate\_block\_index@{calculate\_block\_index}!block.hpp@{block.hpp}}
+\doxysubsubsection{\texorpdfstring{calculate\_block\_index()}{calculate\_block\_index()}}
+{\footnotesize\ttfamily int calculate\+\_\+block\+\_\+index (\begin{DoxyParamCaption}\item[{std\+::array$<$ int, 3 $>$}]{coords,  }\item[{int}]{nx,  }\item[{int}]{ny }\end{DoxyParamCaption})}
+
+Calculates the index of a block in a 3D array given its coordinates and the size of the first two dimensions. 
+\begin{DoxyParams}{Parámetros}
+{\em coords} & The coordinates of the block in the format \{x, y, z\}. \\
+\hline
+{\em nx} & The size of the first dimension. \\
+\hline
+{\em ny} & The size of the second dimension. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The index of the block in the array. 
+\end{DoxyReturn}
+\Hypertarget{block_8hpp_aa8896ca539fed35e8203de6217325ac2}\label{block_8hpp_aa8896ca539fed35e8203de6217325ac2} 
+\index{block.hpp@{block.hpp}!initial\_block\_index@{initial\_block\_index}}
+\index{initial\_block\_index@{initial\_block\_index}!block.hpp@{block.hpp}}
+\doxysubsubsection{\texorpdfstring{initial\_block\_index()}{initial\_block\_index()}}
+{\footnotesize\ttfamily int initial\+\_\+block\+\_\+index (\begin{DoxyParamCaption}\item[{double}]{position,  }\item[{double}]{min\+\_\+limit,  }\item[{double}]{block\+\_\+size }\end{DoxyParamCaption})}
+
+Calculates the index of the block that contains a given position, based on the minimum limit and block size. 
+\begin{DoxyParams}{Parámetros}
+{\em position} & The position to calculate the block index for. \\
+\hline
+{\em min\+\_\+limit} & The minimum limit of the range of positions. \\
+\hline
+{\em block\+\_\+size} & The size of each block. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The index of the block that contains the given position. 
+\end{DoxyReturn}

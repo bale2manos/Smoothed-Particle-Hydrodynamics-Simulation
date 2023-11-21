@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Practica Arquitectura Computadores: Archivo de código fuente C:/Users/Usuario/CLionProjects/ac_p1/sim/grid.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Practica Arquitectura Computadores
+   </div>
+   <div id="projectbrief">Proyecto de programación orientada al rendimiento</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_e6bb53534ac0e427887cf7a94c0c004e.html">C:</a></li><li class="navelem"><a class="el" href="dir_8ceffd4ee35c3518d4e8bdc7e638efe8.html">Users</a></li><li class="navelem"><a class="el" href="dir_af195d8212783ff0980077807998eb0f.html">Usuario</a></li><li class="navelem"><a class="el" href="dir_1ed3482a6503e81a163ae52ed966a5a4.html">CLionProjects</a></li><li class="navelem"><a class="el" href="dir_b43f2280fe0091e3862e41d87a9daa55.html">ac_p1</a></li><li class="navelem"><a class="el" href="dir_43b751b9d90e942004f872ba8f47d2d7.html">sim</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">grid.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="grid_8hpp.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">//</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Created by bale2 on 26/09/2023.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifndef ARQUITECTURA_DE_COMPUTADORES_GRID_HPP</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define ARQUITECTURA_DE_COMPUTADORES_GRID_HPP</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="block_8hpp.html">block.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ae4b10f010e654373b352683e9853bc9c">   14</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#ae4b10f010e654373b352683e9853bc9c">radio_multiplier</a>    = 1.695;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a04e0198fb5d54ec976c72b4d7782ab3f">   15</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a04e0198fb5d54ec976c72b4d7782ab3f">fluid_density</a>       = 10 * 10 * 10;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a9172abf694313a62597ab79ab37ec4e5">   16</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a9172abf694313a62597ab79ab37ec4e5">stiffness_presure</a>   = 3.0;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a43e93fe6c7b01ae35174e9d631fd0aec">   17</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a43e93fe6c7b01ae35174e9d631fd0aec">rigidity_collisions</a> = 3 * 10000;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a7200d96bb69fcb79ad0c3fb33b807350">   18</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a7200d96bb69fcb79ad0c3fb33b807350">damping</a>             = 128.0;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a867ad154c8d5a8692e1aef1d8b483aed">   19</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a867ad154c8d5a8692e1aef1d8b483aed">viscosity</a>           = 0.4;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a505d2a154393e20239058d592eb76064">   20</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a505d2a154393e20239058d592eb76064">particle_size</a>       = 2 * 0.0001;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="grid_8hpp.html#adeb4332ce106902917303ad004eae2fa">   21</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#adeb4332ce106902917303ad004eae2fa">timestep</a>            = 0.001;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ae803943c89cfb6345bf19234651a11c6">   22</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#ae803943c89cfb6345bf19234651a11c6">xmax</a>                = 0.065;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="grid_8hpp.html#afd834eb9115720f1e8018814aa9691e3">   23</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#afd834eb9115720f1e8018814aa9691e3">xmin</a>                = -0.065;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a64240f77e7f1b64d47e62098716d06ca">   24</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a64240f77e7f1b64d47e62098716d06ca">ymax</a>                = 0.1;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a2b8df58237b7603f4cf626d494288006">   25</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a2b8df58237b7603f4cf626d494288006">ymin</a>                = -0.08;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a984e2aaf64f4a50ea90acc2f595cd3fa">   26</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a984e2aaf64f4a50ea90acc2f595cd3fa">zmax</a>                = 0.065;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a96906d89179f4a9fa00ff78e170006d2">   27</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a96906d89179f4a9fa00ff78e170006d2">zmin</a>                = -0.065;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="grid_8hpp.html#af81f980bddb2471a968025ae3a738fa9">   28</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#af81f980bddb2471a968025ae3a738fa9">gravity</a>             = -9.8;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ab3c41d3dcb9d39c92404e11cdbf9d32c">   30</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#ab3c41d3dcb9d39c92404e11cdbf9d32c">fifteen</a>            = 15.0;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ad8cd7a0125ce9046168d6cd6e6585eb1">   31</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#ad8cd7a0125ce9046168d6cd6e6585eb1">three</a>              = 3.0;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="grid_8hpp.html#aad723f6e7ff56339195c1f8c24c41257">   32</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#aad723f6e7ff56339195c1f8c24c41257">half</a>               = 0.5;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ab93b2150ad565b28a471d99d35147ae8">   33</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#ab93b2150ad565b28a471d99d35147ae8">six</a>                = 6.0;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a07ef21739d798812408122e8462c3ef7">   34</a></span><span class="keyword">constexpr</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="grid_8hpp.html#a07ef21739d798812408122e8462c3ef7">six_int</a>            = 6;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a27323a9d5bbcfc3ca5720c685a487cdb">   35</a></span><span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="grid_8hpp.html#a27323a9d5bbcfc3ca5720c685a487cdb">nine</a>                  = 9;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a3f2941d2573da824f63ef55f0a501023">   36</a></span><span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="grid_8hpp.html#a3f2941d2573da824f63ef55f0a501023">wrong_particle_number</a> = -5;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="grid_8hpp.html#a5922505bbd591ae57564d7919c3f6479">   37</a></span><span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="grid_8hpp.html#a5922505bbd591ae57564d7919c3f6479">trescientos_quince</a>    = 315;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="grid_8hpp.html#ab8536e356d201a46c1806686fdedb258">   38</a></span><span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="grid_8hpp.html#ab8536e356d201a46c1806686fdedb258">sixty_four</a>            = 64;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_malla.html">   40</a></span><span class="keyword">class </span><a class="code hl_class" href="class_malla.html">Malla</a> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_function" href="class_malla.html#a504ff3c83e24357e00e0cbb2548f4e55">Malla</a>(<span class="keywordtype">int</span> number_particles, <span class="keywordtype">double</span> particles_per_meter);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_malla.html#a504ff3c83e24357e00e0cbb2548f4e55">   43</a></span>    <a class="code hl_function" href="class_malla.html#a504ff3c83e24357e00e0cbb2548f4e55">Malla</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    std::vector&lt;Block&gt; <a class="code hl_function" href="class_malla.html#a30dd6b34c62468bea53ef74a8ebdc419">createFillGrid</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#ad04f11d26c526f2b78f2818988ecb712">insert_particles</a>(<span class="keywordtype">char</span> <span class="keyword">const</span> * in_file);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a4a4c6f43f535f35a641a401997c2238a">insert_particle_info</a>(std::array&lt;std::array&lt;double, 3&gt;, 3&gt; info, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> block_index);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    std::array&lt;int, 3&gt; <a class="code hl_function" href="class_malla.html#ab1b556cfd0188a35b18d53070db74506">calculate_block_indexes</a>(std::array&lt;double, 3&gt; positions);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a87c84d8b1cdc4a10ca65baf9149b3a6d">particle_repositioning</a>();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a6e5f6d0321d6d9556524e1d0926bab6c">density_increase_and_transformation</a>();</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a957bd183a2c6112ccbf9f9312b1449f3">acceleration_transfer</a>();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#ad26b47c1615cff40f898a436f877cfe2">particle_collide_move_and_bound_interact</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#adb6da674fe10d8a07adfdc385d1acc40">mallaInteraction</a>(<span class="keywordtype">int</span> nts);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    [[nodiscard]] <span class="keywordtype">int</span> <a class="code hl_function" href="class_malla.html#ae24703d52f9a976b8d7b4b78a89348df">getNumberParticles</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#a618199f5bf2d7c4d3fad83aa6eca3288">getParticlesPerMeter</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#aae609d3b76d55c0b527c2284d1a51c96">getSmoothingLength</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    [[nodiscard]] std::array&lt;int, 3&gt; <a class="code hl_function" href="class_malla.html#a7ec4a0eb05ec2f31873c2dbb49cc956a">getNumberBlocks</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    [[nodiscard]] std::array&lt;double, 3&gt; <a class="code hl_function" href="class_malla.html#ac25af227093547fbbdafe4447ed55cd1">getSizeBlocks</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    [[nodiscard]] std::vector&lt;Particle&gt; <a class="code hl_function" href="class_malla.html#a777234f1e040133e4752cc6a00a6ec91">getParticles</a>() <span class="keyword">const</span>;  <span class="comment">// New method to retrieve particles</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_function" href="class_malla.html#a82a91e6d067084c3b0a31c59a9cf927c">nx_calc</a>(<span class="keywordtype">double</span> x_max, <span class="keywordtype">double</span> x_min, <span class="keywordtype">double</span> h_param);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_function" href="class_malla.html#ad96792d831c28daf26000b15719f567b">ny_calc</a>(<span class="keywordtype">double</span> y_max, <span class="keywordtype">double</span> y_min, <span class="keywordtype">double</span> h_param);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_function" href="class_malla.html#a6d54f59336dc7d25df4088d531ae9b3b">nz_calc</a>(<span class="keywordtype">double</span> z_max, <span class="keywordtype">double</span> z_min, <span class="keywordtype">double</span> h_param);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#af0720e750a05dce99ce3929e466f149c">sx_calc</a>(<span class="keywordtype">double</span> x_max, <span class="keywordtype">double</span> x_min, <span class="keywordtype">int</span> n_x);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#a0bc5c28effcd9c6931d4bb4615d654be">sy_calc</a>(<span class="keywordtype">double</span> y_max, <span class="keywordtype">double</span> y_min, <span class="keywordtype">int</span> n_y);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#aa6702dde37a390859544a21af6081d89">sz_calc</a>(<span class="keywordtype">double</span> z_max, <span class="keywordtype">double</span> z_min, <span class="keywordtype">int</span> n_z);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#a9a5b12116c8588e53d6211f83523c9b9">smooth_length_calc</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#a4a12f2a61ea534b6f87f333174f5f2a8">particle_mass_calc</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="class_malla.html#ad7ebc8cb4c814f6b57b42453e2f123f9">get_block_index_from_position</a>(std::array&lt;double, 3&gt; position);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#aba8f7d9026a2da0b9b40a6f4e13c6fd5">limit_of_edge</a>(<span class="keywordtype">int</span> eje, <span class="keywordtype">int</span> extremo);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#aae25db02efdaec200e94bcc160f5ff39">wall_colissions</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particle, <a class="code hl_class" href="class_block.html">Block</a> &amp; block);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a48d96c1c1ec39df0e796982b1cbc6034">edge_collisions</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particula, <span class="keywordtype">int</span> extremo, <span class="keywordtype">int</span> eje);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a942cfc4f43ed570741ea6b2c8e29a0a8">particle_movement</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particle);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a8437ece058b0f7c0da0284d7b0161ca2">limits_interaction</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particle, <a class="code hl_class" href="class_block.html">Block</a> &amp; block);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#ae17bcb2597d21ca400e2e9b9f815f6ad">edge_interaction</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particle, <span class="keywordtype">int</span> extremo, <span class="keywordtype">int</span> eje);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#a758f4452f93b1844ba9218a37ba67a77">acceleration_transfer_calculations</a>(<a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; pivot, <a class="code hl_struct" href="struct_particle.html">Particle</a> &amp; particle2);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_malla.html#acbda10cff432cdb24b9b374afbaab300">increase_density</a>(std::array&lt;double, 3&gt; &amp; pivot_coords,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                          std::array&lt;double, 3&gt; &amp; particle2_coords, <span class="keywordtype">double</span> &amp; pivot_rho,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                          <span class="keywordtype">double</span> &amp; particle2_rho) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="class_malla.html#a129db3712f2142547dabd018739d8d0e">density_transformation</a>(<span class="keywordtype">double</span> density) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordtype">int</span> number_particles{};</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordtype">double</span> particles_per_meter{};</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    std::vector&lt;Block&gt; blocks;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    std::array&lt;int, 3&gt; number_blocks{};</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    std::array&lt;double, 3&gt; size_blocks{};</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">double</span> smoothing_length{}, particle_mass{};</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    std::array&lt;double, 2&gt; accel_constants{};</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    std::vector&lt;Particle&gt; particles;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">void</span> add_particles_neighbours();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>};</div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif  </span><span class="comment">// ARQUITECTURA_DE_COMPUTADORES_GRID_HPP</span></div>
+<div class="ttc" id="ablock_8hpp_html"><div class="ttname"><a href="block_8hpp.html">block.hpp</a></div></div>
+<div class="ttc" id="aclass_block_html"><div class="ttname"><a href="class_block.html">Block</a></div><div class="ttdef"><b>Definition</b> block.hpp:17</div></div>
+<div class="ttc" id="aclass_malla_html"><div class="ttname"><a href="class_malla.html">Malla</a></div><div class="ttdef"><b>Definition</b> grid.hpp:40</div></div>
+<div class="ttc" id="aclass_malla_html_a0bc5c28effcd9c6931d4bb4615d654be"><div class="ttname"><a href="class_malla.html#a0bc5c28effcd9c6931d4bb4615d654be">Malla::sy_calc</a></div><div class="ttdeci">static double sy_calc(double y_max, double y_min, int n_y)</div><div class="ttdef"><b>Definition</b> grid.cpp:227</div></div>
+<div class="ttc" id="aclass_malla_html_a129db3712f2142547dabd018739d8d0e"><div class="ttname"><a href="class_malla.html#a129db3712f2142547dabd018739d8d0e">Malla::density_transformation</a></div><div class="ttdeci">double density_transformation(double density) const</div><div class="ttdef"><b>Definition</b> grid.cpp:297</div></div>
+<div class="ttc" id="aclass_malla_html_a30dd6b34c62468bea53ef74a8ebdc419"><div class="ttname"><a href="class_malla.html#a30dd6b34c62468bea53ef74a8ebdc419">Malla::createFillGrid</a></div><div class="ttdeci">std::vector&lt; Block &gt; createFillGrid()</div><div class="ttdef"><b>Definition</b> grid.cpp:255</div></div>
+<div class="ttc" id="aclass_malla_html_a48d96c1c1ec39df0e796982b1cbc6034"><div class="ttname"><a href="class_malla.html#a48d96c1c1ec39df0e796982b1cbc6034">Malla::edge_collisions</a></div><div class="ttdeci">static void edge_collisions(Particle &amp;particula, int extremo, int eje)</div><div class="ttdef"><b>Definition</b> grid.cpp:360</div></div>
+<div class="ttc" id="aclass_malla_html_a4a12f2a61ea534b6f87f333174f5f2a8"><div class="ttname"><a href="class_malla.html#a4a12f2a61ea534b6f87f333174f5f2a8">Malla::particle_mass_calc</a></div><div class="ttdeci">double particle_mass_calc() const</div><div class="ttdef"><b>Definition</b> grid.cpp:246</div></div>
+<div class="ttc" id="aclass_malla_html_a4a4c6f43f535f35a641a401997c2238a"><div class="ttname"><a href="class_malla.html#a4a4c6f43f535f35a641a401997c2238a">Malla::insert_particle_info</a></div><div class="ttdeci">void insert_particle_info(std::array&lt; std::array&lt; double, 3 &gt;, 3 &gt; info, int id, int block_index)</div><div class="ttdef"><b>Definition</b> grid.cpp:151</div></div>
+<div class="ttc" id="aclass_malla_html_a504ff3c83e24357e00e0cbb2548f4e55"><div class="ttname"><a href="class_malla.html#a504ff3c83e24357e00e0cbb2548f4e55">Malla::Malla</a></div><div class="ttdeci">Malla()=default</div></div>
+<div class="ttc" id="aclass_malla_html_a618199f5bf2d7c4d3fad83aa6eca3288"><div class="ttname"><a href="class_malla.html#a618199f5bf2d7c4d3fad83aa6eca3288">Malla::getParticlesPerMeter</a></div><div class="ttdeci">double getParticlesPerMeter() const</div><div class="ttdef"><b>Definition</b> grid.cpp:67</div></div>
+<div class="ttc" id="aclass_malla_html_a6d54f59336dc7d25df4088d531ae9b3b"><div class="ttname"><a href="class_malla.html#a6d54f59336dc7d25df4088d531ae9b3b">Malla::nz_calc</a></div><div class="ttdeci">static int nz_calc(double z_max, double z_min, double h_param)</div><div class="ttdef"><b>Definition</b> grid.cpp:197</div></div>
+<div class="ttc" id="aclass_malla_html_a6e5f6d0321d6d9556524e1d0926bab6c"><div class="ttname"><a href="class_malla.html#a6e5f6d0321d6d9556524e1d0926bab6c">Malla::density_increase_and_transformation</a></div><div class="ttdeci">void density_increase_and_transformation()</div><div class="ttdef"><b>Definition</b> grid.cpp:444</div></div>
+<div class="ttc" id="aclass_malla_html_a758f4452f93b1844ba9218a37ba67a77"><div class="ttname"><a href="class_malla.html#a758f4452f93b1844ba9218a37ba67a77">Malla::acceleration_transfer_calculations</a></div><div class="ttdeci">void acceleration_transfer_calculations(Particle &amp;pivot, Particle &amp;particle2)</div><div class="ttdef"><b>Definition</b> grid.cpp:310</div></div>
+<div class="ttc" id="aclass_malla_html_a777234f1e040133e4752cc6a00a6ec91"><div class="ttname"><a href="class_malla.html#a777234f1e040133e4752cc6a00a6ec91">Malla::getParticles</a></div><div class="ttdeci">std::vector&lt; Particle &gt; getParticles() const</div><div class="ttdef"><b>Definition</b> grid.cpp:40</div></div>
+<div class="ttc" id="aclass_malla_html_a7ec4a0eb05ec2f31873c2dbb49cc956a"><div class="ttname"><a href="class_malla.html#a7ec4a0eb05ec2f31873c2dbb49cc956a">Malla::getNumberBlocks</a></div><div class="ttdeci">std::array&lt; int, 3 &gt; getNumberBlocks() const</div><div class="ttdef"><b>Definition</b> grid.cpp:75</div></div>
+<div class="ttc" id="aclass_malla_html_a82a91e6d067084c3b0a31c59a9cf927c"><div class="ttname"><a href="class_malla.html#a82a91e6d067084c3b0a31c59a9cf927c">Malla::nx_calc</a></div><div class="ttdeci">static int nx_calc(double x_max, double x_min, double h_param)</div><div class="ttdef"><b>Definition</b> grid.cpp:173</div></div>
+<div class="ttc" id="aclass_malla_html_a8437ece058b0f7c0da0284d7b0161ca2"><div class="ttname"><a href="class_malla.html#a8437ece058b0f7c0da0284d7b0161ca2">Malla::limits_interaction</a></div><div class="ttdeci">void limits_interaction(Particle &amp;particle, Block &amp;block)</div><div class="ttdef"><b>Definition</b> grid.cpp:403</div></div>
+<div class="ttc" id="aclass_malla_html_a87c84d8b1cdc4a10ca65baf9149b3a6d"><div class="ttname"><a href="class_malla.html#a87c84d8b1cdc4a10ca65baf9149b3a6d">Malla::particle_repositioning</a></div><div class="ttdeci">void particle_repositioning()</div><div class="ttdef"><b>Definition</b> grid.cpp:508</div></div>
+<div class="ttc" id="aclass_malla_html_a942cfc4f43ed570741ea6b2c8e29a0a8"><div class="ttname"><a href="class_malla.html#a942cfc4f43ed570741ea6b2c8e29a0a8">Malla::particle_movement</a></div><div class="ttdeci">static void particle_movement(Particle &amp;particle)</div><div class="ttdef"><b>Definition</b> grid.cpp:383</div></div>
+<div class="ttc" id="aclass_malla_html_a957bd183a2c6112ccbf9f9312b1449f3"><div class="ttname"><a href="class_malla.html#a957bd183a2c6112ccbf9f9312b1449f3">Malla::acceleration_transfer</a></div><div class="ttdeci">void acceleration_transfer()</div><div class="ttdef"><b>Definition</b> grid.cpp:465</div></div>
+<div class="ttc" id="aclass_malla_html_a9a5b12116c8588e53d6211f83523c9b9"><div class="ttname"><a href="class_malla.html#a9a5b12116c8588e53d6211f83523c9b9">Malla::smooth_length_calc</a></div><div class="ttdeci">double smooth_length_calc() const</div><div class="ttdef"><b>Definition</b> grid.cpp:205</div></div>
+<div class="ttc" id="aclass_malla_html_aa6702dde37a390859544a21af6081d89"><div class="ttname"><a href="class_malla.html#aa6702dde37a390859544a21af6081d89">Malla::sz_calc</a></div><div class="ttdeci">static double sz_calc(double z_max, double z_min, int n_z)</div><div class="ttdef"><b>Definition</b> grid.cpp:238</div></div>
+<div class="ttc" id="aclass_malla_html_aae25db02efdaec200e94bcc160f5ff39"><div class="ttname"><a href="class_malla.html#aae25db02efdaec200e94bcc160f5ff39">Malla::wall_colissions</a></div><div class="ttdeci">void wall_colissions(Particle &amp;particle, Block &amp;block)</div><div class="ttdef"><b>Definition</b> grid.cpp:342</div></div>
+<div class="ttc" id="aclass_malla_html_aae609d3b76d55c0b527c2284d1a51c96"><div class="ttname"><a href="class_malla.html#aae609d3b76d55c0b527c2284d1a51c96">Malla::getSmoothingLength</a></div><div class="ttdeci">double getSmoothingLength() const</div><div class="ttdef"><b>Definition</b> grid.cpp:49</div></div>
+<div class="ttc" id="aclass_malla_html_ab1b556cfd0188a35b18d53070db74506"><div class="ttname"><a href="class_malla.html#ab1b556cfd0188a35b18d53070db74506">Malla::calculate_block_indexes</a></div><div class="ttdeci">std::array&lt; int, 3 &gt; calculate_block_indexes(std::array&lt; double, 3 &gt; positions)</div><div class="ttdef"><b>Definition</b> grid.cpp:93</div></div>
+<div class="ttc" id="aclass_malla_html_aba8f7d9026a2da0b9b40a6f4e13c6fd5"><div class="ttname"><a href="class_malla.html#aba8f7d9026a2da0b9b40a6f4e13c6fd5">Malla::limit_of_edge</a></div><div class="ttdeci">static double limit_of_edge(int eje, int extremo)</div><div class="ttdef"><b>Definition</b> grid.cpp:563</div></div>
+<div class="ttc" id="aclass_malla_html_ac25af227093547fbbdafe4447ed55cd1"><div class="ttname"><a href="class_malla.html#ac25af227093547fbbdafe4447ed55cd1">Malla::getSizeBlocks</a></div><div class="ttdeci">std::array&lt; double, 3 &gt; getSizeBlocks() const</div><div class="ttdef"><b>Definition</b> grid.cpp:84</div></div>
+<div class="ttc" id="aclass_malla_html_acbda10cff432cdb24b9b374afbaab300"><div class="ttname"><a href="class_malla.html#acbda10cff432cdb24b9b374afbaab300">Malla::increase_density</a></div><div class="ttdeci">void increase_density(std::array&lt; double, 3 &gt; &amp;pivot_coords, std::array&lt; double, 3 &gt; &amp;particle2_coords, double &amp;pivot_rho, double &amp;particle2_rho) const</div><div class="ttdef"><b>Definition</b> grid.cpp:276</div></div>
+<div class="ttc" id="aclass_malla_html_ad04f11d26c526f2b78f2818988ecb712"><div class="ttname"><a href="class_malla.html#ad04f11d26c526f2b78f2818988ecb712">Malla::insert_particles</a></div><div class="ttdeci">void insert_particles(char const *in_file)</div><div class="ttdef"><b>Definition</b> grid.cpp:111</div></div>
+<div class="ttc" id="aclass_malla_html_ad26b47c1615cff40f898a436f877cfe2"><div class="ttname"><a href="class_malla.html#ad26b47c1615cff40f898a436f877cfe2">Malla::particle_collide_move_and_bound_interact</a></div><div class="ttdeci">void particle_collide_move_and_bound_interact()</div><div class="ttdef"><b>Definition</b> grid.cpp:486</div></div>
+<div class="ttc" id="aclass_malla_html_ad7ebc8cb4c814f6b57b42453e2f123f9"><div class="ttname"><a href="class_malla.html#ad7ebc8cb4c814f6b57b42453e2f123f9">Malla::get_block_index_from_position</a></div><div class="ttdeci">int get_block_index_from_position(std::array&lt; double, 3 &gt; position)</div><div class="ttdef"><b>Definition</b> grid.cpp:138</div></div>
+<div class="ttc" id="aclass_malla_html_ad96792d831c28daf26000b15719f567b"><div class="ttname"><a href="class_malla.html#ad96792d831c28daf26000b15719f567b">Malla::ny_calc</a></div><div class="ttdeci">static int ny_calc(double y_max, double y_min, double h_param)</div><div class="ttdef"><b>Definition</b> grid.cpp:185</div></div>
+<div class="ttc" id="aclass_malla_html_adb6da674fe10d8a07adfdc385d1acc40"><div class="ttname"><a href="class_malla.html#adb6da674fe10d8a07adfdc385d1acc40">Malla::mallaInteraction</a></div><div class="ttdeci">void mallaInteraction(int nts)</div><div class="ttdef"><b>Definition</b> grid.cpp:550</div></div>
+<div class="ttc" id="aclass_malla_html_ae17bcb2597d21ca400e2e9b9f815f6ad"><div class="ttname"><a href="class_malla.html#ae17bcb2597d21ca400e2e9b9f815f6ad">Malla::edge_interaction</a></div><div class="ttdeci">static void edge_interaction(Particle &amp;particle, int extremo, int eje)</div><div class="ttdef"><b>Definition</b> grid.cpp:422</div></div>
+<div class="ttc" id="aclass_malla_html_ae24703d52f9a976b8d7b4b78a89348df"><div class="ttname"><a href="class_malla.html#ae24703d52f9a976b8d7b4b78a89348df">Malla::getNumberParticles</a></div><div class="ttdeci">int getNumberParticles() const</div><div class="ttdef"><b>Definition</b> grid.cpp:58</div></div>
+<div class="ttc" id="aclass_malla_html_af0720e750a05dce99ce3929e466f149c"><div class="ttname"><a href="class_malla.html#af0720e750a05dce99ce3929e466f149c">Malla::sx_calc</a></div><div class="ttdeci">static double sx_calc(double x_max, double x_min, int n_x)</div><div class="ttdef"><b>Definition</b> grid.cpp:216</div></div>
+<div class="ttc" id="agrid_8hpp_html_a04e0198fb5d54ec976c72b4d7782ab3f"><div class="ttname"><a href="grid_8hpp.html#a04e0198fb5d54ec976c72b4d7782ab3f">fluid_density</a></div><div class="ttdeci">constexpr double fluid_density</div><div class="ttdef"><b>Definition</b> grid.hpp:15</div></div>
+<div class="ttc" id="agrid_8hpp_html_a07ef21739d798812408122e8462c3ef7"><div class="ttname"><a href="grid_8hpp.html#a07ef21739d798812408122e8462c3ef7">six_int</a></div><div class="ttdeci">constexpr double six_int</div><div class="ttdef"><b>Definition</b> grid.hpp:34</div></div>
+<div class="ttc" id="agrid_8hpp_html_a27323a9d5bbcfc3ca5720c685a487cdb"><div class="ttname"><a href="grid_8hpp.html#a27323a9d5bbcfc3ca5720c685a487cdb">nine</a></div><div class="ttdeci">constexpr int nine</div><div class="ttdef"><b>Definition</b> grid.hpp:35</div></div>
+<div class="ttc" id="agrid_8hpp_html_a2b8df58237b7603f4cf626d494288006"><div class="ttname"><a href="grid_8hpp.html#a2b8df58237b7603f4cf626d494288006">ymin</a></div><div class="ttdeci">constexpr double ymin</div><div class="ttdef"><b>Definition</b> grid.hpp:25</div></div>
+<div class="ttc" id="agrid_8hpp_html_a3f2941d2573da824f63ef55f0a501023"><div class="ttname"><a href="grid_8hpp.html#a3f2941d2573da824f63ef55f0a501023">wrong_particle_number</a></div><div class="ttdeci">constexpr int wrong_particle_number</div><div class="ttdef"><b>Definition</b> grid.hpp:36</div></div>
+<div class="ttc" id="agrid_8hpp_html_a43e93fe6c7b01ae35174e9d631fd0aec"><div class="ttname"><a href="grid_8hpp.html#a43e93fe6c7b01ae35174e9d631fd0aec">rigidity_collisions</a></div><div class="ttdeci">constexpr double rigidity_collisions</div><div class="ttdef"><b>Definition</b> grid.hpp:17</div></div>
+<div class="ttc" id="agrid_8hpp_html_a505d2a154393e20239058d592eb76064"><div class="ttname"><a href="grid_8hpp.html#a505d2a154393e20239058d592eb76064">particle_size</a></div><div class="ttdeci">constexpr double particle_size</div><div class="ttdef"><b>Definition</b> grid.hpp:20</div></div>
+<div class="ttc" id="agrid_8hpp_html_a5922505bbd591ae57564d7919c3f6479"><div class="ttname"><a href="grid_8hpp.html#a5922505bbd591ae57564d7919c3f6479">trescientos_quince</a></div><div class="ttdeci">constexpr int trescientos_quince</div><div class="ttdef"><b>Definition</b> grid.hpp:37</div></div>
+<div class="ttc" id="agrid_8hpp_html_a64240f77e7f1b64d47e62098716d06ca"><div class="ttname"><a href="grid_8hpp.html#a64240f77e7f1b64d47e62098716d06ca">ymax</a></div><div class="ttdeci">constexpr double ymax</div><div class="ttdef"><b>Definition</b> grid.hpp:24</div></div>
+<div class="ttc" id="agrid_8hpp_html_a7200d96bb69fcb79ad0c3fb33b807350"><div class="ttname"><a href="grid_8hpp.html#a7200d96bb69fcb79ad0c3fb33b807350">damping</a></div><div class="ttdeci">constexpr double damping</div><div class="ttdef"><b>Definition</b> grid.hpp:18</div></div>
+<div class="ttc" id="agrid_8hpp_html_a867ad154c8d5a8692e1aef1d8b483aed"><div class="ttname"><a href="grid_8hpp.html#a867ad154c8d5a8692e1aef1d8b483aed">viscosity</a></div><div class="ttdeci">constexpr double viscosity</div><div class="ttdef"><b>Definition</b> grid.hpp:19</div></div>
+<div class="ttc" id="agrid_8hpp_html_a9172abf694313a62597ab79ab37ec4e5"><div class="ttname"><a href="grid_8hpp.html#a9172abf694313a62597ab79ab37ec4e5">stiffness_presure</a></div><div class="ttdeci">constexpr double stiffness_presure</div><div class="ttdef"><b>Definition</b> grid.hpp:16</div></div>
+<div class="ttc" id="agrid_8hpp_html_a96906d89179f4a9fa00ff78e170006d2"><div class="ttname"><a href="grid_8hpp.html#a96906d89179f4a9fa00ff78e170006d2">zmin</a></div><div class="ttdeci">constexpr double zmin</div><div class="ttdef"><b>Definition</b> grid.hpp:27</div></div>
+<div class="ttc" id="agrid_8hpp_html_a984e2aaf64f4a50ea90acc2f595cd3fa"><div class="ttname"><a href="grid_8hpp.html#a984e2aaf64f4a50ea90acc2f595cd3fa">zmax</a></div><div class="ttdeci">constexpr double zmax</div><div class="ttdef"><b>Definition</b> grid.hpp:26</div></div>
+<div class="ttc" id="agrid_8hpp_html_aad723f6e7ff56339195c1f8c24c41257"><div class="ttname"><a href="grid_8hpp.html#aad723f6e7ff56339195c1f8c24c41257">half</a></div><div class="ttdeci">constexpr double half</div><div class="ttdef"><b>Definition</b> grid.hpp:32</div></div>
+<div class="ttc" id="agrid_8hpp_html_ab3c41d3dcb9d39c92404e11cdbf9d32c"><div class="ttname"><a href="grid_8hpp.html#ab3c41d3dcb9d39c92404e11cdbf9d32c">fifteen</a></div><div class="ttdeci">constexpr double fifteen</div><div class="ttdef"><b>Definition</b> grid.hpp:30</div></div>
+<div class="ttc" id="agrid_8hpp_html_ab8536e356d201a46c1806686fdedb258"><div class="ttname"><a href="grid_8hpp.html#ab8536e356d201a46c1806686fdedb258">sixty_four</a></div><div class="ttdeci">constexpr int sixty_four</div><div class="ttdef"><b>Definition</b> grid.hpp:38</div></div>
+<div class="ttc" id="agrid_8hpp_html_ab93b2150ad565b28a471d99d35147ae8"><div class="ttname"><a href="grid_8hpp.html#ab93b2150ad565b28a471d99d35147ae8">six</a></div><div class="ttdeci">constexpr double six</div><div class="ttdef"><b>Definition</b> grid.hpp:33</div></div>
+<div class="ttc" id="agrid_8hpp_html_ad8cd7a0125ce9046168d6cd6e6585eb1"><div class="ttname"><a href="grid_8hpp.html#ad8cd7a0125ce9046168d6cd6e6585eb1">three</a></div><div class="ttdeci">constexpr double three</div><div class="ttdef"><b>Definition</b> grid.hpp:31</div></div>
+<div class="ttc" id="agrid_8hpp_html_adeb4332ce106902917303ad004eae2fa"><div class="ttname"><a href="grid_8hpp.html#adeb4332ce106902917303ad004eae2fa">timestep</a></div><div class="ttdeci">constexpr double timestep</div><div class="ttdef"><b>Definition</b> grid.hpp:21</div></div>
+<div class="ttc" id="agrid_8hpp_html_ae4b10f010e654373b352683e9853bc9c"><div class="ttname"><a href="grid_8hpp.html#ae4b10f010e654373b352683e9853bc9c">radio_multiplier</a></div><div class="ttdeci">constexpr double radio_multiplier</div><div class="ttdef"><b>Definition</b> grid.hpp:14</div></div>
+<div class="ttc" id="agrid_8hpp_html_ae803943c89cfb6345bf19234651a11c6"><div class="ttname"><a href="grid_8hpp.html#ae803943c89cfb6345bf19234651a11c6">xmax</a></div><div class="ttdeci">constexpr double xmax</div><div class="ttdef"><b>Definition</b> grid.hpp:22</div></div>
+<div class="ttc" id="agrid_8hpp_html_af81f980bddb2471a968025ae3a738fa9"><div class="ttname"><a href="grid_8hpp.html#af81f980bddb2471a968025ae3a738fa9">gravity</a></div><div class="ttdeci">constexpr double gravity</div><div class="ttdef"><b>Definition</b> grid.hpp:28</div></div>
+<div class="ttc" id="agrid_8hpp_html_afd834eb9115720f1e8018814aa9691e3"><div class="ttname"><a href="grid_8hpp.html#afd834eb9115720f1e8018814aa9691e3">xmin</a></div><div class="ttdeci">constexpr double xmin</div><div class="ttdef"><b>Definition</b> grid.hpp:23</div></div>
+<div class="ttc" id="astruct_particle_html"><div class="ttname"><a href="struct_particle.html">Particle</a></div><div class="ttdef"><b>Definition</b> block.hpp:10</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

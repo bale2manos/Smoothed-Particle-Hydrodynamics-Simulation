@@ -1,0 +1,101 @@
+\doxysection{grid.\+hpp}
+\hypertarget{grid_8hpp_source}{}\label{grid_8hpp_source}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/grid.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/grid.hpp}}
+\mbox{\hyperlink{grid_8hpp}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ bale2\ on\ 26/09/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ ARQUITECTURA\_DE\_COMPUTADORES\_GRID\_HPP}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ ARQUITECTURA\_DE\_COMPUTADORES\_GRID\_HPP}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{block_8hpp}{block.hpp}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_ae4b10f010e654373b352683e9853bc9c}{radio\_multiplier}}\ \ \ \ =\ 1.695;}
+\DoxyCodeLine{00015\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a04e0198fb5d54ec976c72b4d7782ab3f}{fluid\_density}}\ \ \ \ \ \ \ =\ 10\ *\ 10\ *\ 10;}
+\DoxyCodeLine{00016\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a9172abf694313a62597ab79ab37ec4e5}{stiffness\_presure}}\ \ \ =\ 3.0;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a43e93fe6c7b01ae35174e9d631fd0aec}{rigidity\_collisions}}\ =\ 3\ *\ 10000;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a7200d96bb69fcb79ad0c3fb33b807350}{damping}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 128.0;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a867ad154c8d5a8692e1aef1d8b483aed}{viscosity}}\ \ \ \ \ \ \ \ \ \ \ =\ 0.4;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a505d2a154393e20239058d592eb76064}{particle\_size}}\ \ \ \ \ \ \ =\ 2\ *\ 0.0001;}
+\DoxyCodeLine{00021\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_adeb4332ce106902917303ad004eae2fa}{timestep}}\ \ \ \ \ \ \ \ \ \ \ \ =\ 0.001;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_ae803943c89cfb6345bf19234651a11c6}{xmax}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0.065;}
+\DoxyCodeLine{00023\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_afd834eb9115720f1e8018814aa9691e3}{xmin}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ -\/0.065;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a64240f77e7f1b64d47e62098716d06ca}{ymax}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0.1;}
+\DoxyCodeLine{00025\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a2b8df58237b7603f4cf626d494288006}{ymin}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ -\/0.08;}
+\DoxyCodeLine{00026\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a984e2aaf64f4a50ea90acc2f595cd3fa}{zmax}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0.065;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a96906d89179f4a9fa00ff78e170006d2}{zmin}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ -\/0.065;}
+\DoxyCodeLine{00028\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_af81f980bddb2471a968025ae3a738fa9}{gravity}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ -\/9.8;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_ab3c41d3dcb9d39c92404e11cdbf9d32c}{fifteen}}\ \ \ \ \ \ \ \ \ \ \ \ =\ 15.0;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_ad8cd7a0125ce9046168d6cd6e6585eb1}{three}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 3.0;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_aad723f6e7ff56339195c1f8c24c41257}{half}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0.5;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_ab93b2150ad565b28a471d99d35147ae8}{six}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 6.0;}
+\DoxyCodeLine{00034\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{grid_8hpp_a07ef21739d798812408122e8462c3ef7}{six\_int}}\ \ \ \ \ \ \ \ \ \ \ \ =\ 6;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{grid_8hpp_a27323a9d5bbcfc3ca5720c685a487cdb}{nine}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 9;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{grid_8hpp_a3f2941d2573da824f63ef55f0a501023}{wrong\_particle\_number}}\ =\ -\/5;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{grid_8hpp_a5922505bbd591ae57564d7919c3f6479}{trescientos\_quince}}\ \ \ \ =\ 315;}
+\DoxyCodeLine{00038\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{grid_8hpp_ab8536e356d201a46c1806686fdedb258}{sixty\_four}}\ \ \ \ \ \ \ \ \ \ \ \ =\ 64;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_malla}{Malla}}\ \{}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_malla_a504ff3c83e24357e00e0cbb2548f4e55}{Malla}}(\textcolor{keywordtype}{int}\ number\_particles,\ \textcolor{keywordtype}{double}\ particles\_per\_meter);}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{class_malla_a504ff3c83e24357e00e0cbb2548f4e55}{Malla}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ std::vector<Block>\ \mbox{\hyperlink{class_malla_a30dd6b34c62468bea53ef74a8ebdc419}{createFillGrid}}();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_ad04f11d26c526f2b78f2818988ecb712}{insert\_particles}}(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ in\_file);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a4a4c6f43f535f35a641a401997c2238a}{insert\_particle\_info}}(std::array<std::array<double,\ 3>,\ 3>\ info,\ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{int}\ block\_index);}
+\DoxyCodeLine{00048\ \ \ \ \ std::array<int,\ 3>\ \mbox{\hyperlink{class_malla_ab1b556cfd0188a35b18d53070db74506}{calculate\_block\_indexes}}(std::array<double,\ 3>\ positions);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a87c84d8b1cdc4a10ca65baf9149b3a6d}{particle\_repositioning}}();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a6e5f6d0321d6d9556524e1d0926bab6c}{density\_increase\_and\_transformation}}();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a957bd183a2c6112ccbf9f9312b1449f3}{acceleration\_transfer}}();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_ad26b47c1615cff40f898a436f877cfe2}{particle\_collide\_move\_and\_bound\_interact}}();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_adb6da674fe10d8a07adfdc385d1acc40}{mallaInteraction}}(\textcolor{keywordtype}{int}\ nts);}
+\DoxyCodeLine{00054\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_malla_ae24703d52f9a976b8d7b4b78a89348df}{getNumberParticles}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288}{getParticlesPerMeter}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_aae609d3b76d55c0b527c2284d1a51c96}{getSmoothingLength}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ \ \ \ \ [[nodiscard]]\ std::array<int,\ 3>\ \mbox{\hyperlink{class_malla_a7ec4a0eb05ec2f31873c2dbb49cc956a}{getNumberBlocks}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ [[nodiscard]]\ std::array<double,\ 3>\ \mbox{\hyperlink{class_malla_ac25af227093547fbbdafe4447ed55cd1}{getSizeBlocks}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ [[nodiscard]]\ std::vector<Particle>\ \mbox{\hyperlink{class_malla_a777234f1e040133e4752cc6a00a6ec91}{getParticles}}()\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//\ New\ method\ to\ retrieve\ particles}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_malla_a82a91e6d067084c3b0a31c59a9cf927c}{nx\_calc}}(\textcolor{keywordtype}{double}\ x\_max,\ \textcolor{keywordtype}{double}\ x\_min,\ \textcolor{keywordtype}{double}\ h\_param);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_malla_ad96792d831c28daf26000b15719f567b}{ny\_calc}}(\textcolor{keywordtype}{double}\ y\_max,\ \textcolor{keywordtype}{double}\ y\_min,\ \textcolor{keywordtype}{double}\ h\_param);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_malla_a6d54f59336dc7d25df4088d531ae9b3b}{nz\_calc}}(\textcolor{keywordtype}{double}\ z\_max,\ \textcolor{keywordtype}{double}\ z\_min,\ \textcolor{keywordtype}{double}\ h\_param);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_af0720e750a05dce99ce3929e466f149c}{sx\_calc}}(\textcolor{keywordtype}{double}\ x\_max,\ \textcolor{keywordtype}{double}\ x\_min,\ \textcolor{keywordtype}{int}\ n\_x);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_a0bc5c28effcd9c6931d4bb4615d654be}{sy\_calc}}(\textcolor{keywordtype}{double}\ y\_max,\ \textcolor{keywordtype}{double}\ y\_min,\ \textcolor{keywordtype}{int}\ n\_y);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_aa6702dde37a390859544a21af6081d89}{sz\_calc}}(\textcolor{keywordtype}{double}\ z\_max,\ \textcolor{keywordtype}{double}\ z\_min,\ \textcolor{keywordtype}{int}\ n\_z);}
+\DoxyCodeLine{00066\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_a9a5b12116c8588e53d6211f83523c9b9}{smooth\_length\_calc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_a4a12f2a61ea534b6f87f333174f5f2a8}{particle\_mass\_calc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_malla_ad7ebc8cb4c814f6b57b42453e2f123f9}{get\_block\_index\_from\_position}}(std::array<double,\ 3>\ position);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_aba8f7d9026a2da0b9b40a6f4e13c6fd5}{limit\_of\_edge}}(\textcolor{keywordtype}{int}\ eje,\ \textcolor{keywordtype}{int}\ extremo);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_aae25db02efdaec200e94bcc160f5ff39}{wall\_colissions}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particle,\ \mbox{\hyperlink{class_block}{Block}}\ \&\ block);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a48d96c1c1ec39df0e796982b1cbc6034}{edge\_collisions}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particula,\ \textcolor{keywordtype}{int}\ extremo,\ \textcolor{keywordtype}{int}\ eje);}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a942cfc4f43ed570741ea6b2c8e29a0a8}{particle\_movement}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particle);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a8437ece058b0f7c0da0284d7b0161ca2}{limits\_interaction}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particle,\ \mbox{\hyperlink{class_block}{Block}}\ \&\ block);}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_ae17bcb2597d21ca400e2e9b9f815f6ad}{edge\_interaction}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particle,\ \textcolor{keywordtype}{int}\ extremo,\ \textcolor{keywordtype}{int}\ eje);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_a758f4452f93b1844ba9218a37ba67a77}{acceleration\_transfer\_calculations}}(\mbox{\hyperlink{struct_particle}{Particle}}\ \&\ pivot,\ \mbox{\hyperlink{struct_particle}{Particle}}\ \&\ particle2);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_malla_acbda10cff432cdb24b9b374afbaab300}{increase\_density}}(std::array<double,\ 3>\ \&\ pivot\_coords,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<double,\ 3>\ \&\ particle2\_coords,\ \textcolor{keywordtype}{double}\ \&\ pivot\_rho,}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \&\ particle2\_rho)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_malla_a129db3712f2142547dabd018739d8d0e}{density\_transformation}}(\textcolor{keywordtype}{double}\ density)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_particles\{\};}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{double}\ particles\_per\_meter\{\};}
+\DoxyCodeLine{00086\ \ \ \ \ std::vector<Block>\ blocks;}
+\DoxyCodeLine{00087\ \ \ \ \ std::array<int,\ 3>\ number\_blocks\{\};}
+\DoxyCodeLine{00088\ \ \ \ \ std::array<double,\ 3>\ size\_blocks\{\};}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{double}\ smoothing\_length\{\},\ particle\_mass\{\};}
+\DoxyCodeLine{00090\ \ \ \ \ std::array<double,\ 2>\ accel\_constants\{\};}
+\DoxyCodeLine{00091\ \ \ \ \ std::vector<Particle>\ particles;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ add\_particles\_neighbours();}
+\DoxyCodeLine{00093\ \};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ ARQUITECTURA\_DE\_COMPUTADORES\_GRID\_HPP}}
+
+\end{DoxyCode}

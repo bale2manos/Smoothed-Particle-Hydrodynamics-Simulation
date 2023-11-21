@@ -1,0 +1,33 @@
+\doxysection{progargs.\+hpp}
+\hypertarget{progargs_8hpp_source}{}\label{progargs_8hpp_source}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/progargs.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/progargs.hpp}}
+\mbox{\hyperlink{progargs_8hpp}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ bale2\ on\ 26/09/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ ARQUITECTURA\_DE\_COMPUTADORES\_PROGARGS\_HPP}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ ARQUITECTURA\_DE\_COMPUTADORES\_PROGARGS\_HPP}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{grid_8hpp}{grid.hpp}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ std::array<int,\ 2>\ \mbox{\hyperlink{progargs_8hpp_ad3e711d2d2e3ff8bc8fec9382b56495b}{validate\_parameters}}(\textcolor{keywordtype}{int}\ argc,\ std::vector<std::string>\ argv);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{progargs_8hpp_af027f83701f5b0e5a75dd0c425e06742}{validate\_time\_steps}}(\textcolor{keywordtype}{int}\ nts);}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{progargs_8hpp_a373693adf1342db0b59da2003aeb8b25}{validate\_input\_file}}(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ inputFileName);}
+\DoxyCodeLine{00017\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{progargs_8hpp_aa0ce3332f179c93f5de1d24d9bd827f7}{validate\_output\_file}}(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ outputFileName);}
+\DoxyCodeLine{00018\ \mbox{\hyperlink{class_malla}{Malla}}\ \mbox{\hyperlink{progargs_8hpp_ad59a586d2f9aec574b4c999a4886855c}{read\_input\_file}}(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ in\_file);}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{progargs_8hpp_a4b5b589edf5770af6f55a816d30b600d}{check\_number\_particles}}(\textcolor{keywordtype}{int}\ number\_particles);}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{progargs_8hpp_a09a65288250f6f8ce70b46cb1d65fff8}{write\_output\_file}}(\mbox{\hyperlink{class_malla}{Malla}}\ \&\ malla,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ out\_file);}
+\DoxyCodeLine{00021\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{progargs_8hpp_a0b0b256427a80a806f162cb422852de0}{check\_missmatch\_particles}}(\textcolor{keywordtype}{int}\ counter,\ \textcolor{keywordtype}{int}\ malla\_np);}
+\DoxyCodeLine{00022\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{progargs_8hpp_a4df989145165a9c64c4d65fcc6ab15d6}{read\_particle\_field}}(\textcolor{keywordtype}{bool}\ \&\ finished,\ std::array<int,\ 2>\ indexes,\ std::ifstream\ \&\ input\_file,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<std::array<float,\ 3>,\ 3>\ \&\ info\_particle);}
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{progargs_8hpp_a4516389f57278071e0b2bb1d779cb778}{write\_output\_field}}(std::ofstream\ \&\ output\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_write);}
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{progargs_8hpp_adc4026d7d617e25c23a1f2865f01f1b1}{read\_field\_from\_file}}(std::ifstream\ \&\ input\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_read);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ ARQUITECTURA\_DE\_COMPUTADORES\_PROGARGS\_HPP}}
+
+\end{DoxyCode}

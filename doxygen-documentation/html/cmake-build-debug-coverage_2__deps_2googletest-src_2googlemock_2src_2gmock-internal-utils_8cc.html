@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Practica Arquitectura Computadores: Referencia del archivo C:/Users/Usuario/CLionProjects/ac_p1/cmake-build-debug-coverage/_deps/googletest-src/googlemock/src/gmock-internal-utils.cc</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Practica Arquitectura Computadores
+   </div>
+   <div id="projectbrief">Proyecto de programación orientada al rendimiento</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_e6bb53534ac0e427887cf7a94c0c004e.html">C:</a></li><li class="navelem"><a class="el" href="dir_8ceffd4ee35c3518d4e8bdc7e638efe8.html">Users</a></li><li class="navelem"><a class="el" href="dir_af195d8212783ff0980077807998eb0f.html">Usuario</a></li><li class="navelem"><a class="el" href="dir_1ed3482a6503e81a163ae52ed966a5a4.html">CLionProjects</a></li><li class="navelem"><a class="el" href="dir_b43f2280fe0091e3862e41d87a9daa55.html">ac_p1</a></li><li class="navelem"><a class="el" href="dir_ac5e891d3aafd13ab8d51b470e4eba65.html">cmake-build-debug-coverage</a></li><li class="navelem"><a class="el" href="dir_b3bdc2730936902adb8067fac3d81b06.html">_deps</a></li><li class="navelem"><a class="el" href="dir_92bcd3ec7c72017db4bfcce85de82300.html">googletest-src</a></li><li class="navelem"><a class="el" href="dir_c5a1213a2b4161aedb80331256e1d7bf.html">googlemock</a></li><li class="navelem"><a class="el" href="dir_62381850ba0d79729df53636818f9c26.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Clases</a> &#124;
+<a href="#namespaces">Espacios de nombres</a> &#124;
+<a href="#func-members">Funciones</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo gmock-internal-utils.cc</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;gmock/internal/gmock-internal-utils.h&quot;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;array&gt;</code><br />
+<code>#include &lt;cctype&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;ostream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;gmock/gmock.h&quot;</code><br />
+<code>#include &quot;gmock/internal/gmock-port.h&quot;</code><br />
+<code>#include &quot;gtest/gtest.h&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Clases</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtesting_1_1internal_1_1_google_test_failure_reporter.html">testing::internal::GoogleTestFailureReporter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:namespacetesting" id="r_namespacetesting"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting.html">testing</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacetesting_1_1internal" id="r_namespacetesting_1_1internal"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html">testing::internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ac75a9353286d1b50c872ea2b195f3b4a" id="r_ac75a9353286d1b50c872ea2b195f3b4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#ac75a9353286d1b50c872ea2b195f3b4a">testing::internal::JoinAsKeyValueTuple</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> std::vector&lt; <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> * &gt; &amp;<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">names</a>, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a4ad7524c75dfadde584df6d5b4742aa8">Strings</a> &amp;values)</td></tr>
+<tr class="separator:ac75a9353286d1b50c872ea2b195f3b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b375abcf3081393e6c420194a541b29" id="r_a0b375abcf3081393e6c420194a541b29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a0b375abcf3081393e6c420194a541b29">testing::internal::ConvertIdentifierNameToWords</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> *<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">id_name</a>)</td></tr>
+<tr class="separator:a0b375abcf3081393e6c420194a541b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93a00bf550dcc6b1de870d24c624869c" id="r_a93a00bf550dcc6b1de870d24c624869c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> <a class="el" href="classtesting_1_1internal_1_1_failure_reporter_interface.html">FailureReporterInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a93a00bf550dcc6b1de870d24c624869c">testing::internal::GetFailureReporter</a> ()</td></tr>
+<tr class="separator:a93a00bf550dcc6b1de870d24c624869c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69ffdba5ee36743e88d8f89b79e566ff" id="r_a69ffdba5ee36743e88d8f89b79e566ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a69ffdba5ee36743e88d8f89b79e566ff">testing::internal::LogIsVisible</a> (<a class="el" href="namespacetesting_1_1internal.html#a203d1a8a2147a53d12bbdae40d443914">LogSeverity</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">severity</a>)</td></tr>
+<tr class="separator:a69ffdba5ee36743e88d8f89b79e566ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a57ce0412334a3f487bbaa8321febbe" id="r_a8a57ce0412334a3f487bbaa8321febbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a8a57ce0412334a3f487bbaa8321febbe">testing::internal::Log</a> (<a class="el" href="namespacetesting_1_1internal.html#a203d1a8a2147a53d12bbdae40d443914">LogSeverity</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">severity</a>, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> std::string &amp;message, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">int</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">stack_frames_to_skip</a>)</td></tr>
+<tr class="separator:a8a57ce0412334a3f487bbaa8321febbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4e02ea077a717f95a10a03c10272f1c" id="r_ad4e02ea077a717f95a10a03c10272f1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> <a class="el" href="classtesting_1_1internal_1_1_without_matchers.html">WithoutMatchers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#ad4e02ea077a717f95a10a03c10272f1c">testing::internal::GetWithoutMatchers</a> ()</td></tr>
+<tr class="separator:ad4e02ea077a717f95a10a03c10272f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa67e1e9d28122eedffbb7b6636824f2d" id="r_aa67e1e9d28122eedffbb7b6636824f2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmake-build-debug-coverage_2__deps_2googletest-src_2googletest_2include_2gtest_2internal_2gtest-port_8h.html#aa73be6f0ba4a7456180a94904ce17790">GTEST_API_</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#aa67e1e9d28122eedffbb7b6636824f2d">testing::internal::IllegalDoDefault</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> *file, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">int</a> line)</td></tr>
+<tr class="separator:aa67e1e9d28122eedffbb7b6636824f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8e0d2730dae1cf63d44e6ca4b00132" id="r_acc8e0d2730dae1cf63d44e6ca4b00132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">constexpr</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#acc8e0d2730dae1cf63d44e6ca4b00132">testing::internal::UndoWebSafeEncoding</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">c</a>)</td></tr>
+<tr class="separator:acc8e0d2730dae1cf63d44e6ca4b00132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfca7fa821221defcd7dae3868372da2" id="r_adfca7fa821221defcd7dae3868372da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">constexpr</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#adfca7fa821221defcd7dae3868372da2">testing::internal::UnBase64Impl</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">c</a>, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> *<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">base64</a>, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">carry</a>)</td></tr>
+<tr class="separator:adfca7fa821221defcd7dae3868372da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a006daf2647ad9104c68076b53914980a" id="r_a006daf2647ad9104c68076b53914980a"><td class="memTemplParams" colspan="2">template&lt;size_t... I&gt; </td></tr>
+<tr class="memitem:a006daf2647ad9104c68076b53914980a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">constexpr</a> std::array&lt; <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a>, 256 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a006daf2647ad9104c68076b53914980a">testing::internal::UnBase64Impl</a> (<a class="el" href="structtesting_1_1internal_1_1_index_sequence.html">IndexSequence</a>&lt; I... &gt;, <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> *<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">base64</a>)</td></tr>
+<tr class="separator:a006daf2647ad9104c68076b53914980a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab5c01a6ea90354b06ae1a1838b115c2" id="r_aab5c01a6ea90354b06ae1a1838b115c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">constexpr</a> std::array&lt; <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a>, 256 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#aab5c01a6ea90354b06ae1a1838b115c2">testing::internal::UnBase64</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">char</a> *<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> <a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">base64</a>)</td></tr>
+<tr class="separator:aab5c01a6ea90354b06ae1a1838b115c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ebfee596839f25b8aec40192af1dcdc" id="r_a7ebfee596839f25b8aec40192af1dcdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetesting_1_1internal.html#a7ebfee596839f25b8aec40192af1dcdc">testing::internal::Base64Unescape</a> (<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">const</a> std::string &amp;<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">encoded</a>, std::string *<a class="el" href="namespacetesting_1_1internal.html#a3316c24e8a79f5def3e85d763ae50854">decoded</a>)</td></tr>
+<tr class="separator:a7ebfee596839f25b8aec40192af1dcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

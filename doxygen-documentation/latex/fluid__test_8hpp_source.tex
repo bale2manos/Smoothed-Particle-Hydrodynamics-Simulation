@@ -1,0 +1,32 @@
+\doxysection{fluid\+\_\+test.\+hpp}
+\hypertarget{fluid__test_8hpp_source}{}\label{fluid__test_8hpp_source}\index{C:/Users/Usuario/CLionProjects/ac\_p1/ftest/fluid\_test.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/ftest/fluid\_test.hpp}}
+\mbox{\hyperlink{fluid__test_8hpp}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ FLUID\_FLUID\_TEST\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ FLUID\_FLUID\_TEST\_HPP}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{block_8hpp}{sim/block.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{progargs_8hpp}{sim/progargs.hpp}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_trace_block}{TraceBlock}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{struct_trace_block_a64d01402a4ab550ebc55e759a00f09a4}{numParticles}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00011\ \ \ \ \ std::vector<Particle>\ \mbox{\hyperlink{struct_trace_block_a894017d647889eb2f83e9e818c63bdb9}{particles}}\ =\ \{\};}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{fluid__test_8hpp_a45dadc848e0e6f5258b6955488749b5e}{compare\_iteration}}(\mbox{\hyperlink{class_malla}{Malla}}\ \&\ malla,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ inputFileName);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{fluid__test_8hpp_a47214eebcb4e73e2b777e6ee16e71751}{comparevectorstrz}}(std::vector<Particle>\ particles\_out1,\ std::vector<Particle>\ particles\_out2);}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{fluid__test_8hpp_a7bc13fe2f1eeb504813877d94d374d7e}{comparevectorsout}}(std::vector<Particle>\ particles\_out1,\ std::vector<Particle>\ particles\_out2);}
+\DoxyCodeLine{00017\ std::vector<Particle>\ \mbox{\hyperlink{fluid__test_8hpp_ad4b9199ab2d0dda9a1f0753c89c1f35d}{traceread}}(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ traceFileName);}
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{fluid__test_8hpp_a3e06180aeb4378ddc722a49ca20b2073}{compare}}(std::vector<Particle>\ particles\_out1,\ std::vector<Particle>\ particles\_out2);}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{fluid__test_8hpp_adff40bed5d1e1190d90df114c91ff6ef}{comparetrzvec}}(std::vector<Particle>\ particles\_out1,\ std::vector<Particle>\ particles\_out2);}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fluid__test_8hpp_abd73b6df4b8d3f9750cbf32dc1f050fd}{read\_field\_from\_file\_double}}(std::ifstream\ \&\ input\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_read);}
+\DoxyCodeLine{00021\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fluid__test_8hpp_acf28de6fbb95995dd51e93c7edb90747}{read\_field\_from\_file\_long}}(std::ifstream\ \&\ input\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_read);}
+\DoxyCodeLine{00022\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fluid__test_8hpp_a502693c09701b5a091dfce4d2712169e}{read\_field\_from\_file\_int}}(std::ifstream\ \&\ input\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_read);}
+\DoxyCodeLine{00023\ \mbox{\hyperlink{struct_particle}{Particle}}\ \mbox{\hyperlink{fluid__test_8hpp_a2de4373a0cbd69fd1339d66d93a4c143}{makeparticle}}(std::ifstream\ \&\ traceFile,\ \textcolor{keywordtype}{int}\ iter);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fluid__test_8hpp_a7e56f7b88481a2727adc704ed3e2bde9}{read\_field\_from\_file2}}(std::ifstream\ \&\ input\_file,\ \textcolor{keyword}{auto}\ \&\ field\_to\_read);}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ FLUID\_FLUID\_TEST\_HPP}}
+
+\end{DoxyCode}

@@ -1,0 +1,39 @@
+\doxysection{block.\+hpp}
+\hypertarget{block_8hpp_source}{}\label{block_8hpp_source}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/block.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/block.hpp}}
+\mbox{\hyperlink{block_8hpp}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ bale2\ on\ 26/09/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ ARQUITECTURA\_DE\_COMPUTADORES\_BLOCK\_HPP}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ ARQUITECTURA\_DE\_COMPUTADORES\_BLOCK\_HPP}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_particle}{Particle}}\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ std::array<double,\ 3>\ \mbox{\hyperlink{struct_particle_a2b11da4183f6a582960cb4f48d631416}{h\_vel}},\ \mbox{\hyperlink{struct_particle_aa20a97198c3715ad716eecd213b9ca82}{pos}},\ \mbox{\hyperlink{struct_particle_a172622d83d16fdd1780027395ea661e9}{vel}},\ \mbox{\hyperlink{struct_particle_a34a1af01e06effc33e317a0d1c99b328}{acc}};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_particle_a9201a4d681f8d78736c4bd4d69576189}{density}};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_particle_a544b202775517f8ba05efcb9e0a21bee}{id}};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_particle_a03bbf21d2e65807db477340f25807207}{current\_block}};}
+\DoxyCodeLine{00015\ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_block}{Block}}\ \{}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_block}{Block}}(std::array<int,\ 3>\ \textcolor{keyword}{const}\ \&\ block\_coords,\ std::array<int,\ 3>\ \textcolor{keyword}{const}\ \&\ n\_blocks);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ std::vector<int>\ check\_neighbours(std::array<int,\ 3>\ \textcolor{keyword}{const}\ \&\ n\_blocks);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ std::array<int,\ 3>\ \mbox{\hyperlink{class_block_aa7babb53560c18a2a9938d645ce2b23d}{coords}};}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<int>\ \mbox{\hyperlink{class_block_a68b6114ee088659a3aea123367d72948}{particles}};}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<int>\ \mbox{\hyperlink{class_block_aa3838cf8b516f2ea68effc8ca229d6cc}{neighbours}};}
+\DoxyCodeLine{00028\ \ \ \ \ std::vector<int>\ \mbox{\hyperlink{class_block_ab0e82cca0945b223911c4f4d022c3073}{neighbours\_particles}};}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{block_8hpp_aa8896ca539fed35e8203de6217325ac2}{initial\_block\_index}}(\textcolor{keywordtype}{double}\ position,\ \textcolor{keywordtype}{double}\ min\_limit,\ \textcolor{keywordtype}{double}\ block\_size);}
+\DoxyCodeLine{00032\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{block_8hpp_a74f0e0de710a88a4c60b0af46afacaf7}{calculate\_block\_index}}(std::array<int,\ 3>\ coords,\ \textcolor{keywordtype}{int}\ nx,\ \textcolor{keywordtype}{int}\ ny);}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ ARQUITECTURA\_DE\_COMPUTADORES\_BLOCK\_HPP}}
+
+\end{DoxyCode}

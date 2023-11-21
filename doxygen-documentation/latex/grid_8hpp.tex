@@ -1,0 +1,209 @@
+\doxysection{Referencia del archivo C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/sim/grid.hpp}
+\hypertarget{grid_8hpp}{}\label{grid_8hpp}\index{C:/Users/Usuario/CLionProjects/ac\_p1/sim/grid.hpp@{C:/Users/Usuario/CLionProjects/ac\_p1/sim/grid.hpp}}
+{\ttfamily \#include "{}block.\+hpp"{}}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_malla}{Malla}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_ae4b10f010e654373b352683e9853bc9c}{radio\+\_\+multiplier}} = 1.\+695
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a04e0198fb5d54ec976c72b4d7782ab3f}{fluid\+\_\+density}} = 10 \texorpdfstring{$\ast$}{*} 10 \texorpdfstring{$\ast$}{*} 10
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a9172abf694313a62597ab79ab37ec4e5}{stiffness\+\_\+presure}} = 3.\+0
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a43e93fe6c7b01ae35174e9d631fd0aec}{rigidity\+\_\+collisions}} = 3 \texorpdfstring{$\ast$}{*} 10000
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a7200d96bb69fcb79ad0c3fb33b807350}{damping}} = 128.\+0
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a867ad154c8d5a8692e1aef1d8b483aed}{viscosity}} = 0.\+4
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a505d2a154393e20239058d592eb76064}{particle\+\_\+size}} = 2 \texorpdfstring{$\ast$}{*} 0.\+0001
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_adeb4332ce106902917303ad004eae2fa}{timestep}} = 0.\+001
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_ae803943c89cfb6345bf19234651a11c6}{xmax}} = 0.\+065
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_afd834eb9115720f1e8018814aa9691e3}{xmin}} = -\/0.\+065
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a64240f77e7f1b64d47e62098716d06ca}{ymax}} = 0.\+1
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a2b8df58237b7603f4cf626d494288006}{ymin}} = -\/0.\+08
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a984e2aaf64f4a50ea90acc2f595cd3fa}{zmax}} = 0.\+065
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a96906d89179f4a9fa00ff78e170006d2}{zmin}} = -\/0.\+065
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_af81f980bddb2471a968025ae3a738fa9}{gravity}} = -\/9.\+8
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_ab3c41d3dcb9d39c92404e11cdbf9d32c}{fifteen}} = 15.\+0
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_ad8cd7a0125ce9046168d6cd6e6585eb1}{three}} = 3.\+0
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_aad723f6e7ff56339195c1f8c24c41257}{half}} = 0.\+5
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_ab93b2150ad565b28a471d99d35147ae8}{six}} = 6.\+0
+\item 
+constexpr double \mbox{\hyperlink{grid_8hpp_a07ef21739d798812408122e8462c3ef7}{six\+\_\+int}} = 6
+\item 
+constexpr int \mbox{\hyperlink{grid_8hpp_a27323a9d5bbcfc3ca5720c685a487cdb}{nine}} = 9
+\item 
+constexpr int \mbox{\hyperlink{grid_8hpp_a3f2941d2573da824f63ef55f0a501023}{wrong\+\_\+particle\+\_\+number}} = -\/5
+\item 
+constexpr int \mbox{\hyperlink{grid_8hpp_a5922505bbd591ae57564d7919c3f6479}{trescientos\+\_\+quince}} = 315
+\item 
+constexpr int \mbox{\hyperlink{grid_8hpp_ab8536e356d201a46c1806686fdedb258}{sixty\+\_\+four}} = 64
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de variables}
+\Hypertarget{grid_8hpp_a7200d96bb69fcb79ad0c3fb33b807350}\label{grid_8hpp_a7200d96bb69fcb79ad0c3fb33b807350} 
+\index{grid.hpp@{grid.hpp}!damping@{damping}}
+\index{damping@{damping}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{damping}{damping}}
+{\footnotesize\ttfamily constexpr double damping = 128.\+0\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ab3c41d3dcb9d39c92404e11cdbf9d32c}\label{grid_8hpp_ab3c41d3dcb9d39c92404e11cdbf9d32c} 
+\index{grid.hpp@{grid.hpp}!fifteen@{fifteen}}
+\index{fifteen@{fifteen}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{fifteen}{fifteen}}
+{\footnotesize\ttfamily constexpr double fifteen = 15.\+0\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a04e0198fb5d54ec976c72b4d7782ab3f}\label{grid_8hpp_a04e0198fb5d54ec976c72b4d7782ab3f} 
+\index{grid.hpp@{grid.hpp}!fluid\_density@{fluid\_density}}
+\index{fluid\_density@{fluid\_density}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{fluid\_density}{fluid\_density}}
+{\footnotesize\ttfamily constexpr double fluid\+\_\+density = 10 \texorpdfstring{$\ast$}{*} 10 \texorpdfstring{$\ast$}{*} 10\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_af81f980bddb2471a968025ae3a738fa9}\label{grid_8hpp_af81f980bddb2471a968025ae3a738fa9} 
+\index{grid.hpp@{grid.hpp}!gravity@{gravity}}
+\index{gravity@{gravity}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{gravity}{gravity}}
+{\footnotesize\ttfamily constexpr double gravity = -\/9.\+8\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_aad723f6e7ff56339195c1f8c24c41257}\label{grid_8hpp_aad723f6e7ff56339195c1f8c24c41257} 
+\index{grid.hpp@{grid.hpp}!half@{half}}
+\index{half@{half}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{half}{half}}
+{\footnotesize\ttfamily constexpr double half = 0.\+5\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a27323a9d5bbcfc3ca5720c685a487cdb}\label{grid_8hpp_a27323a9d5bbcfc3ca5720c685a487cdb} 
+\index{grid.hpp@{grid.hpp}!nine@{nine}}
+\index{nine@{nine}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{nine}{nine}}
+{\footnotesize\ttfamily constexpr int nine = 9\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a505d2a154393e20239058d592eb76064}\label{grid_8hpp_a505d2a154393e20239058d592eb76064} 
+\index{grid.hpp@{grid.hpp}!particle\_size@{particle\_size}}
+\index{particle\_size@{particle\_size}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{particle\_size}{particle\_size}}
+{\footnotesize\ttfamily constexpr double particle\+\_\+size = 2 \texorpdfstring{$\ast$}{*} 0.\+0001\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ae4b10f010e654373b352683e9853bc9c}\label{grid_8hpp_ae4b10f010e654373b352683e9853bc9c} 
+\index{grid.hpp@{grid.hpp}!radio\_multiplier@{radio\_multiplier}}
+\index{radio\_multiplier@{radio\_multiplier}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{radio\_multiplier}{radio\_multiplier}}
+{\footnotesize\ttfamily constexpr double radio\+\_\+multiplier = 1.\+695\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a43e93fe6c7b01ae35174e9d631fd0aec}\label{grid_8hpp_a43e93fe6c7b01ae35174e9d631fd0aec} 
+\index{grid.hpp@{grid.hpp}!rigidity\_collisions@{rigidity\_collisions}}
+\index{rigidity\_collisions@{rigidity\_collisions}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{rigidity\_collisions}{rigidity\_collisions}}
+{\footnotesize\ttfamily constexpr double rigidity\+\_\+collisions = 3 \texorpdfstring{$\ast$}{*} 10000\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ab93b2150ad565b28a471d99d35147ae8}\label{grid_8hpp_ab93b2150ad565b28a471d99d35147ae8} 
+\index{grid.hpp@{grid.hpp}!six@{six}}
+\index{six@{six}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{six}{six}}
+{\footnotesize\ttfamily constexpr double six = 6.\+0\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a07ef21739d798812408122e8462c3ef7}\label{grid_8hpp_a07ef21739d798812408122e8462c3ef7} 
+\index{grid.hpp@{grid.hpp}!six\_int@{six\_int}}
+\index{six\_int@{six\_int}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{six\_int}{six\_int}}
+{\footnotesize\ttfamily constexpr double six\+\_\+int = 6\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ab8536e356d201a46c1806686fdedb258}\label{grid_8hpp_ab8536e356d201a46c1806686fdedb258} 
+\index{grid.hpp@{grid.hpp}!sixty\_four@{sixty\_four}}
+\index{sixty\_four@{sixty\_four}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{sixty\_four}{sixty\_four}}
+{\footnotesize\ttfamily constexpr int sixty\+\_\+four = 64\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a9172abf694313a62597ab79ab37ec4e5}\label{grid_8hpp_a9172abf694313a62597ab79ab37ec4e5} 
+\index{grid.hpp@{grid.hpp}!stiffness\_presure@{stiffness\_presure}}
+\index{stiffness\_presure@{stiffness\_presure}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{stiffness\_presure}{stiffness\_presure}}
+{\footnotesize\ttfamily constexpr double stiffness\+\_\+presure = 3.\+0\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ad8cd7a0125ce9046168d6cd6e6585eb1}\label{grid_8hpp_ad8cd7a0125ce9046168d6cd6e6585eb1} 
+\index{grid.hpp@{grid.hpp}!three@{three}}
+\index{three@{three}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{three}{three}}
+{\footnotesize\ttfamily constexpr double three = 3.\+0\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_adeb4332ce106902917303ad004eae2fa}\label{grid_8hpp_adeb4332ce106902917303ad004eae2fa} 
+\index{grid.hpp@{grid.hpp}!timestep@{timestep}}
+\index{timestep@{timestep}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{timestep}{timestep}}
+{\footnotesize\ttfamily constexpr double timestep = 0.\+001\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a5922505bbd591ae57564d7919c3f6479}\label{grid_8hpp_a5922505bbd591ae57564d7919c3f6479} 
+\index{grid.hpp@{grid.hpp}!trescientos\_quince@{trescientos\_quince}}
+\index{trescientos\_quince@{trescientos\_quince}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{trescientos\_quince}{trescientos\_quince}}
+{\footnotesize\ttfamily constexpr int trescientos\+\_\+quince = 315\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a867ad154c8d5a8692e1aef1d8b483aed}\label{grid_8hpp_a867ad154c8d5a8692e1aef1d8b483aed} 
+\index{grid.hpp@{grid.hpp}!viscosity@{viscosity}}
+\index{viscosity@{viscosity}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{viscosity}{viscosity}}
+{\footnotesize\ttfamily constexpr double viscosity = 0.\+4\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a3f2941d2573da824f63ef55f0a501023}\label{grid_8hpp_a3f2941d2573da824f63ef55f0a501023} 
+\index{grid.hpp@{grid.hpp}!wrong\_particle\_number@{wrong\_particle\_number}}
+\index{wrong\_particle\_number@{wrong\_particle\_number}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{wrong\_particle\_number}{wrong\_particle\_number}}
+{\footnotesize\ttfamily constexpr int wrong\+\_\+particle\+\_\+number = -\/5\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_ae803943c89cfb6345bf19234651a11c6}\label{grid_8hpp_ae803943c89cfb6345bf19234651a11c6} 
+\index{grid.hpp@{grid.hpp}!xmax@{xmax}}
+\index{xmax@{xmax}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{xmax}{xmax}}
+{\footnotesize\ttfamily constexpr double xmax = 0.\+065\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_afd834eb9115720f1e8018814aa9691e3}\label{grid_8hpp_afd834eb9115720f1e8018814aa9691e3} 
+\index{grid.hpp@{grid.hpp}!xmin@{xmin}}
+\index{xmin@{xmin}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{xmin}{xmin}}
+{\footnotesize\ttfamily constexpr double xmin = -\/0.\+065\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a64240f77e7f1b64d47e62098716d06ca}\label{grid_8hpp_a64240f77e7f1b64d47e62098716d06ca} 
+\index{grid.hpp@{grid.hpp}!ymax@{ymax}}
+\index{ymax@{ymax}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{ymax}{ymax}}
+{\footnotesize\ttfamily constexpr double ymax = 0.\+1\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a2b8df58237b7603f4cf626d494288006}\label{grid_8hpp_a2b8df58237b7603f4cf626d494288006} 
+\index{grid.hpp@{grid.hpp}!ymin@{ymin}}
+\index{ymin@{ymin}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{ymin}{ymin}}
+{\footnotesize\ttfamily constexpr double ymin = -\/0.\+08\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a984e2aaf64f4a50ea90acc2f595cd3fa}\label{grid_8hpp_a984e2aaf64f4a50ea90acc2f595cd3fa} 
+\index{grid.hpp@{grid.hpp}!zmax@{zmax}}
+\index{zmax@{zmax}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{zmax}{zmax}}
+{\footnotesize\ttfamily constexpr double zmax = 0.\+065\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\Hypertarget{grid_8hpp_a96906d89179f4a9fa00ff78e170006d2}\label{grid_8hpp_a96906d89179f4a9fa00ff78e170006d2} 
+\index{grid.hpp@{grid.hpp}!zmin@{zmin}}
+\index{zmin@{zmin}!grid.hpp@{grid.hpp}}
+\doxysubsubsection{\texorpdfstring{zmin}{zmin}}
+{\footnotesize\ttfamily constexpr double zmin = -\/0.\+065\hspace{0.3cm}{\ttfamily [constexpr]}}
+

@@ -1,0 +1,127 @@
+\doxysection{Referencia del archivo C\+:/\+Users/\+Usuario/\+CLion\+Projects/ac\+\_\+p1/utest/block\+\_\+test.cpp}
+\hypertarget{block__test_8cpp}{}\label{block__test_8cpp}\index{C:/Users/Usuario/CLionProjects/ac\_p1/utest/block\_test.cpp@{C:/Users/Usuario/CLionProjects/ac\_p1/utest/block\_test.cpp}}
+{\ttfamily \#include "{}sim/block.\+hpp"{}}\newline
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{block__test_8cpp_a35b6b23e7cd5f22bff80fb345cf9ffab}{TEST}} (Block\+Test, Initial\+Block\+Index)
+\begin{DoxyCompactList}\small\item\em Test for the initial block index calculation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{block__test_8cpp_aa354720d0d9b3519c26200987ef83850}{TEST}} (Block\+Test, Calculate\+Block\+Index)
+\begin{DoxyCompactList}\small\item\em Test for calculating the block index with a valid case. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{block__test_8cpp_a58602915da8bc2030238c23ff2d32609}{TEST}} (Block\+Test, Check\+Neighbours\+Esquinas)
+\begin{DoxyCompactList}\small\item\em Test for checking neighbors in corner cases. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{block__test_8cpp_a0061a9255cc427e928a46f0604a7d645}{TEST}} (Block\+Test, Check\+Neighbourscentral)
+\begin{DoxyCompactList}\small\item\em Test for checking neighbors in the central case. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{block__test_8cpp_ac8207a85723bd82ac714815fcde8e629}{TEST}} (Block\+Test, Check\+Neighbourspared)
+\begin{DoxyCompactList}\small\item\em Test for checking neighbors in a specific case. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{block__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Entry point for running all the tests. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{block__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{block__test_8cpp_a3c04138a5bfe5d72780bb7e82a18e627} 
+\index{block\_test.cpp@{block\_test.cpp}!main@{main}}
+\index{main@{main}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Entry point for running all the tests. 
+
+This function initializes Google Test and runs all the test cases.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em argc} & Number of command line arguments. \\
+\hline
+{\em argv} & Array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+The result of running all tests. 
+\end{DoxyReturn}
+\Hypertarget{block__test_8cpp_aa354720d0d9b3519c26200987ef83850}\label{block__test_8cpp_aa354720d0d9b3519c26200987ef83850} 
+\index{block\_test.cpp@{block\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Block\+Test}]{,  }\item[{Calculate\+Block\+Index}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for calculating the block index with a valid case. 
+
+This test case uses a 3D vector and checks if the block index is calculated correctly.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Block\+Test} & \doxylink{class_fixture}{Fixture} for block-\/related tests. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{block__test_8cpp_a0061a9255cc427e928a46f0604a7d645}\label{block__test_8cpp_a0061a9255cc427e928a46f0604a7d645} 
+\index{block\_test.cpp@{block\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Block\+Test}]{,  }\item[{Check\+Neighbourscentral}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for checking neighbors in the central case. 
+
+This test case creates a block with coordinates at the center of the grid and checks if the neighbors are correctly identified.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Block\+Test} & \doxylink{class_fixture}{Fixture} for block-\/related tests. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{block__test_8cpp_a58602915da8bc2030238c23ff2d32609}\label{block__test_8cpp_a58602915da8bc2030238c23ff2d32609} 
+\index{block\_test.cpp@{block\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Block\+Test}]{,  }\item[{Check\+Neighbours\+Esquinas}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for checking neighbors in corner cases. 
+
+This test case creates a block with coordinates at the corner of the grid and checks if the neighbors are correctly identified.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Block\+Test} & \doxylink{class_fixture}{Fixture} for block-\/related tests. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{block__test_8cpp_ac8207a85723bd82ac714815fcde8e629}\label{block__test_8cpp_ac8207a85723bd82ac714815fcde8e629} 
+\index{block\_test.cpp@{block\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Block\+Test}]{,  }\item[{Check\+Neighbourspared}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for checking neighbors in a specific case. 
+
+This test case creates a block with coordinates at a specific location and checks if the neighbors are correctly identified.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Block\+Test} & \doxylink{class_fixture}{Fixture} for block-\/related tests. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{block__test_8cpp_a35b6b23e7cd5f22bff80fb345cf9ffab}\label{block__test_8cpp_a35b6b23e7cd5f22bff80fb345cf9ffab} 
+\index{block\_test.cpp@{block\_test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!block\_test.cpp@{block\_test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily TEST (\begin{DoxyParamCaption}\item[{Block\+Test}]{,  }\item[{Initial\+Block\+Index}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the initial block index calculation. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em Block\+Test} & \doxylink{class_fixture}{Fixture} for block-\/related tests. \\
+\hline
+\end{DoxyParams}

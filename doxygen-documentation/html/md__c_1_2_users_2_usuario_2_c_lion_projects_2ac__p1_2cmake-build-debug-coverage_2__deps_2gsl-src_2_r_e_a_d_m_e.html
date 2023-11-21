@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Practica Arquitectura Computadores: GSL: Guidelines Support Library</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Practica Arquitectura Computadores
+   </div>
+   <div id="projectbrief">Proyecto de programación orientada al rendimiento</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">GSL: Guidelines Support Library</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md418"></a><a href="https://dev.azure.com/cppstat/GSL/_build/latest?definitionId=1&amp;branchName=main"><img src="https://dev.azure.com/cppstat/GSL/_apis/build/status/microsoft.GSL?branchName=main" alt="Build Status" class="inline"/></a></p>
+<p>The Guidelines Support Library (GSL) contains functions and types that are suggested for use by the <a href="https://github.com/isocpp/CppCoreGuidelines">C++ Core Guidelines</a> maintained by the <a href="https://isocpp.org">Standard C++ Foundation</a>. This repo contains Microsoft's implementation of GSL.</p>
+<p>The entire implementation is provided inline in the headers under the <a href="./include/gsl">gsl</a> directory. The implementation generally assumes a platform that implements C++14 support.</p>
+<p>While some types have been broken out into their own headers (e.g. <a href="./include/gsl/span">gsl/span</a>), it is simplest to just include <a href="./include/gsl/gsl">gsl/gsl</a> and gain access to the entire library.</p>
+<blockquote class="doxtable">
+<p>&zwj;NOTE: We encourage contributions that improve or refine any of the types in this library as well as ports to </p>
+</blockquote>
+<p>other platforms. Please see <a class="el" href="md__c_1_2_users_2_usuario_2_c_lion_projects_2ac__p1_2cmake-build-debug-coverage_2__deps_2gsl-src_2_c_o_n_t_r_i_b_u_t_i_n_g.html">CONTRIBUTING.md</a> for more information about contributing.</p>
+<h1><a class="anchor" id="autotoc_md419"></a>
+Project Code of Conduct</h1>
+<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="#" onclick="location.href='mai'+'lto:'+'ope'+'nc'+'ode'+'@m'+'icr'+'os'+'oft'+'.c'+'om'; return false;">opencode@microsoft.com</a> with any additional questions or comments.</p>
+<h1><a class="anchor" id="autotoc_md420"></a>
+Usage of Third Party Libraries</h1>
+<p>This project makes use of the <a href="https://github.com/google/googletest">Google Test</a> testing library. Please see the <a href="./ThirdPartyNotices.txt">ThirdPartyNotices.txt</a> file for details regarding the licensing of Google Test.</p>
+<h1><a class="anchor" id="autotoc_md421"></a>
+Supported features</h1>
+<h2><a class="anchor" id="autotoc_md422"></a>
+Microsoft GSL implements the following from the C++ Core Guidelines:</h2>
+<p>Feature | Supported? | Description --------------------------------&mdash;|:-------&mdash;:|----------&mdash; <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslview-views"><b>1. Views</b></a> | | owner | &amp;#x2611; | an alias for a raw pointer not_null | &amp;#x2611; | restricts a pointer / smart pointer to hold non-null values span | &amp;#x2611; | a view over a contiguous sequence of memory. Based on the standardized verison of <code>std::span</code>, however <code>gsl::span</code> enforces bounds checking. See the <a href="https://github.com/microsoft/GSL/wiki/gsl::span-and-std::span">wiki</a> for additional information. span_p | &amp;#x2610; | spans a range starting from a pointer to the first place for which the predicate is true basic_zstring | &amp;#x2611; | A pointer to a C-string (zero-terminated array) with a templated char type zstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of char czstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of const char wzstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of wchar_t cwzstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of const wchar_t u16zstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of char16_t cu16zstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of const char16_t u32zstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of char32_t cu32zstring | &amp;#x2611; | An alias to <code>basic_zstring</code> with dynamic extent and a char type of const char32_t <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslowner-ownership-pointers"><b>2. Owners</b></a> | | unique_ptr | &amp;#x2611; | an alias to <code>std::unique_ptr</code> shared_ptr | &amp;#x2611; | an alias to <code>std::shared_ptr</code> stack_array | &amp;#x2610; | a stack-allocated array dyn_array | &amp;#x2610; | a heap-allocated array <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslassert-assertions"><b>3. Assertions</b></a> | | Expects | &amp;#x2611; | a precondition assertion; on failure it terminates Ensures | &amp;#x2611; | a postcondition assertion; on failure it terminates <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslutil-utilities"><b>4. Utilities</b></a> | | move_owner | &amp;#x2610; | a helper function that moves one <code>owner</code> to the other byte | &amp;#x2611; | either an alias to std::byte or a byte type final_action | &amp;#x2611; | a RAII style class that invokes a functor on its destruction finally | &amp;#x2611; | a helper function instantiating <code>final_action</code> GSL_SUPPRESS | &amp;#x2611; | a macro that takes an argument and turns it into <code>[[gsl::suppress(x)]]</code> or <code>[[gsl::suppress("x")]]</code> [[implicit]] | &amp;#x2610; | a "marker" to put on single-argument constructors to explicitly make them non-explicit index | &amp;#x2611; | a type to use for all container and array indexing (currently an alias for std::ptrdiff_t) joining_thread | &amp;#x2610; | a RAII style version of <code>std::thread</code> that joins narrow | &amp;#x2611; | a checked version of narrow_cast; it can throw <code>narrowing_error</code> narrow_cast | &amp;#x2611; | a narrowing cast for values and a synonym for static_cast narrowing_error | &amp;#x2611; | a custom exception type thrown by <code>narrow()</code> <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslconcept-concepts"><b>5. Concepts</b></a> | &amp;#x2610; |</p>
+<h2><a class="anchor" id="autotoc_md423"></a>
+The following features do not exist in or have been removed from the C++ Core Guidelines:</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Feature   </th><th class="markdownTableHeadCenter">Supported?   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">strict_not_null   </td><td class="markdownTableBodyCenter">&amp;#x2611;   </td><td class="markdownTableBodyNone">A stricter version of <code>not_null</code> with explicit constructors    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">multi_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. Multi-dimensional span.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">strided_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. Support for this type has been discontinued.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">basic_string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. Like <code>span</code> but for strings with a templated char type    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of char    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">cstring_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of const char    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">wstring_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of wchar_t    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">cwstring_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of const wchar_t    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">u16string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of char16_t    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">cu16string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of const char16_t    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">u32string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of char32_t    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">cu32string_span   </td><td class="markdownTableBodyCenter">&amp;#x2610;   </td><td class="markdownTableBodyNone">Deprecated. An alias to <code>basic_string_span</code> with a char type of const char32_t   </td></tr>
+</table>
+<p>This is based on <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library">CppCoreGuidelines semi-specification</a>.</p>
+<h1><a class="anchor" id="autotoc_md424"></a>
+Quick Start</h1>
+<h2><a class="anchor" id="autotoc_md425"></a>
+Supported Compilers / Toolsets</h2>
+<p>The GSL officially supports the latest and previous major versions of VS with MSVC &amp; LLVM, GCC, Clang, and XCode with Apple-Clang. Within these two major versions, we try to target the latest minor updates / revisions (although this may be affected by delays between a toolchain's release and when it becomes widely available for use). Below is a table showing the versions currently being tested.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Compiler   </th><th class="markdownTableHeadRight">Toolset Versions Currently Tested    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">XCode   </td><td class="markdownTableBodyRight">13.2.1 &amp; 12.5.1    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">GCC   </td><td class="markdownTableBodyRight">11[^1] &amp; 10[^2]    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">Clang   </td><td class="markdownTableBodyRight">12[^2] &amp; 11[^2]    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">Visual Studio with MSVC   </td><td class="markdownTableBodyRight">VS2022[^3] &amp; VS2019[^4]    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">Visual Studio with LLVM   </td><td class="markdownTableBodyRight">VS2022[^3] &amp; VS2019[^4]   </td></tr>
+</table>
+<p>[^1]: Precise version may be found in the <a href="https://dev.azure.com/cppstat/GSL/_build?definitionId=1&amp;branchFilter=26">latest CI results</a>. [^2]: Precise version may be found in the <a href="https://dev.azure.com/cppstat/GSL/_build?definitionId=1&amp;branchFilter=26">latest CI results</a>. Should be the version specified <a href="https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md#language-and-runtime">here</a>. [^3]: Precise version may be found in the <a href="https://dev.azure.com/cppstat/GSL/_build?definitionId=1&amp;branchFilter=26">latest CI results</a>. Should be the version specified <a href="https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md#visual-studio-enterprise-2022">here</a>. [^4]: Precise version may be found in the <a href="https://dev.azure.com/cppstat/GSL/_build?definitionId=1&amp;branchFilter=26">latest CI results</a>. Should be the version specified <a href="https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#visual-studio-enterprise-2019">here</a>.</p>
+<hr  />
+<p> If you successfully port GSL to another platform, we would love to hear from you!</p><ul>
+<li>Submit an issue specifying the platform and target.</li>
+<li>Consider contributing your changes by filing a pull request with any necessary changes.</li>
+<li>If at all possible, add a CI/CD step and add the button to the table below!</li>
+</ul>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Target   </th><th class="markdownTableHeadRight">CI/CD Status    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">iOS   </td><td class="markdownTableBodyRight"><img src="https://github.com/microsoft/GSL/workflows/CI_iOS/badge.svg" alt="CI_iOS" style="pointer-events: none;" class="inline"/>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">Android   </td><td class="markdownTableBodyRight"><img src="https://github.com/microsoft/GSL/workflows/CI_Android/badge.svg" alt="CI_Android" style="pointer-events: none;" class="inline"/>   </td></tr>
+</table>
+<p>Note: These CI/CD steps are run with each pull request, however failures in them are non-blocking.</p>
+<h2><a class="anchor" id="autotoc_md427"></a>
+Building the tests</h2>
+<p>To build the tests, you will require the following:</p>
+<ul>
+<li><a href="http://cmake.org">CMake</a>, version 3.1.3 (3.2.3 for AppleClang) or later to be installed and in your PATH.</li>
+</ul>
+<p>These steps assume the source code of this repository has been cloned into a directory named <code>c:\GSL</code>.</p>
+<ol type="1">
+<li>Create a directory to contain the build outputs for a particular architecture (we name it c:\GSL\build-x86 in this example). <pre class="fragment"> cd GSL
+ md build-x86
+ cd build-x86
+</pre></li>
+<li>Configure CMake to use the compiler of your choice (you can see a list by running <code>cmake --help</code>). <pre class="fragment"> cmake -G "Visual Studio 15 2017" c:\GSL
+</pre></li>
+<li>Build the test suite (in this case, in the Debug configuration, Release is another good choice). <pre class="fragment"> cmake --build . --config Debug
+</pre></li>
+<li>Run the test suite. <pre class="fragment"> ctest -C Debug
+</pre> All tests should pass - indicating your platform is fully supported and you are ready to use the GSL types!</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md428"></a>
+Building GSL - Using vcpkg</h2>
+<p>You can download and install GSL using the <a href="https://github.com/Microsoft/vcpkg">vcpkg</a> dependency manager: </p><pre class="fragment">git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+vcpkg install ms-gsl
+</pre><p> The GSL port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please <a href="https://github.com/Microsoft/vcpkg">create an issue or pull request</a> on the vcpkg repository.</p>
+<h2><a class="anchor" id="autotoc_md429"></a>
+Using the libraries</h2>
+<p>As the types are entirely implemented inline in headers, there are no linking requirements.</p>
+<p>You can copy the <a href="./include/gsl">gsl</a> directory into your source tree so it is available to your compiler, then include the appropriate headers in your program.</p>
+<p>Alternatively set your compiler's <em>include path</em> flag to point to the GSL development folder (<code>c:\GSL\include</code> in the example above) or installation folder (after running the install). Eg.</p>
+<p>MSVC++ </p><pre class="fragment">/I c:\GSL\include
+</pre><p> GCC/clang </p><pre class="fragment">-I$HOME/dev/GSL/include
+</pre><p> Include the library using: </p><pre class="fragment">#include &lt;gsl/gsl&gt;
+</pre> <h2><a class="anchor" id="autotoc_md430"></a>
+Usage in CMake</h2>
+<p>The library provides a Config file for CMake, once installed it can be found via </p><pre class="fragment">find_package(Microsoft.GSL CONFIG)
+</pre><p> Which, when successful, will add library target called <code>Microsoft.GSL::GSL</code> which you can use via the usual <code>target_link_libraries</code> mechanism.</p>
+<h3><a class="anchor" id="autotoc_md431"></a>
+FetchContent</h3>
+<p>If you are using cmake version 3.11+ you can use the offical FetchContent module. This allows you to easily incorporate GSL into your project.</p>
+<div class="fragment"><div class="line"># NOTE: This example uses cmake version 3.14 (FetchContent_MakeAvailable).</div>
+<div class="line"># Since it streamlines the FetchContent process</div>
+<div class="line">cmake_minimum_required(VERSION 3.14)</div>
+<div class="line"> </div>
+<div class="line">include(FetchContent)</div>
+<div class="line"> </div>
+<div class="line"># In this example we are picking a specific tag.</div>
+<div class="line"># You can also pick a specific commit, if you need to.</div>
+<div class="line">FetchContent_Declare(GSL</div>
+<div class="line">    GIT_REPOSITORY &quot;https://github.com/microsoft/GSL&quot;</div>
+<div class="line">    GIT_TAG &quot;v3.1.0&quot;</div>
+<div class="line">)</div>
+<div class="line"> </div>
+<div class="line">FetchContent_MakeAvailable(GSL)</div>
+<div class="line"> </div>
+<div class="line"># Now you can link against the GSL interface library</div>
+<div class="line">add_executable(foobar)</div>
+<div class="line"> </div>
+<div class="line"># Link against the interface library (IE header only library)</div>
+<div class="line">target_link_libraries(foobar PRIVATE GSL)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md432"></a>
+Debugging visualization support</h2>
+<p>For Visual Studio users, the file <a href="./GSL.natvis">GSL.natvis</a> in the root directory of the repository can be added to your project if you would like more helpful visualization of GSL types in the Visual Studio debugger than would be offered by default.</p>
+<p>If you are using cmake this will be done automatically for you. See 'GSL_VS_ADD_NATIVE_VISUALIZERS' </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>
