@@ -42,26 +42,13 @@ int calculate_block_index(std::array<int, 3> coords, int nx, int ny) {
  */
 std::vector<int> check_neighbours(std::array<int, 3> coords, std::array<int, 3> n_blocks) {
   std::vector<int> neighbours;
-  // first push back the block itself
-  neighbours.push_back(calculate_block_index(coords, n_blocks[0], n_blocks[1]));
-
   // Encuentra a los vecinos de los cuadros vecinos.
   for (int k_aux = -1; k_aux < 2; k_aux++) {
-    // Encuentra a los vecinos de los cuadros vecinos.
     for (int j_aux = -1; j_aux < 2; j_aux++) {
-      // Encuentra a los vecinos de los cuadros vecinos.
       for (int i_aux = -1; i_aux < 2; i_aux++) {
-        // comprobar si los vecinos están en la matriz de vecinos
-        if (i_aux != 0 || j_aux != 0 || k_aux != 0) {
-          // Añade un bloque a la matriz de vecinos.
-          if (coords[0] + i_aux > -1 && coords[0] + i_aux < n_blocks[0] && coords[1] + j_aux > -1 &&
-              coords[1] + j_aux < n_blocks[1] && coords[2] + k_aux > -1 &&
-              coords[2] + k_aux < n_blocks[2]) {
-            neighbours.push_back(
-                calculate_block_index({coords[0] + i_aux, coords[1] + j_aux, coords[2] + k_aux},
-                                      n_blocks[0], n_blocks[1]));
-          }
-        }
+        // Añade un bloque a la matriz de vecinos.
+        neighbours.push_back(calculate_block_index(
+            {coords[0] + i_aux, coords[1] + j_aux, coords[2] + k_aux}, n_blocks[0], n_blocks[1]));
       }
     }
   }
@@ -85,24 +72,14 @@ Block::Block(std::array<int, 3> const & block_coords, std::array<int, 3> const &
  */
 std::vector<int> Block::check_neighbours(std::array<int, 3> const & n_blocks) {
   // first push back the block itself
-  // TODO revisar si esto mejora el calculo de vecinos (agrupa vecinos)
-  neighbours.push_back(calculate_block_index(coords, n_blocks[0], n_blocks[1]));
 
   // El bloque en el bloque en el bloque en el mismo de nuevo.
   for (int k_aux = -1; k_aux < 2; k_aux++) {
     for (int j_aux = -1; j_aux < 2; j_aux++) {
       for (int i_aux = -1; i_aux < 2; i_aux++) {
-        if (i_aux != 0 || j_aux != 0 ||
-            k_aux != 0) {  // no queremos que se añada el bloque en si mismo de nuevo
-          // Añade un bloque a la lista de vecinos.
-          if (coords[0] + i_aux > -1 && coords[0] + i_aux < n_blocks[0] && coords[1] + j_aux > -1 &&
-              coords[1] + j_aux < n_blocks[1] && coords[2] + k_aux > -1 &&
-              coords[2] + k_aux < n_blocks[2]) {
             neighbours.push_back(
                 calculate_block_index({coords[0] + i_aux, coords[1] + j_aux, coords[2] + k_aux},
                                       n_blocks[0], n_blocks[1]));
-          }
-        }
       }
     }
   }

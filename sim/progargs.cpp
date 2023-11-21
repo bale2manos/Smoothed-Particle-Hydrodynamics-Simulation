@@ -204,8 +204,8 @@ void check_missmatch_particles(int counter, int malla_np) {
 void read_particle_field(bool & finished, std::array<int, 2> indexes, std::ifstream & input_file,
                          std::array<std::array<float, 3>, 3> & info_particle) {
   // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-  if (!input_file.read(reinterpret_cast<char *>(&info_particle.at(indexes[0])[indexes[1]]),
-                       sizeof(info_particle.at(indexes[0])[indexes[1]]))) {
+  if (!input_file.read(reinterpret_cast<char *>(&info_particle.at(indexes[0]).at(indexes[1])),
+                       sizeof(info_particle.at(indexes[0]).at(indexes[1])))) {
     finished = true;
   }
 }

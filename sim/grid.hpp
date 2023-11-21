@@ -54,12 +54,12 @@ class Malla {
     [[nodiscard]] std::array<int, 3> getNumberBlocks() const;
     [[nodiscard]] std::array<double, 3> getSizeBlocks() const;
     [[nodiscard]] std::vector<Particle> getParticles() const;  // New method to retrieve particles
-    static int nx_calc(double xmax, double xmin, double h);
-    static int ny_calc(double ymax, double ymin, double h);
-    static int nz_calc(double zmax, double zmin, double h);
-    static double sx_calc(double xmax, double xmin, int nx);
-    static double sy_calc(double ymax, double ymin, int ny);
-    static double sz_calc(double zmax, double zmin, int nz);
+    static int nx_calc(double x_max, double x_min, double h_param);
+    static int ny_calc(double y_max, double y_min, double h_param);
+    static int nz_calc(double z_max, double z_min, double h_param);
+    static double sx_calc(double x_max, double x_min, int n_x);
+    static double sy_calc(double y_max, double y_min, int n_y);
+    static double sz_calc(double z_max, double z_min, int n_z);
     [[nodiscard]] double smooth_length_calc() const;
     [[nodiscard]] double particle_mass_calc() const;
     int get_block_index_from_position(std::array<double, 3> position);
