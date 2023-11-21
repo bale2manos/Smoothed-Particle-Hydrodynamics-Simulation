@@ -385,12 +385,12 @@ void Malla::particle_movement(Particle & particle) {
   static auto const timestep_half    = timestep * 0.5;
 
   for (int eje = 0; eje < 3; eje++) {
-    double const hvel_i = particle.h_vel.at(eje);
-    double const acc_i  = particle.acc.at(eje);
+    double const hvel_eje = particle.h_vel.at(eje);
+    double const acc_eje  = particle.acc.at(eje);
 
-    particle.pos.at(eje)   += (hvel_i * timestep) + (acc_i * timestep_squared);
-    particle.vel.at(eje)    = hvel_i + (acc_i * timestep_half);
-    particle.h_vel.at(eje) += (acc_i * timestep);
+    particle.pos.at(eje)   += (hvel_eje * timestep) + (acc_eje * timestep_squared);
+    particle.vel.at(eje)    = hvel_eje + (acc_eje * timestep_half);
+    particle.h_vel.at(eje) += (acc_eje * timestep);
   }
 }
 
