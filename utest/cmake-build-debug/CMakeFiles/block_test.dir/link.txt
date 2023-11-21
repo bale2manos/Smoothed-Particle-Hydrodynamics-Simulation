@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -rdynamic CMakeFiles/block_test.dir/block_test.o CMakeFiles/block_test.dir/grid_test.o -o block_test  -lGTest::gtest_main 
