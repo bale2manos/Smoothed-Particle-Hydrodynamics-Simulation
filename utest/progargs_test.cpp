@@ -35,9 +35,9 @@ TEST(TestValidateTimeSteps, Test1) {
 TEST(TestValidateInputFile, Test2) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const pathfile              = currentPath.string() + "/";
-  std::string const testpath              = pathfile + "testfiles/small.fld";
-  std::string const nopath                = pathfile + "incorrectpath";
-  std::string const corrpath              = pathfile + "smallcorr";
+  std::string const testpath              = pathfile + "in/small.fld";
+  std::string const nopath                = pathfile + "utest/incorrectpath";
+  std::string const corrpath              = pathfile + "utest/smallcorr";
   EXPECT_EQ(validate_input_file(testpath.c_str()), 0);
   EXPECT_EQ(validate_input_file(nopath.c_str()), -1);
   EXPECT_EQ(validate_input_file(corrpath.c_str()), -1);
@@ -54,7 +54,7 @@ TEST(TestValidateInputFile, Test2) {
 
 TEST(TestValidateOutputFile, Test3) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
-  std::string const pathfile              = currentPath.string() + "/";
+  std::string const pathfile              = currentPath.string() + "/utest/";
   std::string const testpath              = pathfile + "output.fld";
   std::string const nopath;
   EXPECT_EQ(validate_output_file(testpath.c_str()), 0);
@@ -113,7 +113,7 @@ TEST(TestValidateParameters, Test4) {
 TEST(TestReadInputFile, Test5) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const testpath              = currentPath.string() + "/";
-  std::string const file                  = testpath + "testfiles/small.fld";
+  std::string const file                  = testpath + "in/small.fld";
   Malla const malla                       = read_input_file(file.c_str());
   Malla const mallaux(4800, 204);
   EXPECT_EQ(malla.getNumberParticles(), 4800);
@@ -133,8 +133,8 @@ TEST(TestReadInputFile, Test5) {
 TEST(TestWriteOutputFile, Test6) {
   std::filesystem::path const currentPath = std::filesystem::current_path();
   std::string const testpath              = currentPath.string() + "/";
-  std::string const file                  = testpath + "testfiles/small.fld";
-  std::string const outfile               = testpath + "testfiles/output.fld";
+  std::string const file                  = testpath + "in/small.fld";
+  std::string const outfile               = testpath + "utest/testfiles/output.fld";
   Malla malla                             = read_input_file(file.c_str());
   EXPECT_EQ(write_output_file(malla, outfile.c_str()), 0);
 }

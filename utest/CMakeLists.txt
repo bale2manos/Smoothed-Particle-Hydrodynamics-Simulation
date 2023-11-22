@@ -14,7 +14,6 @@ add_executable(utest
         fluid_test.cpp
         fluid_test.hpp
         main.cpp
-        ../cmake-build-release/utest/utest
 
 )
 
