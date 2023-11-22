@@ -48,25 +48,19 @@ Para observar la energía consumida por el programa, utiliza el siguiente comand
 sbatch -o perf_stat_energy.txt ./scripts/perf_stat_energy.sh
 ```
 
-## Cachegrind de Valgrind
-
-Para observar los resultados del cachegrind de Valgrind, ejecuta el siguiente comando:
-
-```bash
-sbatch -o cachegrind.txt ./scripts/cachegrind.sh
-```
-
 ## Tests Unitarios
-Para ejecutar los tests unitarios, utiliza el siguiente comando:
+Para ejecutar los tests unitarios, navega a la carpeta ftest y utiliza el siguiente comando:
 
 ```bash
-sbatch -o unit_tests.txt ./ftest/testutest.sh
+cd utest
+sbatch -o unit_tests.txt ./testutest.sh
 ```
 
 ## Tests Funcionales
 Para ejecutar los tests funcionales, ejecuta los scripts dentro de la carpeta "ftest", como por ejemplo:
 
 ```bash
+cd ftest
 sbatch -o functional_tests.txt ./ftest/ftest1debug10.sh
 ```
 

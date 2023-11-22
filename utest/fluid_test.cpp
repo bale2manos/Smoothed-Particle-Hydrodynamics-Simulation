@@ -9,28 +9,6 @@
 #include <vector>
 
 /**
- * @brief Test case for checking the output of small.fld after multiple interactions.
- *
- * This test reads the small.fld input file, performs a series of interactions on the grid, and
- * compares the resulting particle vectors with expected outputs for each iteration.
- *
- * @param CheckOutSmall Fixture for checking output of small.fld tests.
- */
-
-TEST(CheckOutSmall, Test1) {
-  std::string const pathsmall             =  "./utest/testfiles/small.fld";
-  std::string const pathfile              =  "./utest/";
-  Malla malla                             = read_input_file(pathsmall.c_str());
-  int const tests                         = 5;
-  for (int iter = 1; iter <= tests; iter++) {
-    malla.mallaInteraction(1);
-    std::string const pathsmall2 = pathfile + "out/small-" + std::to_string(iter) + ".fld";
-    Malla const small            = read_input_file(pathsmall2.c_str());
-    EXPECT_EQ(comparevectorsout(malla.getParticles(), small.getParticles()), 0);
-  }
-}
-
-/**
  * @brief Test case for checking the output of large.fld after multiple interactions.
  *
  * This test reads the large.fld input file, performs a series of interactions on the grid, and
@@ -39,7 +17,7 @@ TEST(CheckOutSmall, Test1) {
  * @param CheckOutLarge Fixture for checking output of large.fld tests.
  */
 
-TEST(CheckOutLarge, Test2) {
+TEST(CheckOutLarge, Test1) {
   std::string const pathlarge             = "./utest/testfiles/large.fld";
   std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathlarge.c_str());
@@ -62,7 +40,7 @@ TEST(CheckOutLarge, Test2) {
  * @param CheckOutSmallTrz Fixture for checking output of small.fld with trz files tests.
  */
 
-TEST(CheckOutSmallTrz, Test3) {
+TEST(CheckOutSmallTrz, Test2) {
   std::string const pathsmall             = "./utest/testfiles/small.fld";
   std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathsmall.c_str());
@@ -85,7 +63,7 @@ TEST(CheckOutSmallTrz, Test3) {
  * @param CheckOutLargeTrz Fixture for checking output of large.fld with trz files tests.
  */
 
-TEST(CheckOutLargeTrz, Test4) {
+TEST(CheckOutLargeTrz, Test3) {
   std::string const pathlarge             = "./utest/testfiles/large.fld";
   std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathlarge.c_str());

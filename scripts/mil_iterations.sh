@@ -2,4 +2,4 @@
 . /etc/profile
 module avail
 module load gcc/12.1.0
-./build-debug/fluid/fluid 1000 large.fld out.fld
+./build-release/fluid/fluid 1000 ./in/large.fld out.fld
