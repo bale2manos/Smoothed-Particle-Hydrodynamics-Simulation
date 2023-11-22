@@ -60,7 +60,7 @@ Para ejecutar los tests funcionales, ejecuta los scripts dentro de la carpeta "f
 
 ```bash
 cd ftest
-sbatch -o functional_tests.txt ./ftest/ftest1debug10.sh
+sbatch -o functional_tests.txt ./ftest1debug10.sh
 ```
 
 ## Documentación Doxygen
