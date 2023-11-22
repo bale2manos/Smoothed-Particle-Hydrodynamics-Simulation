@@ -18,9 +18,8 @@
  */
 
 TEST(CheckOutSmall, Test1) {
-  std::filesystem::path const currentPath = std::filesystem::current_path();
-  std::string const pathsmall             = currentPath.string() + "/testfiles/small.fld";
-  std::string const pathfile              = currentPath.string() + "/";
+  std::string const pathsmall             =  "./utest/testfiles/small.fld";
+  std::string const pathfile              =  "./utest/";
   Malla malla                             = read_input_file(pathsmall.c_str());
   int const tests                         = 5;
   for (int iter = 1; iter <= tests; iter++) {
@@ -41,9 +40,8 @@ TEST(CheckOutSmall, Test1) {
  */
 
 TEST(CheckOutLarge, Test2) {
-  std::filesystem::path const currentPath = std::filesystem::current_path();
-  std::string const pathlarge             = currentPath.string() + "/testfiles/large.fld";
-  std::string const pathfile              = currentPath.string() + "/";
+  std::string const pathlarge             = "./utest/testfiles/large.fld";
+  std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathlarge.c_str());
   int const tests                         = 5;
   for (int iter = 1; iter <= tests; iter++) {
@@ -65,9 +63,8 @@ TEST(CheckOutLarge, Test2) {
  */
 
 TEST(CheckOutSmallTrz, Test3) {
-  std::filesystem::path const currentPath = std::filesystem::current_path();
-  std::string const pathsmall             = currentPath.string() + "/testfiles/small.fld";
-  std::string const pathfile              = currentPath.string() + "/";
+  std::string const pathsmall             = "./utest/testfiles/small.fld";
+  std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathsmall.c_str());
   int const tests                         = 5;
   for (int iter = 1; iter <= tests; iter++) {
@@ -89,9 +86,8 @@ TEST(CheckOutSmallTrz, Test3) {
  */
 
 TEST(CheckOutLargeTrz, Test4) {
-  std::filesystem::path const currentPath = std::filesystem::current_path();
-  std::string const pathlarge             = currentPath.string() + "/testfiles/large.fld";
-  std::string const pathfile              = currentPath.string() + "/";
+  std::string const pathlarge             = "./utest/testfiles/large.fld";
+  std::string const pathfile              = "./utest/";
   Malla malla                             = read_input_file(pathlarge.c_str());
   int const tests                         = 5;
   for (int iter = 1; iter <= tests; iter++) {
