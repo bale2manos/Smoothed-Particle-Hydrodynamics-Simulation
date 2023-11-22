@@ -35,8 +35,8 @@ TEST(GridTest, smoothlenght) {
 /**
  * @brief Test for calculating the number of grid cells in the x-direction.
  *
- * This test case retrieves the grid instance and calculates the number of grid cells in the x-direction,
- * then checks if the result matches the expected value.
+ * This test case retrieves the grid instance and calculates the number of grid cells in the
+ * x-direction, then checks if the result matches the expected value.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -49,8 +49,8 @@ TEST(GridTest, nxcalc) {
 /**
  * @brief Test for calculating the number of grid cells in the y-direction.
  *
- * This test case retrieves the grid instance and calculates the number of grid cells in the y-direction,
- * then checks if the result matches the expected value.
+ * This test case retrieves the grid instance and calculates the number of grid cells in the
+ * y-direction, then checks if the result matches the expected value.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -61,13 +61,13 @@ TEST(GridTest, nycalc) {
 }
 
 /**
-* @brief Test for calculating the number of grid cells in the z-direction.
-*
-* This test case retrieves the grid instance and calculates the number of grid cells in the z-direction,
-* then checks if the result matches the expected value.
-*
-* @param GridTest Fixture for grid-related tests.
-  */
+ * @brief Test for calculating the number of grid cells in the z-direction.
+ *
+ * This test case retrieves the grid instance and calculates the number of grid cells in the
+ * z-direction, then checks if the result matches the expected value.
+ *
+ * @param GridTest Fixture for grid-related tests.
+ */
 
 TEST(GridTest, nzcalc) {
   Malla const & grid = getGrid();
@@ -178,7 +178,8 @@ TEST(GridTest, get_block_index_from_position) {
  * @brief Test for increasing density in the grid without actual increase.
  *
  * This test case retrieves the grid instance, coordinates of pivot and particle,
- * original density values, and attempts to increase density. It checks if the density values remain unchanged.
+ * original density values, and attempts to increase density. It checks if the density values remain
+ * unchanged.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -207,7 +208,8 @@ TEST(GridTest, increase_density_noincrease) {
  * @brief Test for increasing density in the grid with actual increase.
  *
  * This test case retrieves the grid instance, coordinates of pivot and particle,
- * original density values, and attempts to increase density. It checks if the density values increase.
+ * original density values, and attempts to increase density. It checks if the density values
+ * increase.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -229,8 +231,8 @@ TEST(GridTest, increase_density_increase) {
 /**
  * @brief Test for calculating block indexes from particle positions.
  *
- * This test case retrieves the grid instance, calculates block indexes from given particle positions,
- * and checks if the result matches the expected value.
+ * This test case retrieves the grid instance, calculates block indexes from given particle
+ * positions, and checks if the result matches the expected value.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -241,7 +243,6 @@ TEST(GridTest, calculate_block_index) {
   std::array<int, 3> const result       = {21, 30, 21};
   EXPECT_EQ(grid.calculate_block_indexes(positions), result);
 }
-
 
 /**
  * @brief Test for calculating limits of grid edges.
@@ -266,7 +267,8 @@ TEST(GridTest, limit_of_edge) {
  * @brief Test for handling edge collisions for a particle.
  *
  * This test case creates two particles, simulates an edge collision for one of them,
- * and checks if the acceleration component along the z-axis of the collided particle is less than the other.
+ * and checks if the acceleration component along the z-axis of the collided particle is less than
+ * the other.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -364,7 +366,8 @@ TEST(GridTest, particle_movement) {
  * @brief Test for handling limits interactions between particles and grid blocks.
  *
  * This test case retrieves the grid instance, block coordinates, and the number of blocks.
- * It then creates a block and particles, simulates limits interactions, and checks if the acceleration components match.
+ * It then creates a block and particles, simulates limits interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -399,8 +402,9 @@ TEST(GridTest, limits_interactions1) {
 /**
  * @brief Test for handling limits interactions with a different block configuration.
  *
- * This test case retrieves the grid instance, different block coordinates, and the number of blocks.
- * It then creates a block and particles, simulates limits interactions, and checks if the acceleration components match.
+ * This test case retrieves the grid instance, different block coordinates, and the number of
+ * blocks. It then creates a block and particles, simulates limits interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -436,7 +440,8 @@ TEST(GridTest, limits_interactions2) {
  * @brief Test for handling limits interactions with another block configuration.
  *
  * This test case retrieves the grid instance, block coordinates, and a different number of blocks.
- * It then creates a block and particles, simulates limits interactions, and checks if the acceleration components match.
+ * It then creates a block and particles, simulates limits interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -472,7 +477,8 @@ TEST(GridTest, limits_interactions3) {
  * @brief Test for handling wall interactions between particles and grid blocks.
  *
  * This test case retrieves the grid instance, block coordinates, and the number of blocks.
- * It then creates a block and particles, simulates wall interactions, and checks if the acceleration components match.
+ * It then creates a block and particles, simulates wall interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -507,8 +513,9 @@ TEST(GridTest, wall_interactions1) {
 /**
  * @brief Test for handling wall interactions with a different block configuration.
  *
- * This test case retrieves the grid instance, different block coordinates, and the number of blocks.
- * It then creates a block and particles, simulates wall interactions, and checks if the acceleration components match.
+ * This test case retrieves the grid instance, different block coordinates, and the number of
+ * blocks. It then creates a block and particles, simulates wall interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */
@@ -544,7 +551,8 @@ TEST(GridTest, wall_interactions2) {
  * @brief Test for handling wall interactions with another block configuration.
  *
  * This test case retrieves the grid instance, block coordinates, and a different number of blocks.
- * It then creates a block and particles, simulates wall interactions, and checks if the acceleration components match.
+ * It then creates a block and particles, simulates wall interactions, and checks if the
+ * acceleration components match.
  *
  * @param GridTest Fixture for grid-related tests.
  */

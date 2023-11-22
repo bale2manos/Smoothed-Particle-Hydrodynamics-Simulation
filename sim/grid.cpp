@@ -326,8 +326,8 @@ void Malla::acceleration_transfer_calculations(Particle & pivot, Particle & part
     double const denominator   = 1 / (density_2 * density_pivot);
     double const numerator1    = accel_constants[0] * term2 * term3;
     for (int eje = 0; eje < 3; eje++) {
-      double const term1   = (pivot.pos.at(eje) - particle2.pos.at(eje));
-      double const term4   = (particle2.vel.at(eje) - pivot.vel.at(eje));
+      double const term1     = (pivot.pos.at(eje) - particle2.pos.at(eje));
+      double const term4     = (particle2.vel.at(eje) - pivot.vel.at(eje));
       pivot.acc.at(eje)     += ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
       particle2.acc.at(eje) -= ((term1 * numerator1) + (term4 * accel_constants[1])) * denominator;
     }
