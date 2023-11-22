@@ -20,6 +20,11 @@ std\+::vector$<$ int $>$ \mbox{\hyperlink{class_block_aa3838cf8b516f2ea68effc8ca
 \item 
 std\+::vector$<$ int $>$ \mbox{\hyperlink{class_block_ab0e82cca0945b223911c4f4d022c3073}{neighbours\+\_\+particles}}
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos privados}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_block_a982de96267058464b6deffe0d462c11d}{check\+\_\+neighbours}} (std\+::array$<$ int, 3 $>$ const \&n\+\_\+blocks)
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Documentación de constructores y destructores}
@@ -36,6 +41,23 @@ Constructor for \doxylink{class_block}{Block} class.
 {\em n\+\_\+blocks} & An array with the number of blocks in each dimension. \\
 \hline
 \end{DoxyParams}
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{class_block_a982de96267058464b6deffe0d462c11d}\label{class_block_a982de96267058464b6deffe0d462c11d} 
+\index{Block@{Block}!check\_neighbours@{check\_neighbours}}
+\index{check\_neighbours@{check\_neighbours}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{check\_neighbours()}{check\_neighbours()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Block\+::check\+\_\+neighbours (\begin{DoxyParamCaption}\item[{std\+::array$<$ int, 3 $>$ const \&}]{n\+\_\+blocks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Calculates the neighbours of a block in a 3D grid. 
+\begin{DoxyParams}{Parámetros}
+{\em n\+\_\+blocks} & An array with the number of blocks in each dimension of the grid. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+A vector with the indices of the neighbouring blocks. 
+\end{DoxyReturn}
 
 
 \doxysubsection{Documentación de datos miembro}

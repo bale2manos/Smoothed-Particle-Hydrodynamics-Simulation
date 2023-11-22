@@ -60,14 +60,14 @@ sbatch -o cachegrind.txt ./scripts/cachegrind.sh
 Para ejecutar los tests unitarios, utiliza el siguiente comando:
 
 ```bash
-sbatch -o unit_tests.txt ./scripts/unit_tests.sh
+sbatch -o unit_tests.txt ./ftest/testutest.sh
 ```
 
 ## Tests Funcionales
-Para ejecutar los tests funcionales, utiliza el siguiente comando:
+Para ejecutar los tests funcionales, ejecuta los scripts dentro de la carpeta "ftest", como por ejemplo:
 
 ```bash
-sbatch -o functional_tests.txt ./scripts/functional_tests.sh
+sbatch -o functional_tests.txt ./ftest/ftest1debug10.sh
 ```
 
 ## Documentación Doxygen

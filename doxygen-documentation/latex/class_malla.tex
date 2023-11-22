@@ -7,7 +7,7 @@
 \doxysubsubsection*{Métodos públicos}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_malla_a507573c2a88d3a1874eb08e25ed72b85}{Malla}} (int number\+\_\+particles, double particles\+\_\+per\+\_\+meter)
+\mbox{\hyperlink{class_malla_a507573c2a88d3a1874eb08e25ed72b85}{Malla}} (int \mbox{\hyperlink{class_malla_ac26a585932a1c2634503d91baa209a5a}{number\+\_\+particles}}, double \mbox{\hyperlink{class_malla_a3c976ff4516b8026fee1bc3b4e2a6d6d}{particles\+\_\+per\+\_\+meter}})
 \item 
 \mbox{\hyperlink{class_malla_a504ff3c83e24357e00e0cbb2548f4e55}{Malla}} ()=default
 \item 
@@ -80,6 +80,32 @@ static void \mbox{\hyperlink{class_malla_a942cfc4f43ed570741ea6b2c8e29a0a8}{part
 \item 
 static void \mbox{\hyperlink{class_malla_ae17bcb2597d21ca400e2e9b9f815f6ad}{edge\+\_\+interaction}} (\mbox{\hyperlink{struct_particle}{Particle}} \&particle, int extremo, int eje)
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos privados}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_malla_a3223aa96959f7db1f69440dfd591164f}{add\+\_\+particles\+\_\+neighbours}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos privados}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_malla_ac26a585932a1c2634503d91baa209a5a}{number\+\_\+particles}} \{\}
+\item 
+double \mbox{\hyperlink{class_malla_a3c976ff4516b8026fee1bc3b4e2a6d6d}{particles\+\_\+per\+\_\+meter}} \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $>$ \mbox{\hyperlink{class_malla_a807e4c98c083560c50ff0979b45db584}{blocks}}
+\item 
+std\+::array$<$ int, 3 $>$ \mbox{\hyperlink{class_malla_a77d1e9b6db630f496f8d421c657ab253}{number\+\_\+blocks}} \{\}
+\item 
+std\+::array$<$ double, 3 $>$ \mbox{\hyperlink{class_malla_ae90624a6fd55039bf1d91ed3ea0447e2}{size\+\_\+blocks}} \{\}
+\item 
+double \mbox{\hyperlink{class_malla_a67a841712677c751968c789d7bf1fb5f}{smoothing\+\_\+length}} \{\}
+\item 
+double \mbox{\hyperlink{class_malla_a7b1bac55a30242592209721113608e55}{particle\+\_\+mass}} \{\}
+\item 
+std\+::array$<$ double, 2 $>$ \mbox{\hyperlink{class_malla_a777278e231078f76f21c00aaa7a595cf}{accel\+\_\+constants}} \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ \mbox{\hyperlink{class_malla_ab21450f14adf547dd080453aebb71257}{particles}}
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Documentación de constructores y destructores}
@@ -127,7 +153,13 @@ Transfers acceleration between two particles if they are close enough.
 {\em particle2} & The second particle. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{class_malla_ab1b556cfd0188a35b18d53070db74506}\label{class_malla_ab1b556cfd0188a35b18d53070db74506} 
+\Hypertarget{class_malla_a3223aa96959f7db1f69440dfd591164f}\label{class_malla_a3223aa96959f7db1f69440dfd591164f} 
+\index{Malla@{Malla}!add\_particles\_neighbours@{add\_particles\_neighbours}}
+\index{add\_particles\_neighbours@{add\_particles\_neighbours}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{add\_particles\_neighbours()}{add\_particles\_neighbours()}}
+{\footnotesize\ttfamily void Malla\+::add\+\_\+particles\+\_\+neighbours (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This function adds the particles in the neighboring blocks to the list of particles in each block. \Hypertarget{class_malla_ab1b556cfd0188a35b18d53070db74506}\label{class_malla_ab1b556cfd0188a35b18d53070db74506} 
 \index{Malla@{Malla}!calculate\_block\_indexes@{calculate\_block\_indexes}}
 \index{calculate\_block\_indexes@{calculate\_block\_indexes}!Malla@{Malla}}
 \doxysubsubsection{\texorpdfstring{calculate\_block\_indexes()}{calculate\_block\_indexes()}}
@@ -232,11 +264,6 @@ The number of points in the grid.
 \doxysubsubsection{\texorpdfstring{getParticles()}{getParticles()}}
 {\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_particle}{Particle}} $>$ Malla\+::get\+Particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
-Returns a vector containing all the particles in the grid.
-
-\begin{DoxyReturn}{Devuelve}
-A vector containing all the particles in the grid. 
-\end{DoxyReturn}
 \Hypertarget{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288}\label{class_malla_a618199f5bf2d7c4d3fad83aa6eca3288} 
 \index{Malla@{Malla}!getParticlesPerMeter@{getParticlesPerMeter}}
 \index{getParticlesPerMeter@{getParticlesPerMeter}!Malla@{Malla}}
@@ -506,6 +533,63 @@ Detects and handles collisions between a particle and a block\textquotesingle{}s
 {\em block} & The block to check for collisions against. \\
 \hline
 \end{DoxyParams}
+
+
+\doxysubsection{Documentación de datos miembro}
+\Hypertarget{class_malla_a777278e231078f76f21c00aaa7a595cf}\label{class_malla_a777278e231078f76f21c00aaa7a595cf} 
+\index{Malla@{Malla}!accel\_constants@{accel\_constants}}
+\index{accel\_constants@{accel\_constants}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{accel\_constants}{accel\_constants}}
+{\footnotesize\ttfamily std\+::array$<$double, 2$>$ Malla\+::accel\+\_\+constants \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_a807e4c98c083560c50ff0979b45db584}\label{class_malla_a807e4c98c083560c50ff0979b45db584} 
+\index{Malla@{Malla}!blocks@{blocks}}
+\index{blocks@{blocks}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{blocks}{blocks}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_block}{Block}}$>$ Malla\+::blocks\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_a77d1e9b6db630f496f8d421c657ab253}\label{class_malla_a77d1e9b6db630f496f8d421c657ab253} 
+\index{Malla@{Malla}!number\_blocks@{number\_blocks}}
+\index{number\_blocks@{number\_blocks}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{number\_blocks}{number\_blocks}}
+{\footnotesize\ttfamily std\+::array$<$int, 3$>$ Malla\+::number\+\_\+blocks \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_ac26a585932a1c2634503d91baa209a5a}\label{class_malla_ac26a585932a1c2634503d91baa209a5a} 
+\index{Malla@{Malla}!number\_particles@{number\_particles}}
+\index{number\_particles@{number\_particles}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{number\_particles}{number\_particles}}
+{\footnotesize\ttfamily int Malla\+::number\+\_\+particles \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_a7b1bac55a30242592209721113608e55}\label{class_malla_a7b1bac55a30242592209721113608e55} 
+\index{Malla@{Malla}!particle\_mass@{particle\_mass}}
+\index{particle\_mass@{particle\_mass}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particle\_mass}{particle\_mass}}
+{\footnotesize\ttfamily double Malla\+::particle\+\_\+mass \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_ab21450f14adf547dd080453aebb71257}\label{class_malla_ab21450f14adf547dd080453aebb71257} 
+\index{Malla@{Malla}!particles@{particles}}
+\index{particles@{particles}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particles}{particles}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{struct_particle}{Particle}}$>$ Malla\+::particles\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_a3c976ff4516b8026fee1bc3b4e2a6d6d}\label{class_malla_a3c976ff4516b8026fee1bc3b4e2a6d6d} 
+\index{Malla@{Malla}!particles\_per\_meter@{particles\_per\_meter}}
+\index{particles\_per\_meter@{particles\_per\_meter}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{particles\_per\_meter}{particles\_per\_meter}}
+{\footnotesize\ttfamily double Malla\+::particles\+\_\+per\+\_\+meter \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_ae90624a6fd55039bf1d91ed3ea0447e2}\label{class_malla_ae90624a6fd55039bf1d91ed3ea0447e2} 
+\index{Malla@{Malla}!size\_blocks@{size\_blocks}}
+\index{size\_blocks@{size\_blocks}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{size\_blocks}{size\_blocks}}
+{\footnotesize\ttfamily std\+::array$<$double, 3$>$ Malla\+::size\+\_\+blocks \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_malla_a67a841712677c751968c789d7bf1fb5f}\label{class_malla_a67a841712677c751968c789d7bf1fb5f} 
+\index{Malla@{Malla}!smoothing\_length@{smoothing\_length}}
+\index{smoothing\_length@{smoothing\_length}!Malla@{Malla}}
+\doxysubsubsection{\texorpdfstring{smoothing\_length}{smoothing\_length}}
+{\footnotesize\ttfamily double Malla\+::smoothing\+\_\+length \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
 
 
 La documentación de esta clase está generada de los siguientes archivos\+:\begin{DoxyCompactItemize}
