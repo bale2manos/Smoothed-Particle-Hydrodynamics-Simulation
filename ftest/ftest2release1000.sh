@@ -1,4 +1,7 @@
 #!/bin/bash
+. /etc/profile
+module avail
+module load gcc/12.1.0
 cd ..
 cmake -B build-release -DCMAKE_BUILD_TYPE=Release
 cmake --build build-release
