@@ -48,7 +48,7 @@ sbatch -o perf_stat_energy.txt ./scripts/perf_stat_energy.sh
 ```
 
 ## Tests Unitarios
-Para ejecutar los tests unitarios, navega a la carpeta ftest y utiliza el siguiente comando:
+Para ejecutar los tests unitarios, navega a la carpeta utest y utiliza el siguiente comando:
 
 ```bash
 cd utest
