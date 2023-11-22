@@ -12,7 +12,6 @@ Descripción concisa de la simulación de fluidos orientada al rendimiento.
 - [Ejecución con 1000 Iteraciones](#ejecución-con-1000-iteraciones)
 - [Rendimiento del Programa](#rendimiento-del-programa)
 - [Consumo de Energía](#consumo-de-energía)
-- [Cachegrind de Valgrind](#cachegrind-de-valgrind)
 - [Tests Unitarios](#tests-unitarios)
 - [Tests Funcionales](#tests-funcionales)
 - [Documentación Doxygen](#documentación-doxygen)
